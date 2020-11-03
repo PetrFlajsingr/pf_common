@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
+include("cmake/HunterGate.cmake")
+HunterGate(
+        URL "https://github.com/cpp-pm/hunter/archive/v0.23.269.tar.gz"
+        SHA1 "64024b7b95b4c86d50ae05b926814448c93a70a0"
+)
+
 project(pf_common
         VERSION 0.1.0
         DESCRIPTION "Header only library with concepts and other commonly used things"
@@ -17,6 +23,9 @@ if (NOT (EXISTS ${CPM_DOWNLOAD_LOCATION} AND CPM_VERSION STREQUAL CPM_DOWNLOAD_V
     file(DOWNLOAD https://github.com/TheLartians/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake ${CPM_DOWNLOAD_LOCATION})
 endif ()
 
+hunter_add_package(fmt)
+find_package(fmt CONFIG REQUIRED)
+
 CPMAddPackage(
         NAME cppcoro
         GITHUB_REPOSITORY dutow/cppcoro
@@ -26,6 +35,11 @@ CPMAddPackage(
         NAME backward_cpp
         GITHUB_REPOSITORY bombela/backward-cpp
         GIT_TAG v1.5
+)
+CPMAddPackage(
+        NAME range-v3
+        GITHUB_REPOSITORY ericniebler/range-v3
+        GIT_TAG 0.11.0
 )
 
 
@@ -40,7 +54,7 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro ${BACKWARD_ENABLE})
+target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro ${BACKWARD_ENABLE} range-v3)
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
