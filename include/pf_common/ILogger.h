@@ -30,5 +30,10 @@ class ILogger {
   virtual ~ILogger() = default;
 };
 
+class EmptyLogger : public ILogger {
+ public:
+  inline void log(LogLevel, std::string_vew) override {}
+};
+
 }// namespace pf
 #endif//PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H
