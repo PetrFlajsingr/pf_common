@@ -54,7 +54,7 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro ${BACKWARD_ENABLE} range-v3)
+target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro ${BACKWARD_ENABLE} range-v3 fmt::fmt)
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
