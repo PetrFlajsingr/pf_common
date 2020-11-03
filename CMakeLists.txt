@@ -41,7 +41,7 @@ CPMAddPackage(
         GITHUB_REPOSITORY ericniebler/range-v3
         GIT_TAG 0.11.0
 )
-
+set(RANGE_V3_TESTS OFF)
 
 include(GNUInstallDirs)
 
