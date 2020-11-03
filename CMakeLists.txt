@@ -36,7 +36,7 @@ target_include_directories(
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
 
-install(TARGETS ${PROJECT_NAME} cppcoro
+install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
