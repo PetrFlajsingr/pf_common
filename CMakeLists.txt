@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
+
 project(pf_common
         VERSION 0.1.0
         DESCRIPTION "Header only library with concepts and other commonly used things"
@@ -6,6 +7,21 @@ project(pf_common
         )
 
 set(CMAKE_CXX_STANDARD 20)
+
+set(CPM_DOWNLOAD_LOCATION "${CMAKE_SOURCE_DIR}/cmake/CPM.cmake")
+set(CPM_DOWNLOAD_VERSION 0.27.4)
+include(${CPM_DOWNLOAD_LOCATION})
+
+if (NOT (EXISTS ${CPM_DOWNLOAD_LOCATION} AND CPM_VERSION STREQUAL CPM_DOWNLOAD_VERSION))
+    message(STATUS "Downloading CPM.cmake")
+    file(DOWNLOAD https://github.com/TheLartians/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake ${CPM_DOWNLOAD_LOCATION})
+endif ()
+
+CPMAddPackage(
+        NAME cppcoro
+        GITHUB_REPOSITORY dutow/cppcoro
+        GIT_TAG 4b1951ff3c25fea78198a5c0aabb50589946b694
+)
 
 include(GNUInstallDirs)
 
@@ -19,7 +35,8 @@ target_include_directories(
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
-install(TARGETS ${PROJECT_NAME}
+
+install(TARGETS ${PROJECT_NAME} cppcoro
         EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
