@@ -12,7 +12,12 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#undef BACKWARD_HAS_BFD
+#define BACKWARD_HAS_BFD 1
+#include <backward.hpp>
+#include <range/v3/view/enumerate.hpp>
 
+namespace pf {
 struct TraceData {
   std::string file;
   std::string function;
@@ -84,4 +89,5 @@ class NotImplementedException : public StackTraceException {
       : StackTraceException(message) {}
 };
 
+}// namespace pf
 #endif//VOXEL_RENDER_STACKTRACEEXCEPTION_H
