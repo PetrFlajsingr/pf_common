@@ -5,8 +5,9 @@
 #ifndef DESIGN_PATTERNS_LAZY_INIT_H
 #define DESIGN_PATTERNS_LAZY_INIT_H
 
-#include "../concepts.h"
+#include <concepts>
 #include <functional>
+#include <memory>
 
 namespace pf {
 template<typename T>
