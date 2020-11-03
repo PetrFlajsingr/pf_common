@@ -28,13 +28,13 @@ struct TraceData {
 
 inline std::vector<TraceData> getTrace(std::size_t skipN = 0) {
   auto result = std::vector<TraceData>{};
-  auto stackTrace = StackTrace{};
-  auto resolver = TraceResolver{};
+  auto stackTrace = backward::StackTrace{};
+  auto resolver = backward::TraceResolver{};
   stackTrace.load_here();
   resolver.load_stacktrace(stackTrace);
   result.reserve(stackTrace.size());
   for (std::size_t i = skipN; i < stackTrace.size(); ++i) {
-    const ResolvedTrace trace = resolver.resolve(stackTrace[i]);
+    const auto trace = resolver.resolve(stackTrace[i]);
     result.emplace_back(trace.source.filename, trace.object_function, trace.source.line);
   }
 
@@ -42,6 +42,7 @@ inline std::vector<TraceData> getTrace(std::size_t skipN = 0) {
 }
 
 inline std::string traceToString(const std::vector<TraceData> &traceData) {
+  using namespace std::string_literals;
   auto result = ""s;
   for (const auto &[idx, trace] : ranges::views::enumerate(traceData)) {
     result += fmt::format("{} {} ({}:{})\n", idx, trace.function, trace.file, trace.lineN);
@@ -52,6 +53,7 @@ inline std::string traceToString(const std::vector<TraceData> &traceData) {
 class StackTraceException : public std::exception {
  public:
   inline explicit StackTraceException(std::string_view message) {
+    using namespace std::string_view_literals;
     constexpr auto STACKTRACE_SKIP_N = 4;
     const auto traces = getTrace(STACKTRACE_SKIP_N);
     auto ss = std::stringstream{};
