@@ -40,7 +40,7 @@ class ILogger {
 class EmptyLogger : public ILogger {
  public:
   inline EmptyLogger() : ILogger("") {}
-  inline void log(LogLevel, std::string_vew) override {}
+  inline void log(LogLevel, std::string_view) override {}
 };
 
 }// namespace pf
