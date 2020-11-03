@@ -5,9 +5,9 @@
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H
 #define PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H
 
+#include <fmt/format.h>
 #include <string_view>
 #include <utility>
-#include <fmt/format.h>
 
 namespace pf {
 enum class LogLevel {
@@ -22,15 +22,15 @@ enum class LogLevel {
 
 class ILogger {
  public:
-  inline ILogger(std::string loggerName) : name(std::move(loggerName)) {}
+  inline explicit ILogger(std::string loggerName) : name(std::move(loggerName)) {}
   template<typename... Args>
-  void logFmt(LogLevel level, std::string_view format, Args &&... args) {
+  void logFmt(LogLevel level, std::string_view tag, std::string_view format, Args &&... args) {
     log(level, fmt::format(format, std::forward<Args>(args)...));
   }
   [[nodiscard]] virtual std::string_view getName() const {
     return name;
   }
-  virtual void log(LogLevel level, std::string_view msg) = 0;
+  virtual void log(LogLevel level, std::string_view tag, std::string_view msg) = 0;
   virtual ~ILogger() = default;
 
  private:
