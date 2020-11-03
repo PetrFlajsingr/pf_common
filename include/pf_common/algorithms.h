@@ -6,6 +6,7 @@
 #define VOXEL_RENDER_ALGORITHMS_H
 
 #include <algorithm>
+
 namespace pf {
 template<typename T, typename Container = std::initializer_list<T>>
 bool isIn(const T &val, Container &&vals) {
