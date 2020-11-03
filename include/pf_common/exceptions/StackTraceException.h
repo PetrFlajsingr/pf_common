@@ -8,10 +8,18 @@
 #include <exception>
 #include <fmt/format.h>
 #include <optional>
+#include <sstream>
 #include <string>
 #include <string_view>
 #include <vector>
-#include <sstream>
+
+struct TraceData {
+  std::string file;
+  std::string function;
+  uint32_t lineN;
+  inline TraceData(std::string filename, std::string fncName, uint32_t lineNumber)
+      : file(std::move(filename)), function(std::move(fncName)), lineN(lineNumber) {}
+};
 
 inline std::vector<TraceData> getTrace(std::size_t skipN = 0) {
   auto result = std::vector<TraceData>{};
@@ -35,7 +43,6 @@ inline std::string traceToString(const std::vector<TraceData> &traceData) {
   }
   return result;
 }
-
 
 class StackTraceException : public std::exception {
  public:
@@ -63,14 +70,6 @@ class StackTraceException : public std::exception {
 
  private:
   std::string whatStacktrace;
-};
-
-struct TraceData {
-  std::string file;
-  std::string function;
-  uint32_t lineN;
-  inline TraceData(std::string filename, std::string fncName, uint32_t lineNumber)
-      : file(std::move(filename)), function(std::move(fncName)), lineN(lineNumber) {}
 };
 
 class InvalidArgumentException : public StackTraceException {
