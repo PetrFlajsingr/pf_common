@@ -22,6 +22,12 @@ CPMAddPackage(
         GITHUB_REPOSITORY dutow/cppcoro
         GIT_TAG 4b1951ff3c25fea78198a5c0aabb50589946b694
 )
+CPMAddPackage(
+        NAME backward_cpp
+        GITHUB_REPOSITORY bombela/backward-cpp
+        GIT_TAG v1.5
+)
+
 
 include(GNUInstallDirs)
 
@@ -34,7 +40,7 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro)
+target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro ${BACKWARD_ENABLE})
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
