@@ -11,6 +11,31 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <sstream>
+
+inline std::vector<TraceData> getTrace(std::size_t skipN = 0) {
+  auto result = std::vector<TraceData>{};
+  auto stackTrace = StackTrace{};
+  auto resolver = TraceResolver{};
+  stackTrace.load_here();
+  resolver.load_stacktrace(stackTrace);
+  result.reserve(stackTrace.size());
+  for (std::size_t i = skipN; i < stackTrace.size(); ++i) {
+    const ResolvedTrace trace = resolver.resolve(stackTrace[i]);
+    result.emplace_back(trace.source.filename, trace.object_function, trace.source.line);
+  }
+
+  return result;
+}
+
+inline std::string traceToString(const std::vector<TraceData> &traceData) {
+  auto result = ""s;
+  for (const auto &[idx, trace] : ranges::views::enumerate(traceData)) {
+    result += fmt::format("{} {} ({}:{})\n", idx, trace.function, trace.file, trace.lineN);
+  }
+  return result;
+}
+
 
 class StackTraceException : public std::exception {
  public:
@@ -59,28 +84,5 @@ class NotImplementedException : public StackTraceException {
   inline explicit NotImplementedException(std::string_view message)
       : StackTraceException(message) {}
 };
-
-inline std::vector<TraceData> getTrace(std::size_t skipN = 0) {
-  auto result = std::vector<TraceData>{};
-  auto stackTrace = StackTrace{};
-  auto resolver = TraceResolver{};
-  stackTrace.load_here();
-  resolver.load_stacktrace(stackTrace);
-  result.reserve(stackTrace.size());
-  for (std::size_t i = skipN; i < stackTrace.size(); ++i) {
-    const ResolvedTrace trace = resolver.resolve(stackTrace[i]);
-    result.emplace_back(trace.source.filename, trace.object_function, trace.source.line);
-  }
-
-  return result;
-}
-
-inline std::string traceToString(const std::vector<TraceData> &traceData) {
-  auto result = ""s;
-  for (const auto &[idx, trace] : ranges::views::enumerate(traceData)) {
-    result += fmt::format("{} {} ({}:{})\n", idx, trace.function, trace.file, trace.lineN);
-  }
-  return result;
-}
 
 #endif//VOXEL_RENDER_STACKTRACEEXCEPTION_H
