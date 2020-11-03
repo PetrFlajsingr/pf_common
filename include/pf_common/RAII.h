@@ -20,6 +20,6 @@ class RAII {
  private:
   std::function<void()> callable;
 };
-}// namespace pf
+}// namespace pf_common
 
 #endif//REALISTIC_VOXEL_RENDERING_UTILS_RAII_H

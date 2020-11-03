@@ -148,5 +148,5 @@ class object_pool {
   std::list<std::unique_ptr<T>> available_;
   pool_allocator allocator;
 };
-}// namespace pf
+}// namespace pf_common
 #endif//DESIGN_PATTERNS_OBJECT_POOL_H

@@ -21,5 +21,5 @@ concept ModCapable = requires(T t) {
   { t % t }
   ->std::convertible_to<T>;
 };
-}// namespace pf
+}// namespace pf_common
 #endif//VOXEL_RENDER_INCREMENTABLE_H

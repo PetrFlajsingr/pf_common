@@ -36,6 +36,6 @@ struct Range {
 
   T getSize() const { return end - start; }
 };
-}// namespace pf::math
+}// namespace pf_common::math
 
 #endif//REALISTIC_VOXEL_RENDERING_UTILS_MATH_H

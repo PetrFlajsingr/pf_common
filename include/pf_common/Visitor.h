@@ -11,5 +11,5 @@ struct Visitor : Ts... { using Ts::operator()...; };
 template<class... Ts>
 Visitor(Ts...) -> Visitor<Ts...>;
 
-}// namespace pf
+}// namespace pf_common
 #endif//REALISTIC_VOXEL_RENDERING_UTILS_VISITOR_H

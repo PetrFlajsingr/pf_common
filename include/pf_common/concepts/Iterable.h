@@ -23,5 +23,5 @@ concept Iterable_of = Iterable<T> &&requires(T t) {
 
 template<Iterable T>
 using IterableValueType = decltype(*std::begin(std::declval<T>()));
-}// namespace pf
+}// namespace pf_common
 #endif//VOXEL_RENDER_ITERABLE_H

@@ -50,5 +50,5 @@ class LazyInit {
   calc_fnc calc;
   std::unique_ptr<T> value;
 };
-}// namespace pf
+}// namespace pf_common
 #endif//DESIGN_PATTERNS_LAZY_INIT_H

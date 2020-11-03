@@ -29,5 +29,5 @@ void iterateTuplePairs(F &&action, std::tuple<Obj...> const &tup) {
   details::iterateTuplePairsImpl(action, tup, std::make_index_sequence<sizeof...(Obj) - 1>());
 }
 
-}// namespace pf
+}// namespace pf_common
 #endif//VOXEL_RENDER_TUPLE_H

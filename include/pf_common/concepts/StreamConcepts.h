@@ -22,5 +22,5 @@ concept StreamOutputable = requires(T t, std::istream i) {
 
 template<typename T>
 concept Streamable = StreamOutputable<T> &&StreamInputable<T>;
-}// namespace pf
+}// namespace pf_common
 #endif//VOXEL_RENDER_STREAMCONCEPTS_H

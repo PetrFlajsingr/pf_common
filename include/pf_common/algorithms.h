@@ -20,5 +20,5 @@ std::optional<T> findFirstCommon(const Container<T> &vals, const Container2<T> &
   }
   return std::nullopt;
 }
-}// namespace pf
+}// namespace pf_common
 #endif//VOXEL_RENDER_ALGORITHMS_H

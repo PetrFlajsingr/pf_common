@@ -20,5 +20,5 @@ struct PtrConstructible {
     return std::make_unique<T>(std::forward<Args>(args)...);
   }
 };
-}// namespace pf
+}// namespace pf_common
 #endif//VOXEL_RENDER_PTRCONSTRUCTIBLE_H

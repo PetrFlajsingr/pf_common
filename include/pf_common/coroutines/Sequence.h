@@ -45,5 +45,5 @@ T getNext(cppcoro::generator<T> &generator) {
   return *iter;
 }
 
-}// namespace pf
+}// namespace pf_common
 #endif//VOXEL_RENDER_SEQUENCE_H
