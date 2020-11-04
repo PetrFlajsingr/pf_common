@@ -2,8 +2,8 @@
 // Created by Petr on 15.09.2020.
 //
 
-#ifndef DESIGN_PATTERNS_LAZY_INIT_H
-#define DESIGN_PATTERNS_LAZY_INIT_H
+#ifndef PF_COMMON_LAZY_INIT_H
+#define PF_COMMON_LAZY_INIT_H
 
 #include <concepts>
 #include <functional>
@@ -51,5 +51,5 @@ class LazyInit {
   calc_fnc calc;
   std::unique_ptr<T> value;
 };
-}// namespace pf_common
-#endif//DESIGN_PATTERNS_LAZY_INIT_H
+}// namespace pf
+#endif//PF_COMMON_LAZY_INIT_H

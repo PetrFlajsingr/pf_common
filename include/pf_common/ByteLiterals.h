@@ -2,8 +2,8 @@
 // Created by Petr on 18.11.2019.
 //
 
-#ifndef UTILITIES_BYTELITERALS_H
-#define UTILITIES_BYTELITERALS_H
+#ifndef PF_COMMON_BYTELITERALS_H
+#define PF_COMMON_BYTELITERALS_H
 
 namespace pf {
 namespace detail {
@@ -17,7 +17,7 @@ inline constexpr unsigned long long pow(unsigned long long a, unsigned long long
   }
   return result;
 }
-} // namespace detail
+}// namespace detail
 constexpr unsigned long long operator"" _B(unsigned long long value) { return value; }
 constexpr unsigned long long operator"" _KB(unsigned long long value) { return value * detail::byteOrderMultiplier; }
 constexpr unsigned long long operator"" _MB(unsigned long long value) {
@@ -47,6 +47,6 @@ constexpr unsigned long long operator"" _PiB(unsigned long long value) {
   return value * detail::pow(detail::biByteOrderMultiplier, 5);
 }
 
-} // namespace ByteLiterals
+}// namespace pf
 
-#endif // UTILITIES_BYTELITERALS_H
+#endif// PF_COMMON_BYTELITERALS_H

@@ -2,8 +2,8 @@
 // Created by petr on 9/24/20.
 //
 
-#ifndef VOXEL_RENDER_STREAMCONCEPTS_H
-#define VOXEL_RENDER_STREAMCONCEPTS_H
+#ifndef PF_COMMON_STREAMCONCEPTS_H
+#define PF_COMMON_STREAMCONCEPTS_H
 
 #include <istream>
 #include <ostream>
@@ -23,4 +23,4 @@ concept StreamOutputable = requires(T t, std::istream i) {
 template<typename T>
 concept Streamable = StreamOutputable<T> &&StreamInputable<T>;
 }// namespace pf_common
-#endif//VOXEL_RENDER_STREAMCONCEPTS_H
+#endif//PF_COMMON_STREAMCONCEPTS_H

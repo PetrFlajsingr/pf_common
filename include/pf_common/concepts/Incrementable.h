@@ -2,8 +2,8 @@
 // Created by petr on 9/24/20.
 //
 
-#ifndef VOXEL_RENDER_INCREMENTABLE_H
-#define VOXEL_RENDER_INCREMENTABLE_H
+#ifndef PF_COMMON_INCREMENTABLE_H
+#define PF_COMMON_INCREMENTABLE_H
 
 #include <concepts>
 
@@ -21,5 +21,5 @@ concept ModCapable = requires(T t) {
   { t % t }
   ->std::convertible_to<T>;
 };
-}// namespace pf_common
-#endif//VOXEL_RENDER_INCREMENTABLE_H
+}// namespace pf
+#endif//PF_COMMON_INCREMENTABLE_H

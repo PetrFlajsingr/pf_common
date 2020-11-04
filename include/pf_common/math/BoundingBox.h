@@ -2,15 +2,16 @@
 // Created by Petr on 19.11.2019.
 //
 
-#ifndef UTILITIES_BOUNDINGBOX_H
-#define UTILITIES_BOUNDINGBOX_H
+#ifndef PF_COMMON_BOUNDINGBOX_H
+#define PF_COMMON_BOUNDINGBOX_H
 
 #include "common.h"
 #include <glm/glm.hpp>
 #include <ostream>
 
 namespace pf::math {
-template <unsigned int Dimensions = 3> struct BoundingBox {
+template<unsigned int Dimensions = 3>
+struct BoundingBox {
   static_assert(Dimensions == 2 || Dimensions == 3);
   using Point = std::conditional_t<Dimensions == 3, glm::vec3, glm::vec2>;
   Point p1, p2;
@@ -27,8 +28,9 @@ template <unsigned int Dimensions = 3> struct BoundingBox {
   [[nodiscard]] bool contains(Point point) const;
 };
 
-template <unsigned int Dims> std::ostream &operator<<(std::ostream &stream, const BoundingBox<Dims> &aabb);
-} // namespace geo
+template<unsigned int Dims>
+std::ostream &operator<<(std::ostream &stream, const BoundingBox<Dims> &aabb);
+}// namespace pf::math
 
 #include "BoundingBox.tpp"
-#endif // UTILITIES_BOUNDINGBOX_H
+#endif// PF_COMMON_BOUNDINGBOX_H

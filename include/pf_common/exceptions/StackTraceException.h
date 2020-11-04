@@ -2,8 +2,8 @@
 // Created by petr on 9/23/20.
 //
 
-#ifndef VOXEL_RENDER_STACKTRACEEXCEPTION_H
-#define VOXEL_RENDER_STACKTRACEEXCEPTION_H
+#ifndef PF_COMMON_STACKTRACEEXCEPTION_H
+#define PF_COMMON_STACKTRACEEXCEPTION_H
 
 #include <exception>
 #include <fmt/format.h>
@@ -92,4 +92,4 @@ class NotImplementedException : public StackTraceException {
 };
 
 }// namespace pf
-#endif//VOXEL_RENDER_STACKTRACEEXCEPTION_H
+#endif//PF_COMMON_STACKTRACEEXCEPTION_H

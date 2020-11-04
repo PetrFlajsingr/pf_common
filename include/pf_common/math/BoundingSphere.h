@@ -2,14 +2,15 @@
 // Created by Petr on 19.11.2019.
 //
 
-#ifndef UTILITIES_BOUNDINGSPHERE_H
-#define UTILITIES_BOUNDINGSPHERE_H
+#ifndef PF_COMMON_BOUNDINGSPHERE_H
+#define PF_COMMON_BOUNDINGSPHERE_H
 
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
 
 namespace pf::math {
-template <unsigned int Dimensions = 3> struct BoundingSphere {
+template<unsigned int Dimensions = 3>
+struct BoundingSphere {
   static_assert(Dimensions == 2 || Dimensions == 3);
   using Point = std::conditional_t<Dimensions == 3, glm::vec3, glm::vec2>;
   Point center;
@@ -20,7 +21,7 @@ template <unsigned int Dimensions = 3> struct BoundingSphere {
 
   [[nodiscard]] float distance(Point point) const;
 };
-} // namespace geo
+}// namespace pf::math
 
 #include "BoundingSphere.tpp"
-#endif // UTILITIES_BOUNDINGSPHERE_H
+#endif// PF_COMMON_BOUNDINGSPHERE_H

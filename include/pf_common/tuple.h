@@ -2,8 +2,8 @@
 // Created by petr on 10/26/20.
 //
 
-#ifndef VOXEL_RENDER_TUPLE_H
-#define VOXEL_RENDER_TUPLE_H
+#ifndef PF_COMMON_TUPLE_H
+#define PF_COMMON_TUPLE_H
 
 #include <tuple>
 namespace pf {
@@ -29,5 +29,5 @@ void iterateTuplePairs(F &&action, std::tuple<Obj...> const &tup) {
   details::iterateTuplePairsImpl(action, tup, std::make_index_sequence<sizeof...(Obj) - 1>());
 }
 
-}// namespace pf_common
-#endif//VOXEL_RENDER_TUPLE_H
+}// namespace pf
+#endif//PF_COMMON_TUPLE_H

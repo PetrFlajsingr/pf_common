@@ -2,20 +2,23 @@
 // Created by Petr on 19.11.2019.
 //
 
-template <unsigned int Dims> std::ostream &pf::math::operator<<(std::ostream &stream, const pf::math::BoundingBox<Dims> &aabb) {
+template<unsigned int Dims>
+std::ostream &pf::math::operator<<(std::ostream &stream, const pf::math::BoundingBox<Dims> &aabb) {
   stream << "P1: [" << aabb.p1.x << ", " << aabb.p1.y << ", " << aabb.p1.z << "], P2: [ " << aabb.p2.x << ", " << aabb.p2.y
          << ", " << aabb.p2.z << "]";
   return stream;
 }
 
-template <unsigned int Dimensions> bool pf::math::BoundingBox<Dimensions>::operator==(const pf::math::BoundingBox<Dimensions> &rhs) const {
+template<unsigned int Dimensions>
+bool pf::math::BoundingBox<Dimensions>::operator==(const pf::math::BoundingBox<Dimensions> &rhs) const {
   return p1 == rhs.p1 && p2 == rhs.p2;
 }
 
-template <unsigned int Dimensions> bool pf::math::BoundingBox<Dimensions>::operator!=(const pf::math::BoundingBox<Dimensions> &rhs) const {
+template<unsigned int Dimensions>
+bool pf::math::BoundingBox<Dimensions>::operator!=(const pf::math::BoundingBox<Dimensions> &rhs) const {
   return !(rhs == *this);
 }
-template <unsigned int Dimensions>
+template<unsigned int Dimensions>
 pf::math::RelativePosition pf::math::BoundingBox<Dimensions>::contains(const pf::math::BoundingBox<Dimensions> &aabb) const {
   if constexpr (Dimensions == 2) {
     const bool minIn = p1.x < aabb.p1.x && p1.y < aabb.p1.y && p2.x > aabb.p1.x && p2.y > aabb.p1.y;
@@ -41,7 +44,8 @@ pf::math::RelativePosition pf::math::BoundingBox<Dimensions>::contains(const pf:
     return RelativePosition::Outside;
   }
 }
-template <unsigned int Dimensions> bool pf::math::BoundingBox<Dimensions>::contains(Point point) const {
+template<unsigned int Dimensions>
+bool pf::math::BoundingBox<Dimensions>::contains(Point point) const {
   if constexpr (Dimensions == 2) {
     return p1.x <= point.x && p1.y <= point.y && point.x <= p2.x && point.y <= p2.y;
   } else {

@@ -2,8 +2,8 @@
 // Created by petr on 10/12/20.
 //
 
-#ifndef VOXEL_RENDER_PTRCONSTRUCTIBLE_H
-#define VOXEL_RENDER_PTRCONSTRUCTIBLE_H
+#ifndef PF_COMMON_PTRCONSTRUCTIBLE_H
+#define PF_COMMON_PTRCONSTRUCTIBLE_H
 
 #include <memory>
 namespace pf {
@@ -21,4 +21,4 @@ struct PtrConstructible {
   }
 };
 }// namespace pf_common
-#endif//VOXEL_RENDER_PTRCONSTRUCTIBLE_H
+#endif//PF_COMMON_PTRCONSTRUCTIBLE_H

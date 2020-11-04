@@ -2,8 +2,8 @@
 // Created by petr on 9/24/20.
 //
 
-#ifndef VOXEL_RENDER_SEQUENCE_H
-#define VOXEL_RENDER_SEQUENCE_H
+#ifndef PF_COMMON_SEQUENCE_H
+#define PF_COMMON_SEQUENCE_H
 
 #include <pf_common/concepts/Incrementable.h>
 #include <cppcoro/generator.hpp>
@@ -46,4 +46,4 @@ T getNext(cppcoro::generator<T> &generator) {
 }
 
 }// namespace pf_common
-#endif//VOXEL_RENDER_SEQUENCE_H
+#endif//PF_COMMON_SEQUENCE_H

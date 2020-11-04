@@ -2,8 +2,8 @@
 // Created by petr on 11/1/20.
 //
 
-#ifndef REALISTIC_VOXEL_RENDERING_UTILS_MATH_H
-#define REALISTIC_VOXEL_RENDERING_UTILS_MATH_H
+#ifndef PF_COMMON_UTILS_MATH_H
+#define PF_COMMON_UTILS_MATH_H
 
 #include <compare>
 
@@ -36,6 +36,6 @@ struct Range {
 
   T getSize() const { return end - start; }
 };
-}// namespace pf_common::math
+}// namespace pf::math
 
-#endif//REALISTIC_VOXEL_RENDERING_UTILS_MATH_H
+#endif//PF_COMMON_UTILS_MATH_H

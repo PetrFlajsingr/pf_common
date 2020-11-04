@@ -2,8 +2,8 @@
 // Created by petr on 11/1/20.
 //
 
-#ifndef REALISTIC_VOXEL_RENDERING_UTILS_RAII_H
-#define REALISTIC_VOXEL_RENDERING_UTILS_RAII_H
+#ifndef PF_COMMONING_UTILS_RAII_H
+#define PF_COMMONING_UTILS_RAII_H
 
 #include <concepts>
 #include <functional>
@@ -20,6 +20,6 @@ class RAII {
  private:
   std::function<void()> callable;
 };
-}// namespace pf_common
+}// namespace pf
 
-#endif//REALISTIC_VOXEL_RENDERING_UTILS_RAII_H
+#endif//PF_COMMONING_UTILS_RAII_H

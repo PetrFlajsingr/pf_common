@@ -2,8 +2,8 @@
 // Created by petr on 10/26/20.
 //
 
-#ifndef VOXEL_RENDER_ALGORITHMS_H
-#define VOXEL_RENDER_ALGORITHMS_H
+#ifndef PF_COMMON_ALGORITHMS_H
+#define PF_COMMON_ALGORITHMS_H
 
 #include <algorithm>
 
@@ -22,4 +22,4 @@ std::optional<T> findFirstCommon(const Container<T> &vals, const Container2<T> &
   return std::nullopt;
 }
 }// namespace pf_common
-#endif//VOXEL_RENDER_ALGORITHMS_H
+#endif//PF_COMMON_ALGORITHMS_H

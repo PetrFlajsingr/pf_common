@@ -2,8 +2,8 @@
 // Created by petr on 9/24/20.
 //
 
-#ifndef VOXEL_RENDER_SUBSCRIPTION_H
-#define VOXEL_RENDER_SUBSCRIPTION_H
+#ifndef PF_COMMON_SUBSCRIPTION_H
+#define PF_COMMON_SUBSCRIPTION_H
 
 #include <functional>
 
@@ -32,4 +32,4 @@ class Subscription {
 };
 }// namespace pf
 
-#endif//VOXEL_RENDER_SUBSCRIPTION_H
+#endif//PF_COMMON_SUBSCRIPTION_H

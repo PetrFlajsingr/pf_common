@@ -2,17 +2,17 @@
 // Created by Petr on 15.09.2020.
 //
 
-#ifndef DESIGN_PATTERNS_OBJECT_POOL_H
-#define DESIGN_PATTERNS_OBJECT_POOL_H
+#ifndef PF_COMMON_OBJECT_POOL_H
+#define PF_COMMON_OBJECT_POOL_H
 
 #include "../concepts.h"
 #include <algorithm>
 #include <concepts>
 #include <exception>
+#include <experimental/memory>
 #include <iostream>
 #include <list>
 #include <mutex>
-#include <experimental/memory>
 
 namespace pf {
 
@@ -22,15 +22,14 @@ enum class PoolAllocStrategy {
   OnDemand
 };
 
-
 namespace details {
-template <PoolAllocStrategy Strategy>
+template<PoolAllocStrategy Strategy>
 struct DefaultPoolAllocatorData {};
-template <>
+template<>
 struct DefaultPoolAllocatorData<PoolAllocStrategy::IncreaseBy2x> {
   std::size_t capacity_ = 0;
 };
-template <>
+template<>
 struct DefaultPoolAllocatorData<PoolAllocStrategy::OnDemand> {
   std::size_t capacity_ = 0;
 };
@@ -40,8 +39,8 @@ struct DefaultPoolAllocator {
   DefaultPoolAllocatorData<Strategy> data;
 
   explicit DefaultPoolAllocator(std::invocable auto &&generator,
-                                  std::list<std::unique_ptr<T>> &available,
-                                  std::list<std::unique_ptr<T>> &inUse) : generator(generator) {
+                                std::list<std::unique_ptr<T>> &available,
+                                std::list<std::unique_ptr<T>> &inUse) : generator(generator) {
     if constexpr (Strategy == PoolAllocStrategy::Preallocate) {
       alloc_n(available, inUse, PoolSize);
     }
@@ -50,12 +49,12 @@ struct DefaultPoolAllocator {
     if constexpr (Strategy == PoolAllocStrategy::IncreaseBy2x) {
       if (data.capacity_ == inUse.size() && data.capacity_ < PoolSize) {
         const auto n_to_alloc = std::max(std::min(data.capacity_ * 2, PoolSize - data.capacity_), 1ull);
-        alloc_n(available, inUse,n_to_alloc);
+        alloc_n(available, inUse, n_to_alloc);
         data.capacity_ += n_to_alloc;
       }
     } else if constexpr (Strategy == PoolAllocStrategy::OnDemand) {
       if (data.capacity_ == inUse.size() && data.capacity_ < PoolSize) {
-        alloc_n(available, inUse,1);
+        alloc_n(available, inUse, 1);
         ++data.capacity_;
       }
     }
@@ -85,6 +84,7 @@ struct DefaultPoolAllocator {
 template<typename T, std::size_t PoolSize, PoolAllocStrategy Strategy = PoolAllocStrategy::Preallocate>
 class object_pool {
   using pool_allocator = details::DefaultPoolAllocator<T, PoolSize, Strategy>;
+
  public:
   using size_type = std::size_t;
   using value_type = T;
@@ -93,7 +93,7 @@ class object_pool {
   using pointer = std::experimental::observer_ptr<T>;
   using const_pointer = std::experimental::observer_ptr<const T>;
 
-  object_pool() requires std::default_initializable<T> : allocator([] {return T();}, available_, inUse) {}
+  object_pool() requires std::default_initializable<T> : allocator([] { return T(); }, available_, inUse) {}
 
   explicit object_pool(std::invocable auto &&generator) : allocator(generator, available_, inUse) {
   }
@@ -122,7 +122,7 @@ class object_pool {
     }
   }
 
-  [[nodiscard]] size_type capacity() const{
+  [[nodiscard]] size_type capacity() const {
     if constexpr (Strategy == PoolAllocStrategy::Preallocate) {
       return PoolSize;
     } else {
@@ -130,7 +130,7 @@ class object_pool {
     }
   }
 
-  void shrink_to_fit() requires (Strategy != PoolAllocStrategy::Preallocate) {
+  void shrink_to_fit() requires(Strategy != PoolAllocStrategy::Preallocate) {
     allocator.shrink(available_, inUse);
   }
 
@@ -148,5 +148,5 @@ class object_pool {
   std::list<std::unique_ptr<T>> available_;
   pool_allocator allocator;
 };
-}// namespace pf_common
-#endif//DESIGN_PATTERNS_OBJECT_POOL_H
+}// namespace pf
+#endif//PF_COMMON_OBJECT_POOL_H
