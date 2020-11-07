@@ -21,5 +21,6 @@ std::optional<T> findFirstCommon(const Container<T> &vals, const Container2<T> &
   }
   return std::nullopt;
 }
+
 }// namespace pf_common
 #endif//PF_COMMON_ALGORITHMS_H
