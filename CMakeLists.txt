@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 include("cmake/HunterGate.cmake")
 HunterGate(
-        URL "https://github.com/cpp-pm/hunter/archive/v0.23.283.tar.gz"
-        SHA1 "f445fbb4716e5485e83f6acf110b51d3b8916b2c"
+        URL "https://github.com/cpp-pm/hunter/archive/v0.23.269.tar.gz"
+        SHA1 "64024b7b95b4c86d50ae05b926814448c93a70a0"
 )
 
 project(pf_common
@@ -37,8 +37,11 @@ CPMAddPackage(
         GIT_TAG v1.5
 )
 set(RANGE_V3_TESTS OFF)
-hunter_add_package(range-v3)
-find_package(range-v3 CONFIG REQUIRED)
+CPMAddPackage(
+        NAME range-v3
+        GITHUB_REPOSITORY ericniebler/range-v3
+        GIT_TAG 0.11.0
+)
 
 include(GNUInstallDirs)
 
