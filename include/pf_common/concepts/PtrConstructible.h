@@ -20,5 +20,5 @@ struct PtrConstructible {
     return std::make_unique<T>(std::forward<Args>(args)...);
   }
 };
-}// namespace pf_common
+}// namespace pf
 #endif//PF_COMMON_PTRCONSTRUCTIBLE_H

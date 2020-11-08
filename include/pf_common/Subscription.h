@@ -11,12 +11,10 @@ namespace pf {
 class Subscription {
  public:
   using Unsubscriber = std::function<void()>;
-  inline explicit Subscription(Unsubscriber &&unsubscriber)
-      : unsub(unsubscriber) {}
+  inline explicit Subscription(Unsubscriber &&unsubscriber) : unsub(unsubscriber) {}
   Subscription(const Subscription &) = delete;
   Subscription &operator=(const Subscription &) = delete;
-  inline Subscription(Subscription &&other) noexcept
-      : unsub(std::move(other.unsub)) {
+  inline Subscription(Subscription &&other) noexcept : unsub(std::move(other.unsub)) {
     other.unsub = [] {};
   }
   inline Subscription &operator=(Subscription &&other) noexcept {

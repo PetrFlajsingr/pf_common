@@ -16,11 +16,7 @@
 
 namespace pf {
 
-enum class PoolAllocStrategy {
-  Preallocate,
-  IncreaseBy2x,
-  OnDemand
-};
+enum class PoolAllocStrategy { Preallocate, IncreaseBy2x, OnDemand };
 
 namespace details {
 template<PoolAllocStrategy Strategy>
@@ -40,7 +36,8 @@ struct DefaultPoolAllocator {
 
   explicit DefaultPoolAllocator(std::invocable auto &&generator,
                                 std::list<std::unique_ptr<T>> &available,
-                                std::list<std::unique_ptr<T>> &inUse) : generator(generator) {
+                                std::list<std::unique_ptr<T>> &inUse)
+      : generator(generator) {
     if constexpr (Strategy == PoolAllocStrategy::Preallocate) {
       alloc_n(available, inUse, PoolSize);
     }
@@ -48,7 +45,8 @@ struct DefaultPoolAllocator {
   void on_lease(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse) {
     if constexpr (Strategy == PoolAllocStrategy::IncreaseBy2x) {
       if (data.capacity_ == inUse.size() && data.capacity_ < PoolSize) {
-        const auto n_to_alloc = std::max(std::min(data.capacity_ * 2, PoolSize - data.capacity_), 1ull);
+        const auto n_to_alloc =
+            std::max(std::min(data.capacity_ * 2, PoolSize - data.capacity_), 1ull);
         alloc_n(available, inUse, n_to_alloc);
         data.capacity_ += n_to_alloc;
       }
@@ -59,12 +57,9 @@ struct DefaultPoolAllocator {
       }
     }
   }
-  void on_release(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse) {
-  }
+  void on_release(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse) {}
 
-  std::size_t capacity() {
-    return data.capacity_;
-  }
+  std::size_t capacity() { return data.capacity_; }
 
   void shrink(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse) {
     const auto remove_cnt = inUse.size();
@@ -72,8 +67,10 @@ struct DefaultPoolAllocator {
     data.capacity_ -= remove_cnt;
   }
 
-  void alloc_n(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse, std::size_t n) {
-    std::generate_n(std::back_inserter(available), n, [&] { return std::make_unique<T>(generator()); });
+  void alloc_n(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse,
+               std::size_t n) {
+    std::generate_n(std::back_inserter(available), n,
+                    [&] { return std::make_unique<T>(generator()); });
     std::cout << "allocating " << n << std::endl;
   }
 
@@ -81,7 +78,8 @@ struct DefaultPoolAllocator {
 };
 }// namespace details
 
-template<typename T, std::size_t PoolSize, PoolAllocStrategy Strategy = PoolAllocStrategy::Preallocate>
+template<typename T, std::size_t PoolSize,
+         PoolAllocStrategy Strategy = PoolAllocStrategy::Preallocate>
 class object_pool {
   using pool_allocator = details::DefaultPoolAllocator<T, PoolSize, Strategy>;
 
@@ -93,17 +91,15 @@ class object_pool {
   using pointer = std::experimental::observer_ptr<T>;
   using const_pointer = std::experimental::observer_ptr<const T>;
 
-  object_pool() requires std::default_initializable<T> : allocator([] { return T(); }, available_, inUse) {}
+  object_pool() requires std::default_initializable<T>
+      : allocator([] { return T(); }, available_, inUse) {}
 
-  explicit object_pool(std::invocable auto &&generator) : allocator(generator, available_, inUse) {
-  }
+  explicit object_pool(std::invocable auto &&generator) : allocator(generator, available_, inUse) {}
 
   [[nodiscard]] pointer lease() {
     std::unique_lock lock{mutex};
     allocator.on_lease(available_, inUse);
-    if (available_.empty()) {
-      throw std::runtime_error{"Pool has no available objects."};
-    }
+    if (available_.empty()) { throw std::runtime_error{"Pool has no available objects."}; }
     const auto first_available_iter = available_.begin();
     auto &ref = inUse.emplace_front(std::move(*first_available_iter));
     available_.erase(first_available_iter);
@@ -112,9 +108,8 @@ class object_pool {
 
   void release(pointer object) {
     std::unique_lock lock{mutex};
-    if (auto iter = std::find_if(inUse.begin(), inUse.end(), [&object](const auto &obj) {
-          return obj.get() == object.get();
-        });
+    if (auto iter = std::find_if(inUse.begin(), inUse.end(),
+                                 [&object](const auto &obj) { return obj.get() == object.get(); });
         iter != inUse.end()) {
       auto &ref = available_.emplace_back(std::move(*iter));
       inUse.erase(iter);
@@ -134,13 +129,9 @@ class object_pool {
     allocator.shrink(available_, inUse);
   }
 
-  [[nodiscard]] size_type used() const {
-    return inUse.size();
-  }
+  [[nodiscard]] size_type used() const { return inUse.size(); }
 
-  [[nodiscard]] size_type available() const {
-    return available_.size();
-  }
+  [[nodiscard]] size_type available() const { return available_.size(); }
 
  private:
   std::mutex mutex;

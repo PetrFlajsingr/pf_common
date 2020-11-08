@@ -63,7 +63,8 @@ class StackTraceException : public std::exception {
 
     const auto padding = std::string(CAUSED_BY.size(), ' ');
     for (const auto &[idx, trace] : ranges::views::enumerate(traces)) {
-      ss << fmt::format("{}#{} {} ({}:{})\n", padding, idx, trace.function, trace.file, trace.lineN);
+      ss << fmt::format("{}#{} {} ({}:{})\n", padding, idx, trace.function, trace.file,
+                        trace.lineN);
     }
     whatStacktrace = ss.str();
   }
@@ -71,9 +72,7 @@ class StackTraceException : public std::exception {
     return StackTraceException(fmt::format(fmt, args...));
   }
 
-  [[nodiscard]] inline const char *what() const noexcept override {
-    return whatStacktrace.c_str();
-  }
+  [[nodiscard]] inline const char *what() const noexcept override { return whatStacktrace.c_str(); }
 
  private:
   std::string whatStacktrace;

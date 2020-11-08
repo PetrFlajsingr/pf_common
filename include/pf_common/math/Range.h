@@ -33,7 +33,9 @@ struct Range {
     return std::strong_ordering::less;
   }
 
-  T getSize() const { return end - start; }
+  [[nodiscard]] constexpr T getSize() const { return end - start; }
+
+  [[nodiscard]] constexpr bool contains(T val) { return start <= val && val <= end; }
 };
 }// namespace pf::math
 

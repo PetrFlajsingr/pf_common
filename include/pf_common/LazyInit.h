@@ -44,9 +44,7 @@ class LazyInit {
 
  private:
   void calculate() {
-    if (value == nullptr) {
-      value = std::make_unique<T>(calc());
-    }
+    if (value == nullptr) { value = std::make_unique<T>(calc()); }
   }
   calc_fnc calc;
   std::unique_ptr<T> value;

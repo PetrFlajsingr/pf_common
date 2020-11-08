@@ -11,8 +11,7 @@ namespace pf {
 template<typename T, typename Mutex = std::mutex>
 class Safe final {
  public:
-  enum class AccessType { ReadWrite,
-                          ReadOnly };
+  enum class AccessType { ReadWrite, ReadOnly };
   template<AccessType = AccessType::ReadWrite>
   class Access;
 
@@ -37,9 +36,7 @@ class Safe final {
     mtx = std::mutex{};
   }
   Safe &operator=(const Safe &other) {
-    if (this == &other) {
-      return *this;
-    }
+    if (this == &other) { return *this; }
     value = other.value;
     mtx = std::mutex{};
     return *this;
@@ -67,8 +64,10 @@ class Safe final {
 template<typename T, typename Mutex>
 template<typename Safe<T, Mutex>::AccessType AccessPolicy>
 class Safe<T, Mutex>::Access final {
-  using reference_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, reference, const_reference>;
-  using pointer_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, pointer, const_pointer>;
+  using reference_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite,
+                                            reference, const_reference>;
+  using pointer_type =
+      std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, pointer, const_pointer>;
 
  public:
   Access(reference_type value, Mutex &mtx) : value(value), lck(mtx) {}
@@ -93,7 +92,6 @@ using ReadOnlyAccess =
     typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadOnly>;
 
 template<typename T, typename Mutex = std::mutex>
-using WriteAccess =
-    typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadWrite>;
+using WriteAccess = typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadWrite>;
 }// namespace pf
 #endif// PF_COMMON_SAFE_H

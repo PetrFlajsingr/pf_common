@@ -10,15 +10,7 @@
 #include <utility>
 
 namespace pf {
-enum class LogLevel {
-  Trace,
-  Debug,
-  Info,
-  Warn,
-  Err,
-  Critical,
-  Off
-};
+enum class LogLevel { Trace, Debug, Info, Warn, Err, Critical, Off };
 
 class ILogger {
  public:
@@ -27,9 +19,7 @@ class ILogger {
   void logFmt(LogLevel level, std::string_view tag, std::string_view format, Args &&... args) {
     log(level, tag, fmt::format(format, std::forward<Args>(args)...));
   }
-  [[nodiscard]] virtual std::string_view getName() const {
-    return name;
-  }
+  [[nodiscard]] virtual std::string_view getName() const { return name; }
   virtual void log(LogLevel level, std::string_view tag, std::string_view msg) = 0;
   virtual ~ILogger() = default;
 

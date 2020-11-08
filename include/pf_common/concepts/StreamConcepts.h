@@ -22,5 +22,5 @@ concept StreamOutputable = requires(T t, std::istream i) {
 
 template<typename T>
 concept Streamable = StreamOutputable<T> &&StreamInputable<T>;
-}// namespace pf_common
+}// namespace pf
 #endif//PF_COMMON_STREAMCONCEPTS_H

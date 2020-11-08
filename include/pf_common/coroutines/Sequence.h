@@ -5,8 +5,8 @@
 #ifndef PF_COMMON_SEQUENCE_H
 #define PF_COMMON_SEQUENCE_H
 
-#include <pf_common/concepts/Incrementable.h>
 #include <cppcoro/generator.hpp>
+#include <pf_common/concepts/Incrementable.h>
 
 namespace pf {
 template<Incrementable T>
@@ -45,5 +45,5 @@ T getNext(cppcoro::generator<T> &generator) {
   return *iter;
 }
 
-}// namespace pf_common
+}// namespace pf
 #endif//PF_COMMON_SEQUENCE_H
