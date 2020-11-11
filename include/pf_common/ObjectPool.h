@@ -5,7 +5,6 @@
 #ifndef PF_COMMON_OBJECT_POOL_H
 #define PF_COMMON_OBJECT_POOL_H
 
-#include "../concepts.h"
 #include <algorithm>
 #include <concepts>
 #include <exception>
@@ -71,7 +70,6 @@ struct DefaultPoolAllocator {
                std::size_t n) {
     std::generate_n(std::back_inserter(available), n,
                     [&] { return std::make_unique<T>(generator()); });
-    std::cout << "allocating " << n << std::endl;
   }
 
   std::function<T()> generator;
@@ -117,7 +115,7 @@ class object_pool {
     }
   }
 
-  [[nodiscard]] size_type capacity() const {
+  [[nodiscard]] constexpr size_type capacity() const {
     if constexpr (Strategy == PoolAllocStrategy::Preallocate) {
       return PoolSize;
     } else {
