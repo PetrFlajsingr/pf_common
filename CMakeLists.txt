@@ -16,12 +16,13 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(CPM_DOWNLOAD_LOCATION "${CMAKE_SOURCE_DIR}/cmake/CPM.cmake")
 set(CPM_DOWNLOAD_VERSION 0.27.4)
-include(${CPM_DOWNLOAD_LOCATION})
 
 if (NOT (EXISTS ${CPM_DOWNLOAD_LOCATION} AND CPM_VERSION STREQUAL CPM_DOWNLOAD_VERSION))
     message(STATUS "Downloading CPM.cmake")
     file(DOWNLOAD https://github.com/TheLartians/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake ${CPM_DOWNLOAD_LOCATION})
 endif ()
+
+include(${CPM_DOWNLOAD_LOCATION})
 
 hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
