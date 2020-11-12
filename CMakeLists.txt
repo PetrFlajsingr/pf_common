@@ -12,7 +12,7 @@ project(pf_common
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
 
-option(ENABLE_TESTS "Enable test & download of test framework")
+option(PF_COMMON_TESTS "Enable test & download of test framework")
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -46,7 +46,7 @@ CPMAddPackage(
         GIT_TAG 0.11.0
 )
 
-if (ENABLE_TESTS)
+if (PF_COMMON_TESTS)
     message("Downloading Catch2")
     hunter_add_package(Catch)
     find_package(Catch2 CONFIG REQUIRED)
@@ -100,7 +100,7 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 
 include(CPack)
 
-if (ENABLE_TESTS)
+if (PF_COMMON_TESTS)
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
             tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp)
     target_link_libraries(pf_common_tests Catch2::Catch2 ${PROJECT_NAME})
