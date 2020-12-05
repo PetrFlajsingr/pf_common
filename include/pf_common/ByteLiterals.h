@@ -5,7 +5,9 @@
 #ifndef PF_COMMON_BYTELITERALS_H
 #define PF_COMMON_BYTELITERALS_H
 
-namespace pf {
+#include <cstddef>
+
+namespace pf::byte_literals {
 namespace detail {
 constexpr unsigned long long byteOrderMultiplier = 1000;
 constexpr unsigned long long biByteOrderMultiplier = 1024;
@@ -49,6 +51,6 @@ constexpr unsigned long long operator"" _PiB(unsigned long long value) {
   return value * detail::pow(detail::biByteOrderMultiplier, 5);
 }
 
-}// namespace pf
+}// namespace pf::byte_literals
 
 #endif// PF_COMMON_BYTELITERALS_H
