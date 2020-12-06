@@ -28,7 +28,8 @@ include(${CPM_DOWNLOAD_LOCATION})
 
 hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
-
+hunter_add_package(glm)
+find_package(glm CONFIG REQUIRED)
 CPMAddPackage(
         NAME cppcoro
         GITHUB_REPOSITORY dutow/cppcoro
