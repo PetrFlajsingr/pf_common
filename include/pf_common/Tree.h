@@ -133,20 +133,22 @@ class Tree {
 };
 
 namespace tree_traversal {
+
+
 template<typename T>
-void depthFirst(const Node<T> &node, std::invocable<Node<T>> auto callable) {
+void depthFirst(Node<T> &node, std::invocable<Node<T>> auto callable) {
   callable(node);
   auto children = node.children();
   for (const auto &child : children) { depthFirst(child, callable); }
 }
 template<typename T>
-void depthFirst(const Tree<T> &tree, std::invocable<Node<T>> auto callable) {
+void depthFirst(Tree<T> &tree, std::invocable<Node<T>> auto callable) {
   if (!tree.hasRoot()) { return; }
   depthFirst(tree.getRoot(), callable);
 }
 
 template<typename T>
-void breadthFirst(const Node<T> &node, std::invocable<Node<T>> auto callable) {
+void breadthFirst(Node<T> &node, std::invocable<Node<T>> auto callable) {
   auto queue = std::queue<const Node<T> *>();
   queue.push(&node);
   while (!queue.empty()) {
@@ -158,7 +160,37 @@ void breadthFirst(const Node<T> &node, std::invocable<Node<T>> auto callable) {
   }
 }
 template<typename T>
-void breadthFirst(const Tree<T> &tree, std::invocable<Node<T>> auto callable) {
+void BreadthFirst( Tree<T> &tree, std::invocable<Node<T>> auto callable) {
+  if (!tree.hasRoot()) { return; }
+  breadthFirst(tree.getRoot(), callable);
+}
+
+template<typename T>
+void cDepthFirst(const Node<T> &node, std::invocable<Node<T>> auto callable) {
+  callable(node);
+  auto children = node.children();
+  for (const auto &child : children) { depthFirst(child, callable); }
+}
+template<typename T>
+void cDepthFirst(const Tree<T> &tree, std::invocable<Node<T>> auto callable) {
+  if (!tree.hasRoot()) { return; }
+  depthFirst(tree.getRoot(), callable);
+}
+
+template<typename T>
+void cBreadthFirst(const Node<T> &node, std::invocable<Node<T>> auto callable) {
+  auto queue = std::queue<const Node<T> *>();
+  queue.push(&node);
+  while (!queue.empty()) {
+    auto currentNode = queue.front();
+    queue.pop();
+    callable(*currentNode);
+    auto children = currentNode->children();
+    for (const auto &child : children) { queue.push(&child); }
+  }
+}
+template<typename T>
+void cBreadthFirst(const Tree<T> &tree, std::invocable<Node<T>> auto callable) {
   if (!tree.hasRoot()) { return; }
   breadthFirst(tree.getRoot(), callable);
 }
