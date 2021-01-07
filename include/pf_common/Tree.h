@@ -5,6 +5,8 @@
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_TREE_H
 #define PF_COMMON_INCLUDE_PF_COMMON_TREE_H
 
+#include <range/v3/view/transform.hpp>
+
 namespace pf {
 
 //TODO: STL like iterators
