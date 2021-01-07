@@ -89,7 +89,9 @@ class Node {
     return children_ | ranges::views::transform([](const auto &child) -> const Node & { return *child; });
   }
 
-  void sortChildren(std::predicate<T, T> auto pred) { children_ | ranges::actions::sort(pred); }
+  void sortChildren(std::predicate<T, T> auto pred) {
+    std::ranges::sort(children_, [pred](const auto &lhs, const auto &rhs) { return pred(*lhs, *rhs); });
+  }
 
   [[nodiscard]] size_type childrenSize() const { return children_.size(); }
 
@@ -134,7 +136,6 @@ class Tree {
 
 namespace tree_traversal {
 
-
 template<typename T>
 void depthFirst(Node<T> &node, std::invocable<Node<T>> auto callable) {
   callable(node);
@@ -160,7 +161,7 @@ void breadthFirst(Node<T> &node, std::invocable<Node<T>> auto callable) {
   }
 }
 template<typename T>
-void BreadthFirst( Tree<T> &tree, std::invocable<Node<T>> auto callable) {
+void BreadthFirst(Tree<T> &tree, std::invocable<Node<T>> auto callable) {
   if (!tree.hasRoot()) { return; }
   breadthFirst(tree.getRoot(), callable);
 }
