@@ -5,9 +5,10 @@
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_TREE_H
 #define PF_COMMON_INCLUDE_PF_COMMON_TREE_H
 
-#include <range/v3/view/transform.hpp>
-#include <queue>
 #include <memory>
+#include <queue>
+#include <range/v3/action/sort.hpp>
+#include <range/v3/view/transform.hpp>
 
 namespace pf {
 
@@ -87,6 +88,8 @@ class Node {
   [[nodiscard]] auto children() const {
     return children_ | ranges::views::transform([](const auto &child) -> const Node & { return *child; });
   }
+
+  void sortChildren(std::predicate<T, T> auto pred) { children_ | ranges::actions::sort(pred); }
 
   [[nodiscard]] size_type childrenSize() const { return children_.size(); }
 
