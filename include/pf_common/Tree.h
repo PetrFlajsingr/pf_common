@@ -90,7 +90,7 @@ class Node {
   }
 
   void sortChildren(std::predicate<T, T> auto pred) {
-    std::ranges::sort(children_, [pred](const auto &lhs, const auto &rhs) { return pred(*lhs, *rhs); });
+    std::ranges::sort(children_, [pred](const auto &lhs, const auto &rhs) { return pred(**lhs, **rhs); });
   }
 
   [[nodiscard]] size_type childrenSize() const { return children_.size(); }
