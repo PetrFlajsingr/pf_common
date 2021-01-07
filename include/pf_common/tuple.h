@@ -14,8 +14,7 @@ void iterateTupleImpl(F &&action, T const &tup, std::index_sequence<Index...> co
 }
 template<typename F, typename T, std::size_t... Index>
 void iterateTuplePairsImpl(F &&action, T const &tup, std::index_sequence<Index...> const &) {
-  [[maybe_unused]] bool ignore[] = {
-      (action(std::get<Index>(tup), std::get<Index + 1>(tup)), true)...};
+  [[maybe_unused]] bool ignore[] = {(action(std::get<Index>(tup), std::get<Index + 1>(tup)), true)...};
 }
 }// namespace details
 

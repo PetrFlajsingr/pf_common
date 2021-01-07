@@ -7,6 +7,5 @@ float pf::math::BoundingSphere<Dimensions>::distance(BoundingSphere::Point point
   return glm::distance(center, point) - radius;
 }
 template<unsigned int Dimensions>
-pf::math::BoundingSphere<Dimensions>::BoundingSphere(Point center, float radius)
-    : center(center), radius(radius) {}
+pf::math::BoundingSphere<Dimensions>::BoundingSphere(Point center, float radius) : center(center), radius(radius) {}
 S

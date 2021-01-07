@@ -5,10 +5,10 @@
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_CONST_INIT_H
 #define PF_COMMON_INCLUDE_PF_COMMON_CONST_INIT_H
 
-#define CONST_INIT(type, init)                                                                     \
-  [&] {                                                                                            \
-    auto result = type{};                                                                          \
-    init return result;                                                                            \
+#define CONST_INIT(type, init)                                                                                         \
+  [&] {                                                                                                                \
+    auto result = type{};                                                                                              \
+    init return result;                                                                                                \
   }()
 
 #endif//PF_COMMON_INCLUDE_PF_COMMON_CONST_INIT_H

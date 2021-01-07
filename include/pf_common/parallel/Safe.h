@@ -27,10 +27,9 @@ class Safe final {
   using const_pointer = const T *;
 
   template<typename... Args>
-  explicit Safe(Args &&... args) : value(std::forward<Args &&...>(args)...) {}
+  explicit Safe(Args &&...args) : value(std::forward<Args &&...>(args)...) {}
   template<typename... Args>
-  explicit Safe(Mutex &&mtx, Args &&... args)
-      : mtx(std::move(mtx)), value(std::forward<Args &&...>(args)...) {}
+  explicit Safe(Mutex &&mtx, Args &&...args) : mtx(std::move(mtx)), value(std::forward<Args &&...>(args)...) {}
   Safe(const Safe &other) {
     value = other.value;
     mtx = std::mutex{};
@@ -64,10 +63,8 @@ class Safe final {
 template<typename T, typename Mutex>
 template<typename Safe<T, Mutex>::AccessType AccessPolicy>
 class Safe<T, Mutex>::Access final {
-  using reference_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite,
-                                            reference, const_reference>;
-  using pointer_type =
-      std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, pointer, const_pointer>;
+  using reference_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, reference, const_reference>;
+  using pointer_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, pointer, const_pointer>;
 
  public:
   Access(reference_type value, Mutex &mtx) : value(value), lck(mtx) {}
@@ -88,8 +85,7 @@ class Safe<T, Mutex>::Access final {
 };
 
 template<typename T, typename Mutex = std::mutex>
-using ReadOnlyAccess =
-    typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadOnly>;
+using ReadOnlyAccess = typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadOnly>;
 
 template<typename T, typename Mutex = std::mutex>
 using WriteAccess = typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadWrite>;

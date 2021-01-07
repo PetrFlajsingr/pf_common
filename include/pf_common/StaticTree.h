@@ -277,7 +277,7 @@ class StaticTree {
 #include "detail/StaticTree.tpp"
 #include "detail/StaticTree_detail.tpp"
 #include "detail/StaticTree_node.tpp"
-}
+}// namespace pf::static_tree
 #endif// UTILITIES_TREE_H
 
 #pragma clang diagnostic pop

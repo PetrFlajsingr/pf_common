@@ -63,12 +63,11 @@ class StackTraceException : public std::exception {
 
     const auto padding = std::string(CAUSED_BY.size(), ' ');
     for (const auto &[idx, trace] : ranges::views::enumerate(traces)) {
-      ss << fmt::format("{}#{} {} ({}:{})\n", padding, idx, trace.function, trace.file,
-                        trace.lineN);
+      ss << fmt::format("{}#{} {} ({}:{})\n", padding, idx, trace.function, trace.file, trace.lineN);
     }
     whatStacktrace = ss.str();
   }
-  static StackTraceException fmt(std::string_view fmt, auto &&... args) {
+  static StackTraceException fmt(std::string_view fmt, auto &&...args) {
     return StackTraceException(fmt::format(fmt, args...));
   }
 
@@ -80,14 +79,12 @@ class StackTraceException : public std::exception {
 
 class InvalidArgumentException : public StackTraceException {
  public:
-  inline explicit InvalidArgumentException(std::string_view message)
-      : StackTraceException(message) {}
+  inline explicit InvalidArgumentException(std::string_view message) : StackTraceException(message) {}
 };
 
 class NotImplementedException : public StackTraceException {
  public:
-  inline explicit NotImplementedException(std::string_view message)
-      : StackTraceException(message) {}
+  inline explicit NotImplementedException(std::string_view message) : StackTraceException(message) {}
 };
 
 }// namespace pf

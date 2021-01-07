@@ -19,9 +19,7 @@ inline constexpr unsigned long long pow(unsigned long long a, unsigned long long
 }
 }// namespace detail
 constexpr unsigned long long operator"" _B(unsigned long long value) { return value; }
-constexpr unsigned long long operator"" _KB(unsigned long long value) {
-  return value * detail::byteOrderMultiplier;
-}
+constexpr unsigned long long operator"" _KB(unsigned long long value) { return value * detail::byteOrderMultiplier; }
 constexpr unsigned long long operator"" _MB(unsigned long long value) {
   return value * detail::pow(detail::byteOrderMultiplier, 2);
 }
@@ -35,9 +33,7 @@ constexpr unsigned long long operator"" _PB(unsigned long long value) {
   return value * detail::pow(detail::byteOrderMultiplier, 5);
 }
 
-constexpr unsigned long long operator"" _KiB(unsigned long long value) {
-  return value * detail::biByteOrderMultiplier;
-}
+constexpr unsigned long long operator"" _KiB(unsigned long long value) { return value * detail::biByteOrderMultiplier; }
 constexpr unsigned long long operator"" _MiB(unsigned long long value) {
   return value * detail::pow(detail::biByteOrderMultiplier, 2);
 }

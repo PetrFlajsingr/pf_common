@@ -20,9 +20,7 @@ struct Range {
   T start;
   T end;
 
-  constexpr bool operator==(const Range &rhs) const {
-    return (*this <=> rhs) == std::strong_ordering::equal;
-  }
+  constexpr bool operator==(const Range &rhs) const { return (*this <=> rhs) == std::strong_ordering::equal; }
   constexpr bool operator!=(const Range &rhs) const { return !(rhs == *this); }
 
   constexpr std::strong_ordering operator<=>(const Range &rhs) const {
