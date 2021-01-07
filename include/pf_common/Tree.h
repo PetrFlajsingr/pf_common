@@ -140,7 +140,7 @@ template<typename T>
 void depthFirst(Node<T> &node, std::invocable<Node<T> &> auto callable) {
   callable(node);
   auto children = node.children();
-  for (const auto &child : children) { depthFirst(child, callable); }
+  for (auto &child : children) { depthFirst(child, callable); }
 }
 template<typename T>
 void depthFirst(Tree<T> &tree, std::invocable<Node<T> &> auto callable) {
@@ -157,7 +157,7 @@ void breadthFirst(Node<T> &node, std::invocable<Node<T> &> auto callable) {
     queue.pop();
     callable(*currentNode);
     auto children = currentNode->children();
-    for (const auto &child : children) { queue.push(&child); }
+    for (auto &child : children) { queue.push(&child); }
   }
 }
 template<typename T>
