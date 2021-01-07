@@ -42,6 +42,10 @@ class Node {
     children_.template emplace_back(std::make_unique<Node>(val));
     return *children_.back();
   }
+  Node<T> &appendChild() requires std::is_default_constructible_v<T> {
+    children_.template emplace_back(std::make_unique<Node>());
+    return *children_.back();
+  }
   Node<T> &appendChild(rvalue val) {
     children_.template emplace_back(std::make_unique<Node>(std::move(val)));
     return *children_.back();
@@ -54,6 +58,10 @@ class Node {
   Node<T> &insertChild(size_type idx, const_reference val) {
     assert(idx < childrenSize());
     return **children_.insert(children_.begin() + idx, std::make_unique<Node>(val));
+  }
+  Node<T> &insertChild(size_type idx) requires std::is_default_constructible_v<T> {
+    assert(idx < childrenSize());
+    return **children_.insert(children_.begin() + idx, std::make_unique<Node>());
   }
   Node<T> &insertChild(size_type idx, rvalue val) {
     assert(idx < childrenSize());
