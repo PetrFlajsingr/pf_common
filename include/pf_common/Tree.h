@@ -82,6 +82,12 @@ class Node {
     return result;
   }
 
+  std::vector<std::unique_ptr<Node>> clearChildren() {
+    auto result = std::move(children_);
+    children_.clear();
+    return result;
+  }
+
   [[nodiscard]] auto children() {
     return children_ | ranges::views::transform([](const auto &child) -> Node & { return *child; });
   }
