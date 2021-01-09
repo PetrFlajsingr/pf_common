@@ -13,11 +13,11 @@
 
 namespace pf {
 namespace tree_traversal {
-template<typename T, bool IsConst>
-class DepthFirstIteration;
+enum class Type { DepthFirst, BreadthFirst };
 
-template<typename T, bool IsConst>
-class BreadthFirstIteration;
+template<typename T, bool IsConst, bool IsNode, Type TravType>
+class TreeIteration;
+
 }// namespace tree_traversal
 
 //TODO: STL like iterators
@@ -109,17 +109,34 @@ class Node {
 
   [[nodiscard]] size_type childrenSize() const { return children_.size(); }
 
-  [[nodiscard]] tree_traversal::BreadthFirstIteration<T, false> iterBreadthFirst() {
-    return tree_traversal::BreadthFirstIteration<T, false>(this);
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::BreadthFirst> iterBreadthFirst() {
+    return tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::BreadthFirst>(this);
   }
-  [[nodiscard]] tree_traversal::BreadthFirstIteration<T, true> iterBreadthFirst() const {
-    return tree_traversal::BreadthFirstIteration<T, false>(this);
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::BreadthFirst>
+  iterBreadthFirst() const {
+    return tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::BreadthFirst>(this);
   }
-  [[nodiscard]] tree_traversal::DepthFirstIteration<T, false> iterDepthFirst() {
-    return tree_traversal::DepthFirstIteration<T, false>(this);
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::DepthFirst> iterDepthFirst() {
+    return tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::DepthFirst>(this);
   }
-  [[nodiscard]] tree_traversal::DepthFirstIteration<T, true> iterDepthFirst() const {
-    return tree_traversal::DepthFirstIteration<T, false>(this);
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::DepthFirst> iterDepthFirst() const {
+    return tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::DepthFirst>(this);
+  }
+
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::BreadthFirst>
+  iterNodesBreadthFirst() {
+    return tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::BreadthFirst>(this);
+  }
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::BreadthFirst>
+  iterNodesBreadthFirst() const {
+    return tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::BreadthFirst>(this);
+  }
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::DepthFirst> iterNodesDepthFirst() {
+    return tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::DepthFirst>(this);
+  }
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::DepthFirst>
+  iterNodesDepthFirst() const {
+    return tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::DepthFirst>(this);
   }
 
  private:
@@ -157,12 +174,35 @@ class Tree {
 
   [[nodiscard]] bool hasRoot() const { return root != nullptr; }
 
-  [[nodiscard]] tree_traversal::BreadthFirstIteration<T, false> iterBreadthFirst() { return root->iterBreadthFirst(); }
-  [[nodiscard]] tree_traversal::BreadthFirstIteration<T, true> iterBreadthFirst() const {
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::BreadthFirst> iterBreadthFirst() {
     return root->iterBreadthFirst();
   }
-  [[nodiscard]] tree_traversal::DepthFirstIteration<T, false> iterDepthFirst() { return root->iterDepthFirst(); }
-  [[nodiscard]] tree_traversal::DepthFirstIteration<T, true> iterDepthFirst() const { return root->iterDepthFirst(); }
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::BreadthFirst>
+  iterBreadthFirst() const {
+    return root->iterBreadthFirst();
+  }
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::DepthFirst> iterDepthFirst() {
+    return root->iterDepthFirst();
+  }
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::DepthFirst> iterDepthFirst() const {
+    return root->iterDepthFirst();
+  }
+
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::BreadthFirst>
+  iterNodesBreadthFirst() {
+    return root->iterNodesBreadthFirst();
+  }
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::BreadthFirst>
+  iterNodesBreadthFirst() const {
+    return root->iterNodesBreadthFirst();
+  }
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::DepthFirst> iterNodesDepthFirst() {
+    return root->iterNodesDepthFirst();
+  }
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::DepthFirst>
+  iterNodesDepthFirst() const {
+    return root->iterNodesDepthFirst();
+  }
 
  private:
   std::unique_ptr<Node<T>> root = nullptr;
@@ -170,43 +210,62 @@ class Tree {
 
 namespace tree_traversal {
 
-template<typename T, bool IsConst>
-class DepthFirstIterator {
+template<typename T, bool IsConst, bool IsNode, Type TravType>
+class TreeIterator {
+  using underlying_type = std::conditional_t<IsNode, Node<T>, T>;
+  using iter_structure = std::conditional_t<TravType == Type::DepthFirst, std::stack<Node<T> *>, std::queue<Node<T> *>>;
+
  public:
   using difference_type = std::size_t;
-  using value_type = std::conditional_t<IsConst, const T, T>;
+  using value_type = std::conditional_t<IsConst, const underlying_type, underlying_type>;
   using pointer = value_type *;
   using reference = value_type &;
   using iterator_category = std::forward_iterator_tag;
 
-  DepthFirstIterator() = default;
-  explicit DepthFirstIterator(Node<T> *node) : currentNode(node) {
+  TreeIterator() = default;
+  explicit TreeIterator(Node<T> *node) : currentNode(node) {
     for (auto &child : currentNode->children()) { stack.push(&child); }
   }
-  DepthFirstIterator(const DepthFirstIterator &other) = default;
-  DepthFirstIterator &operator=(const DepthFirstIterator &other) = default;
-  DepthFirstIterator(DepthFirstIterator &&other) noexcept = default;
-  DepthFirstIterator &operator=(DepthFirstIterator &&other) noexcept = default;
+  TreeIterator(const TreeIterator &other) = default;
+  TreeIterator &operator=(const TreeIterator &other) = default;
+  TreeIterator(TreeIterator &&other) noexcept = default;
+  TreeIterator &operator=(TreeIterator &&other) noexcept = default;
 
-  bool operator==(const DepthFirstIterator &rhs) { return currentNode == rhs.currentNode; }
-  bool operator!=(const DepthFirstIterator &rhs) { return !(*this == rhs); }
+  bool operator==(const TreeIterator &rhs) { return currentNode == rhs.currentNode; }
+  bool operator!=(const TreeIterator &rhs) { return !(*this == rhs); }
 
-  reference operator*() { return **currentNode; }
+  reference operator*() {
+    if constexpr (IsNode) {
+      return *currentNode;
+    } else {
+      return **currentNode;
+    }
+  }
 
-  pointer operator->() { return &**currentNode; }
+  pointer operator->() {
+    if constexpr (IsNode) {
+      return &*currentNode;
+    } else {
+      return &**currentNode;
+    }
+  }
 
-  DepthFirstIterator &operator++() {
+  TreeIterator &operator++() {
     if (stack.empty()) {
       currentNode = nullptr;
       return *this;
     }
-    currentNode = stack.top();
+    if constexpr (TravType == Type::BreadthFirst) {
+      currentNode = stack.front();
+    } else {
+      currentNode = stack.top();
+    }
     stack.pop();
     for (auto &child : currentNode->children()) { stack.push(&child); }
     return *this;
   }
 
-  DepthFirstIterator operator++(int) {
+  TreeIterator operator++(int) {
     auto copy = *this;
     operator++();
     return copy;
@@ -214,77 +273,17 @@ class DepthFirstIterator {
 
  private:
   Node<T> *currentNode = nullptr;
-  std::stack<Node<T> *> stack;
+  iter_structure stack;
 };
 
-template<typename T, bool IsConst>
-class BreadthFirstIterator {
+template<typename T, bool IsConst, bool IsNode, Type TravType>
+class TreeIteration {
  public:
-  using difference_type = std::size_t;
-  using value_type = std::conditional_t<IsConst, const T, T>;
-  using pointer = value_type *;
-  using reference = value_type &;
-  using iterator_category = std::forward_iterator_tag;
-
-  BreadthFirstIterator() = default;
-  explicit BreadthFirstIterator(Node<T> *node) : currentNode(node) {
-    for (auto &child : currentNode->children()) { queue.push(&child); }
-  }
-  BreadthFirstIterator(const BreadthFirstIterator &other) = default;
-  BreadthFirstIterator &operator=(const BreadthFirstIterator &other) = default;
-  BreadthFirstIterator(BreadthFirstIterator &&other) noexcept = default;
-  BreadthFirstIterator &operator=(BreadthFirstIterator &&other) noexcept = default;
-
-  bool operator==(const BreadthFirstIterator &rhs) { return currentNode == rhs.currentNode; }
-  bool operator!=(const BreadthFirstIterator &rhs) { return !(*this == rhs); }
-
-  reference operator*() { return **currentNode; }
-
-  pointer operator->() { return &**currentNode; }
-
-  BreadthFirstIterator &operator++() {
-    if (queue.empty()) {
-      currentNode = nullptr;
-      return *this;
-    }
-    currentNode = queue.top();
-    queue.pop();
-    for (auto &child : currentNode->children()) { queue.push(&child); }
-    return *this;
-  }
-
-  BreadthFirstIterator operator++(int) {
-    auto copy = *this;
-    operator++();
-    return copy;
-  }
-
- private:
-  Node<T> *currentNode = nullptr;
-  std::stack<Node<T> *> queue;
-};
-
-template<typename T, bool IsConst>
-class DepthFirstIteration {
- public:
-  explicit DepthFirstIteration(Node<T> *node) : node_(node) {}
-  DepthFirstIterator<T, IsConst> begin() { return DepthFirstIterator<T, IsConst>(node_); }
-  DepthFirstIterator<T, IsConst> end() { return DepthFirstIterator<T, IsConst>(nullptr); }
-  DepthFirstIterator<T, true> cbegin() { return DepthFirstIterator<T, true>(node_); }
-  DepthFirstIterator<T, true> cend() { return DepthFirstIterator<T, true>(nullptr); }
-
- private:
-  Node<T> *node_;
-};
-
-template<typename T, bool IsConst>
-class BreadthFirstIteration {
- public:
-  explicit BreadthFirstIteration(Node<T> *node) : node_(node) {}
-  BreadthFirstIterator<T, IsConst> begin() { return BreadthFirstIterator<T, IsConst>(node_); }
-  BreadthFirstIterator<T, IsConst> end() { return BreadthFirstIterator<T, IsConst>(nullptr); }
-  BreadthFirstIterator<T, true> cbegin() { return BreadthFirstIterator<T, true>(node_); }
-  BreadthFirstIterator<T, true> cend() { return BreadthFirstIterator<T, true>(nullptr); }
+  explicit TreeIteration(Node<T> *node) : node_(node) {}
+  TreeIterator<T, IsConst, IsNode, TravType> begin() { return TreeIterator<T, IsConst, IsNode, TravType>(node_); }
+  TreeIterator<T, IsConst, IsNode, TravType> end() { return TreeIterator<T, IsConst, IsNode, TravType>(nullptr); }
+  TreeIterator<T, true, IsNode, TravType> cbegin() { return TreeIterator<T, true, IsNode, TravType>(node_); }
+  TreeIterator<T, true, IsNode, TravType> cend() { return TreeIterator<T, true, IsNode, TravType>(nullptr); }
 
  private:
   Node<T> *node_;
