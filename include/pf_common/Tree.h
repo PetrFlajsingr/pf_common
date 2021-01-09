@@ -216,7 +216,7 @@ class TreeIterator {
   using iter_structure = std::conditional_t<TravType == Type::DepthFirst, std::stack<Node<T> *>, std::queue<Node<T> *>>;
 
  public:
-  using difference_type = std::size_t;
+  using difference_type = long long;
   using value_type = std::conditional_t<IsConst, const underlying_type, underlying_type>;
   using pointer = value_type *;
   using reference = value_type &;
@@ -231,10 +231,10 @@ class TreeIterator {
   TreeIterator(TreeIterator &&other) noexcept = default;
   TreeIterator &operator=(TreeIterator &&other) noexcept = default;
 
-  bool operator==(const TreeIterator &rhs) { return currentNode == rhs.currentNode; }
-  bool operator!=(const TreeIterator &rhs) { return !(*this == rhs); }
+  bool operator==(const TreeIterator &rhs) const { return currentNode == rhs.currentNode; }
+  bool operator!=(const TreeIterator &rhs) const { return !(*this == rhs); }
 
-  reference operator*() {
+  reference operator*() const {
     if constexpr (IsNode) {
       return *currentNode;
     } else {
@@ -242,7 +242,7 @@ class TreeIterator {
     }
   }
 
-  pointer operator->() {
+  pointer operator->() const {
     if constexpr (IsNode) {
       return &*currentNode;
     } else {
