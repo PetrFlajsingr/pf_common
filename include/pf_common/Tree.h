@@ -198,7 +198,7 @@ class DepthFirstIterator {
   DepthFirstIterator &operator++() {
     if (stack.empty()) {
       currentNode = nullptr;
-      return;
+      return *this;
     }
     currentNode = stack.top();
     stack.pop();
@@ -245,7 +245,7 @@ class BreadthFirstIterator {
   BreadthFirstIterator &operator++() {
     if (queue.empty()) {
       currentNode = nullptr;
-      return;
+      return *this;
     }
     currentNode = queue.top();
     queue.pop();
