@@ -189,6 +189,7 @@ class DepthFirstIterator {
   DepthFirstIterator &operator=(DepthFirstIterator &&other) noexcept = default;
 
   bool operator==(const DepthFirstIterator &rhs) { return currentNode == rhs.currentNode; }
+  bool operator!=(const DepthFirstIterator &rhs) { return !(*this == rhs); }
 
   reference operator*() { return **currentNode; }
 
@@ -231,6 +232,7 @@ class BreadthFirstIterator {
   BreadthFirstIterator &operator=(BreadthFirstIterator &&other) noexcept = default;
 
   bool operator==(const BreadthFirstIterator &rhs) { return currentNode == rhs.currentNode; }
+  bool operator!=(const BreadthFirstIterator &rhs) { return !(*this == rhs); }
 
   reference operator*() { return **currentNode; }
 
