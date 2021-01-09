@@ -9,8 +9,16 @@
 #include <queue>
 #include <range/v3/action/sort.hpp>
 #include <range/v3/view/transform.hpp>
+#include <stack>
 
 namespace pf {
+namespace tree_traversal {
+template<typename T, bool IsConst>
+class DepthFirstIteration;
+
+template<typename T, bool IsConst>
+class BreadthFirstIteration;
+}// namespace tree_traversal
 
 //TODO: STL like iterators
 template<typename T>
@@ -101,6 +109,19 @@ class Node {
 
   [[nodiscard]] size_type childrenSize() const { return children_.size(); }
 
+  [[nodiscard]] tree_traversal::BreadthFirstIteration<T, false> iterBreadthFirst() {
+    return tree_traversal::BreadthFirstIteration<T, false>(this);
+  }
+  [[nodiscard]] tree_traversal::BreadthFirstIteration<T, true> iterBreadthFirst() const {
+    return tree_traversal::BreadthFirstIteration<T, false>(this);
+  }
+  [[nodiscard]] tree_traversal::DepthFirstIteration<T, false> iterDepthFirst() {
+    return tree_traversal::DepthFirstIteration<T, false>(this);
+  }
+  [[nodiscard]] tree_traversal::DepthFirstIteration<T, true> iterDepthFirst() const {
+    return tree_traversal::DepthFirstIteration<T, false>(this);
+  }
+
  private:
   T value_;
   std::vector<std::unique_ptr<Node>> children_;
@@ -136,11 +157,128 @@ class Tree {
 
   [[nodiscard]] bool hasRoot() const { return root != nullptr; }
 
+  [[nodiscard]] tree_traversal::BreadthFirstIteration<T, false> iterBreadthFirst() { return root->iterBreadthFirst(); }
+  [[nodiscard]] tree_traversal::BreadthFirstIteration<T, true> iterBreadthFirst() const {
+    return root->iterBreadthFirst();
+  }
+  [[nodiscard]] tree_traversal::DepthFirstIteration<T, false> iterDepthFirst() { return root->iterDepthFirst(); }
+  [[nodiscard]] tree_traversal::DepthFirstIteration<T, true> iterDepthFirst() const { return root->iterDepthFirst(); }
+
  private:
   std::unique_ptr<Node<T>> root = nullptr;
 };
 
 namespace tree_traversal {
+
+template<typename T, bool IsConst>
+class DepthFirstIterator {
+ public:
+  using difference_type = std::size_t;
+  using value_type = std::conditional_t<IsConst, const T, T>;
+  using pointer = value_type *;
+  using reference = value_type &;
+  using iterator_category = std::forward_iterator_tag;
+
+  DepthFirstIterator() = default;
+  explicit DepthFirstIterator(Node<T> *node) : currentNode(node) {
+    for (auto &child : currentNode->children()) { stack.push(&child); }
+  }
+  DepthFirstIterator(const DepthFirstIterator &other) = default;
+  DepthFirstIterator &operator=(const DepthFirstIterator &other) = default;
+  DepthFirstIterator(DepthFirstIterator &&other) noexcept = default;
+  DepthFirstIterator &operator=(DepthFirstIterator &&other) noexcept = default;
+
+  bool operator==(const DepthFirstIterator &rhs) { return currentNode == rhs.currentNode; }
+
+  reference operator*() { return **currentNode; }
+
+  pointer operator->() { return &**currentNode; }
+
+  DepthFirstIterator &operator++() {
+    currentNode = stack.top();
+    stack.pop();
+    for (auto &child : currentNode->children()) { stack.push(&child); }
+    return *this;
+  }
+
+  DepthFirstIterator operator++(int) {
+    auto copy = *this;
+    operator++();
+    return copy;
+  }
+
+ private:
+  Node<T> *currentNode = nullptr;
+  std::stack<Node<T> *> stack;
+};
+
+template<typename T, bool IsConst>
+class BreadthFirstIterator {
+ public:
+  using difference_type = std::size_t;
+  using value_type = std::conditional_t<IsConst, const T, T>;
+  using pointer = value_type *;
+  using reference = value_type &;
+  using iterator_category = std::forward_iterator_tag;
+
+  BreadthFirstIterator() = default;
+  explicit BreadthFirstIterator(Node<T> *node) : currentNode(node) {
+    for (auto &child : currentNode->children()) { queue.push(&child); }
+  }
+  BreadthFirstIterator(const BreadthFirstIterator &other) = default;
+  BreadthFirstIterator &operator=(const BreadthFirstIterator &other) = default;
+  BreadthFirstIterator(BreadthFirstIterator &&other) noexcept = default;
+  BreadthFirstIterator &operator=(BreadthFirstIterator &&other) noexcept = default;
+
+  bool operator==(const BreadthFirstIterator &rhs) { return currentNode == rhs.currentNode; }
+
+  reference operator*() { return **currentNode; }
+
+  pointer operator->() { return &**currentNode; }
+
+  BreadthFirstIterator &operator++() {
+    currentNode = queue.top();
+    queue.pop();
+    for (auto &child : currentNode->children()) { queue.push(&child); }
+    return *this;
+  }
+
+  BreadthFirstIterator operator++(int) {
+    auto copy = *this;
+    operator++();
+    return copy;
+  }
+
+ private:
+  Node<T> *currentNode = nullptr;
+  std::stack<Node<T> *> queue;
+};
+
+template<typename T, bool IsConst>
+class DepthFirstIteration {
+ public:
+  explicit DepthFirstIteration(Node<T> *node) : node_(node) {}
+  DepthFirstIterator<T, IsConst> begin() { return DepthFirstIterator<T, IsConst>(node_); }
+  DepthFirstIterator<T, IsConst> end() { return DepthFirstIterator<T, IsConst>(nullptr); }
+  DepthFirstIterator<T, true> cbegin() { return DepthFirstIterator<T, true>(node_); }
+  DepthFirstIterator<T, true> cend() { return DepthFirstIterator<T, true>(nullptr); }
+
+ private:
+  Node<T> *node_;
+};
+
+template<typename T, bool IsConst>
+class BreadthFirstIteration {
+ public:
+  explicit BreadthFirstIteration(Node<T> *node) : node_(node) {}
+  BreadthFirstIterator<T, IsConst> begin() { return BreadthFirstIterator<T, IsConst>(node_); }
+  BreadthFirstIterator<T, IsConst> end() { return BreadthFirstIterator<T, IsConst>(nullptr); }
+  BreadthFirstIterator<T, true> cbegin() { return BreadthFirstIterator<T, true>(node_); }
+  BreadthFirstIterator<T, true> cend() { return BreadthFirstIterator<T, true>(nullptr); }
+
+ private:
+  Node<T> *node_;
+};
 
 template<typename T>
 void depthFirst(Node<T> &node, std::invocable<Node<T> &> auto callable) {
