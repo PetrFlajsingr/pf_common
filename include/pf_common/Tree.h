@@ -224,7 +224,9 @@ class TreeIterator {
 
   TreeIterator() = default;
   explicit TreeIterator(Node<T> *node) : currentNode(node) {
-    for (auto &child : currentNode->children()) { stack.push(&child); }
+    if (currentNode != nullptr) {
+      for (auto &child : currentNode->children()) { stack.push(&child); }
+    }
   }
   TreeIterator(const TreeIterator &other) = default;
   TreeIterator &operator=(const TreeIterator &other) = default;
