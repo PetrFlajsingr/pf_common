@@ -196,6 +196,10 @@ class DepthFirstIterator {
   pointer operator->() { return &**currentNode; }
 
   DepthFirstIterator &operator++() {
+    if (stack.empty()) {
+      currentNode = nullptr;
+      return;
+    }
     currentNode = stack.top();
     stack.pop();
     for (auto &child : currentNode->children()) { stack.push(&child); }
@@ -239,6 +243,10 @@ class BreadthFirstIterator {
   pointer operator->() { return &**currentNode; }
 
   BreadthFirstIterator &operator++() {
+    if (queue.empty()) {
+      currentNode = nullptr;
+      return;
+    }
     currentNode = queue.top();
     queue.pop();
     for (auto &child : currentNode->children()) { queue.push(&child); }
