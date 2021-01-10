@@ -5,6 +5,7 @@
 #include <catch2/catch.hpp>
 #include <pf_common/algorithms.h>
 #include <unordered_set>
+#include <pf_common/Tree.h>
 
 template<typename T, template<class> typename C>
 struct CheckIsInInstantiation {
@@ -47,4 +48,12 @@ TEST_CASE("find first common", "[algorithm][findFirstCommon]") {
   SECTION("returns first common element when one is present") {
     REQUIRE(*pf::findFirstCommon(vec1, vec2) == 2);
   }
+}
+
+TEST_CASE("fsdf", "adsdas") {
+  static_assert(std::forward_iterator<pf::tree_traversal::TreeIterator<int, false, true, pf::tree_traversal::Type::DepthFirst>>);
+
+  pf::Tree<int> tree;
+  for ([[maybe_unused]] auto &a : tree.iterBreadthFirst()) {}
+  for ([[maybe_unused]] auto &a : tree.iterDepthFirst()) {}
 }

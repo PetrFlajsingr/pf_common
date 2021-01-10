@@ -102,9 +102,11 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 include(CPack)
 
 if (PF_COMMON_TESTS)
+    list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10")
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
             tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp)
     target_link_libraries(pf_common_tests Catch2::Catch2 ${PROJECT_NAME})
+    target_compile_options(pf_common_tests PRIVATE ${flags})
 
     include(CTest)
     include(Catch)
