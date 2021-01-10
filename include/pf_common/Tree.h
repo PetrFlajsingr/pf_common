@@ -9,8 +9,8 @@
 #include <queue>
 #include <range/v3/action/sort.hpp>
 #include <range/v3/view/transform.hpp>
-#include <stack>
 #include <ranges>
+#include <stack>
 
 namespace pf {
 namespace tree_traversal {
@@ -357,6 +357,10 @@ void cBreadthFirst(const Tree<T> &tree, std::invocable<const Node<T> &> auto cal
 }// namespace pf
 
 namespace std::ranges {
+template<typename T, bool IsConst, bool IsNode, pf::tree_traversal::Type TravType>
+inline constexpr bool enable_borrowed_range<pf::tree_traversal::TreeIteration<T, IsConst, IsNode, TravType>> = true;
+}
+namespace ranges {
 template<typename T, bool IsConst, bool IsNode, pf::tree_traversal::Type TravType>
 inline constexpr bool enable_borrowed_range<pf::tree_traversal::TreeIteration<T, IsConst, IsNode, TravType>> = true;
 }
