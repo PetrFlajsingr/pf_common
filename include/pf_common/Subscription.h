@@ -6,6 +6,7 @@
 #define PF_COMMON_SUBSCRIPTION_H
 
 #include <functional>
+#include <utility>
 #include <concepts>
 
 namespace pf {
