@@ -7,8 +7,8 @@
 
 #include <algorithm>
 #include <optional>
-#include <range/v3/range_concepts.hpp>
-#include <range/v3/range_traits.hpp>
+#include <range/v3/range/concepts.hpp>
+#include <range/v3/range/traits.hppt>
 
 namespace pf {
 template<typename T, typename Container = std::initializer_list<T>>
