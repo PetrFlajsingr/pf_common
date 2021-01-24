@@ -6,6 +6,8 @@
 #define PF_COMMON_ALGORITHMS_H
 
 #include <algorithm>
+#include <range/v3/range_concepts.hpp>
+#include <range/v3/range_traits.hpp>
 
 namespace pf {
 template<typename T, typename Container = std::initializer_list<T>>
@@ -18,6 +20,13 @@ std::optional<T> findFirstCommon(const Container<T> &vals, const Container2<T> &
   for (const auto &val : vals) {
     if (isIn(val, vals2)) { return val; }
   }
+  return std::nullopt;
+}
+
+template<ranges::range Range>
+std::optional<ranges::range_value_t<Range>> findIf(Range &&range,
+                                                   std::predicate<ranges::range_value_t<Range>> auto &&predicate) {
+  if (const auto iter = std::ranges::find_if(range, predicate); iter != ranges::end(range)) { return *iter; }
   return std::nullopt;
 }
 
