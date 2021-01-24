@@ -6,6 +6,7 @@
 #define PF_COMMON_ALGORITHMS_H
 
 #include <algorithm>
+#include <optional>
 #include <range/v3/range_concepts.hpp>
 #include <range/v3/range_traits.hpp>
 
