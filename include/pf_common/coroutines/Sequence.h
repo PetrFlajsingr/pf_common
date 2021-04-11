@@ -19,6 +19,7 @@ cppcoro::generator<T> iota(T start = T(0)) {
 
 template<typename T>
 requires ModCapable<T> &&Incrementable<T> cppcoro::generator<T> modRepeat(T start, T mod) {
+  start %= mod;
   while (true) {
     co_yield start;
     start = (start + 1) % mod;

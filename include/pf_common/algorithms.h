@@ -9,19 +9,24 @@
 #include <optional>
 #include <range/v3/range/concepts.hpp>
 #include <range/v3/range/traits.hpp>
+#include <ranges>
 
 namespace pf {
-template<typename T, typename Container = std::initializer_list<T>>
-bool isIn(const T &val, Container &&vals) {
-  return std::ranges::any_of(vals, [&val](const auto &v) { return val == v; });
+template<std::ranges::range Range>
+bool isIn(const auto &needle, Range &&haystack) {
+  static_assert(std::equality_comparable_with<decltype(needle), std::ranges::range_value_t<Range>>);
+  return std::ranges::any_of(haystack, [&needle](const auto &value) { return needle == value; });
 }
 
-template<typename T, template<class> typename Container, template<class> typename Container2>
-std::optional<T> findFirstCommon(const Container<T> &vals, const Container2<T> &vals2) {
-  for (const auto &val : vals) {
-    if (isIn(val, vals2)) { return val; }
+auto findFirstCommon(const std::ranges::range auto &range1, const std::ranges::range auto &range2) {
+  static_assert(std::equality_comparable_with<std::ranges::range_value_t<decltype(range1)>,
+                                              std::ranges::range_value_t<decltype(range2)>>);
+  using ResultType = std::ranges::range_value_t<decltype(range1)>;
+  if (auto iter = std::ranges::find_if(range1, [&range2](const auto &val) { return isIn(val, range2); });
+      iter != range1.end()) {
+    return std::optional<ResultType>{*iter};
   }
-  return std::nullopt;
+  return std::optional<ResultType>{};
 }
 
 template<ranges::range Range>

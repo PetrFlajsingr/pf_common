@@ -12,7 +12,7 @@
 namespace pf {
 class RAII {
  public:
-  inline explicit RAII(std::invocable auto &&callable) : callable(std::forward<decltype(callable)>(callable)) {}
+  explicit RAII(std::invocable auto &&callable) : callable(std::forward<decltype(callable)>(callable)) {}
 
   inline ~RAII() { std::invoke(callable); }
 

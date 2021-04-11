@@ -23,6 +23,8 @@ TEST_CASE("mod repeat", "[mod_repeat]") {
   }
   SECTION("explicit argument") {
     auto iota = pf::modRepeat<int>(10, 10);
-    for (int i = 10; i < 100; ++i) { REQUIRE(i%10 == pf::getNext(iota)); }
+    for (int i = 10; i < 100; ++i) {
+      REQUIRE(i%10 == pf::getNext(iota));
+    }
   }
 }

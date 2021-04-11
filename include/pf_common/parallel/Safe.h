@@ -30,10 +30,7 @@ class Safe final {
   explicit Safe(Args &&...args) : value(std::forward<Args &&...>(args)...) {}
   template<typename... Args>
   explicit Safe(Mutex &&mtx, Args &&...args) : mtx(std::move(mtx)), value(std::forward<Args &&...>(args)...) {}
-  Safe(const Safe &other) {
-    value = other.value;
-    mtx = std::mutex{};
-  }
+  Safe(const Safe &other) : value(other.value), mtx(std::mutex{}) {}
   Safe &operator=(const Safe &other) {
     if (this == &other) { return *this; }
     value = other.value;

@@ -8,4 +8,3 @@ float pf::math::BoundingSphere<Dimensions>::distance(BoundingSphere::Point point
 }
 template<unsigned int Dimensions>
 pf::math::BoundingSphere<Dimensions>::BoundingSphere(Point center, float radius) : center(center), radius(radius) {}
-S
