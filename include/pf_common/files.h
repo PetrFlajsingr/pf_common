@@ -6,6 +6,7 @@
 #define REALISTIC_VOXEL_RENDERING_SRC_UTILS_FILES_H
 
 #include <vector>
+#include <ranges>
 #include <filesystem>
 #include <pf_common/exceptions/StackTraceException.h>
 

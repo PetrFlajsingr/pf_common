@@ -32,7 +32,7 @@ std::string toString(const T &val) {
     return ss.str();
   } else if constexpr (HasStdToString<T>) {
     return std::to_string(val);
-  } else if constexpr (HasToStringM<T>) {
+  } else if constexpr (HasToString<T>) {
     return val.toString();
   }
 }
