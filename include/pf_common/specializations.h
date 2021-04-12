@@ -7,16 +7,36 @@
 
 namespace pf {
 template<class T, template<class...> class Template>
-struct is_specialization : std::false_type {};
+struct is_direct_specialization : std::false_type {};
 
 template<template<class...> class Template, class... Args>
-struct is_specialization<Template<Args...>, Template> : std::true_type {};
+struct is_direct_specialization<Template<Args...>, Template> : std::true_type {};
 
 template<typename T, template<class...> class U>
-constexpr static auto is_specialization_v = is_specialization<T, U>::value;
+constexpr static auto is_direct_specialization_v = is_direct_specialization<T, U>::value;
 
 template<typename T, template<class...> class U>
-concept specialization_of = is_specialization_v<T, U>;
+concept direct_specialization_of = is_direct_specialization_v<T, U>;
+
+namespace detail {
+  template<template<typename> class F>
+  struct conversion_tester {
+    template<typename T>
+    conversion_tester(const F<T> &);
+  };
+}// namespace detail
+
+template<class From, template<typename> class To>
+struct is_derived_specialization {
+  static const bool value = std::is_convertible<From, detail::conversion_tester<To>>::value;
+};
+
+template<typename T, template<class...> class U>
+constexpr static auto is_derived_specialization_v = is_derived_specialization<T, U>::value;
+
+template<typename T, template<class...> class U>
+concept derived_specialization_of = is_derived_specialization_v<T, U>;
+
 }// namespace pf
 
 #endif//PF_COMMON_INCLUDE_PF_COMMON_SPECIALIZATIONS_H
