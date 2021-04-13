@@ -10,7 +10,7 @@ namespace pf {
 enum class Enabled { Yes, No };
 
 #define ENABLE_BIT_MASK_ENUM(enum_type)                                                                                \
-  inline Stretch operator|(enum_type lhs, enum_type rhs) {                                                             \
+  inline enum_type operator|(enum_type lhs, enum_type rhs) {                                                             \
     using T = std::underlying_type_t<enum_type>;                                                                       \
     return static_cast<enum_type>(static_cast<T>(lhs) | static_cast<T>(rhs));                                          \
   }                                                                                                                    \
