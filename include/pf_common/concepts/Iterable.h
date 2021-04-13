@@ -10,16 +10,13 @@
 namespace pf {
 template<typename T>
 concept Iterable = requires(T t) {
-  { std::begin(t) }
-  ->std::forward_iterator;
-  { std::end(t) }
-  ->std::sentinel_for<decltype(std::begin(t))>;
+  { std::begin(t) } -> std::forward_iterator;
+  { std::end(t) } -> std::sentinel_for<decltype(std::begin(t))>;
 };
 
 template<typename T, typename ValueType>
-concept Iterable_of = Iterable<T> &&requires(T t) {
-  { *std::begin(t) }
-  ->std::convertible_to<ValueType>;
+concept Iterable_of = Iterable<T> && requires(T t) {
+  { *std::begin(t) } -> std::convertible_to<ValueType>;
 };
 
 template<Iterable T>

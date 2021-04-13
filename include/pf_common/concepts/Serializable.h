@@ -13,20 +13,16 @@ namespace pf {
 
 template<typename T>
 concept Serializable = requires(const T t) {
-  { t.serialize() }
-  ->std::same_as<std::vector<std::byte>>;
+  { t.serialize() } -> std::same_as<std::vector<std::byte>>;
 };
 template<typename T>
 concept Deserializable = requires(std::span<const std::byte> data) {
-  { T::Deserialize(data) }
-  ->std::same_as<T>;
+  { T::Deserialize(data) } -> std::same_as<T>;
 };
 
-std::vector<std::byte> serialize(const Serializable auto &obj) {
-  return obj.serialize();
-}
+std::vector<std::byte> serialize(const Serializable auto &obj) { return obj.serialize(); }
 
-template <Deserializable T>
+template<Deserializable T>
 T deserialize(std::span<const std::byte> data) {
   return T::Deserialize(data);
 }
@@ -34,7 +30,7 @@ T deserialize(std::span<const std::byte> data) {
 void saveToFile(const std::filesystem::path &path, const Serializable auto &obj) {
   const auto data = obj.serialize();
   auto ostream = std::ofstream(path, std::ios::binary);
-  ostream.write(reinterpret_cast<const char*>(data.data()), data.size());
+  ostream.write(reinterpret_cast<const char *>(data.data()), data.size());
 }
 
 template<Deserializable T>

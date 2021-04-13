@@ -5,9 +5,9 @@
 #ifndef PF_COMMON_SUBSCRIPTION_H
 #define PF_COMMON_SUBSCRIPTION_H
 
+#include <concepts>
 #include <functional>
 #include <utility>
-#include <concepts>
 
 namespace pf {
 class Subscription {

@@ -10,9 +10,8 @@
 namespace pf::math {
 
 template<typename T>
-concept RangeValueType = std::equality_comparable<T> &&requires(T t) {
-  { t - t }
-  ->std::convertible_to<T>;
+concept RangeValueType = std::equality_comparable<T> && requires(T t) {
+  { t - t } -> std::convertible_to<T>;
 };
 
 template<RangeValueType T>

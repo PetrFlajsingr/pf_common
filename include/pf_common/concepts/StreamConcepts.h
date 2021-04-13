@@ -10,17 +10,15 @@
 namespace pf {
 template<typename T>
 concept StreamInputable = requires(T t, std::ostream o) {
-  { o << t }
-  ->std::convertible_to<std::ostream &>;
+  { o << t } -> std::convertible_to<std::ostream &>;
 };
 
 template<typename T>
 concept StreamOutputable = requires(T t, std::istream i) {
-  { t >> i }
-  ->std::convertible_to<std::istream &>;
+  { t >> i } -> std::convertible_to<std::istream &>;
 };
 
 template<typename T>
-concept Streamable = StreamOutputable<T> &&StreamInputable<T>;
+concept Streamable = StreamOutputable<T> && StreamInputable<T>;
 }// namespace pf
 #endif//PF_COMMON_STREAMCONCEPTS_H

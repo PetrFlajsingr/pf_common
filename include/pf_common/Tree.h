@@ -33,7 +33,8 @@ class Node {
   using rvalue = T &&;
   using size_type = std::size_t;
 
-  Node() requires std::is_default_constructible_v<T> = default;
+  Node() requires std::is_default_constructible_v<T>
+  = default;
   explicit Node(rvalue val) : value_(std::move(val)) {}
   explicit Node(const_reference val) : value_(val) {}
   Node(const Node &) = delete;

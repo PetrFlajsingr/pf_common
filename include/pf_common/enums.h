@@ -5,7 +5,7 @@
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_ENUMS_H
 #define PF_COMMON_INCLUDE_PF_COMMON_ENUMS_H
 
-namespace pf{
+namespace pf {
 
 enum class Enabled { Yes, No };
 
