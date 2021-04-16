@@ -126,7 +126,7 @@ endif()
 if (BUILD_DOCS)
     find_package(Doxygen)
     if (DOXYGEN_FOUND)
-        doxygen_add_docs(doc ALL
+        doxygen_add_docs(pf_common_doc ALL
                 ${CMAKE_SOURCE_DIR}/include
                 )
     endif()
