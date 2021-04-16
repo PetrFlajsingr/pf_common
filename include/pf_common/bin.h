@@ -8,6 +8,12 @@
 #include "concepts/Serializable.h"
 
 namespace pf {
+/**
+ * Raw type to binary data conversion.
+ * @tparam T type to convert
+ * @param data data to convert
+ * @return data as binary data
+ */
 template<typename T>
 std::vector<std::byte> toBytes(const T &data) {
   if constexpr (Serializable<T>) { return data.serialize(); }
@@ -16,6 +22,12 @@ std::vector<std::byte> toBytes(const T &data) {
   return result;
 }
 
+/**
+ * Reconstruct T from provided binary data.
+ * @tparam T type to reconstruct
+ * @param data binary input data
+ * @return reconstruted value
+ */
 template<typename T>
 requires std::is_default_constructible_v<T> T fromBytes(std::span<const std::byte> data) {
   assert(data.size() == sizeof(T));
