@@ -18,11 +18,25 @@ void iterateTuplePairsImpl(F &&action, T const &tup, std::index_sequence<Index..
 }
 }// namespace details
 
+/**
+ * Iterate over each element of a tuple and call action on it.
+ * @tparam F callable
+ * @tparam Obj value types in tuple
+ * @param action action to call on each tuple element
+ * @param tup tuple
+ */
 template<typename F, typename... Obj>
 void iterateTuple(F &&action, std::tuple<Obj...> const &tup) {
   details::iterateTupleImpl(action, tup, std::make_index_sequence<sizeof...(Obj)>());
 }
 
+/**
+ * Iterate over each pair of adjacent elements of a tuple and call action on them.
+ * @tparam F callable
+ * @tparam Obj value types in tuple
+ * @param action action to call on each tuple element pair
+ * @param tup tuple
+ */
 template<typename F, typename... Obj>
 void iterateTuplePairs(F &&action, std::tuple<Obj...> const &tup) {
   details::iterateTuplePairsImpl(action, tup, std::make_index_sequence<sizeof...(Obj) - 1>());
