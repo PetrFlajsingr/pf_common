@@ -7,7 +7,7 @@ HunterGate(
 )
 
 project(pf_common
-        VERSION 0.1.0
+        VERSION 1.0.1
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
@@ -27,6 +27,7 @@ endif ()
 include(${CPM_DOWNLOAD_LOCATION})
 
 option(ENABLE_STACKTRACE "enable stacktrace in exceptions" OFF)
+option(BUILD_DOCS "build doxygen docs" OFF)
 
 if (ENABLE_STACKTRACE)
     add_compile_definitions(STACKTRACE_ENABLE)
@@ -120,4 +121,13 @@ if (PF_COMMON_TESTS)
     include(Catch)
     include(ParseAndAddCatchTests)
     ParseAndAddCatchTests(pf_common_tests)
+endif()
+
+if (BUILD_DOCS)
+    find_package(Doxygen)
+    if (DOXYGEN_FOUND)
+        doxygen_add_docs(doc ALL
+                ${CMAKE_SOURCE_DIR}/include
+                )
+    endif()
 endif()
