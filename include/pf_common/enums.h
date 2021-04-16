@@ -77,10 +77,10 @@ class Flags {
   }
   /**
    * Create Flags from range of enum values.
-   * @param vals enum values
+   * @param values enum values
    */
-  explicit Flags(const std::ranges::range auto &vals) requires(std::same_as<E, std::ranges::range_value_t<decltype(vals)>>) {
-    std::ranges::for_each(vals, [this](auto val) {
+  explicit Flags(const std::ranges::range auto &values) requires(std::same_as<E, std::ranges::range_value_t<decltype(values)>>) {
+    std::ranges::for_each(values, [this](auto val) {
       operator|=(val);
     });
   }

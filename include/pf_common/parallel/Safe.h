@@ -123,8 +123,8 @@ class Safe<T, Mutex>::Access final {
   using pointer_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, pointer, const_pointer>;
 
  public:
-  Access(reference_type value, Mutex &mtx) : value(value), lck(mtx) {}
-  Access(Safe<T, Mutex> &safe) : Access(safe.value, safe.mtx) {}
+  Access(reference_type value, const Mutex &mtx) : value(value), lck(mtx) {}
+  explicit Access(Safe<T, Mutex> &safe) : Access(safe.value, safe.mtx) {}
   Access(const Access &other) = delete;
   Access(Access &&other) = delete;
   Access &operator=(const Access &other) = delete;

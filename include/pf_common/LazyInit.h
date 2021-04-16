@@ -35,7 +35,7 @@ class LazyInit {
 
   pointer operator->() {
     calculate();
-    return &*value;
+    return value.get();
   }
 
   reference operator*() {
@@ -45,7 +45,7 @@ class LazyInit {
 
   const_pointer operator->() const {
     calculate();
-    return *&value;
+    return value.get();
   }
 
   const_reference operator*() const {
@@ -54,11 +54,11 @@ class LazyInit {
   }
 
  private:
-  void calculate() {
+  void calculate() const {
     if (value == nullptr) { value = std::make_unique<T>(calc()); }
   }
   calc_fnc calc;
-  std::unique_ptr<T> value;
+  mutable std::unique_ptr<T> value;
 };
 }// namespace pf
 #endif//PF_COMMON_LAZY_INIT_H

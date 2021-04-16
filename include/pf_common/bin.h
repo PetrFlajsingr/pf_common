@@ -26,7 +26,7 @@ std::vector<std::byte> toBytes(const T &data) {
  * Reconstruct T from provided binary data.
  * @tparam T type to reconstruct
  * @param data binary input data
- * @return reconstruted value
+ * @return reconstructed value
  */
 template<typename T>
 requires std::is_default_constructible_v<T> T fromBytes(std::span<const std::byte> data) {

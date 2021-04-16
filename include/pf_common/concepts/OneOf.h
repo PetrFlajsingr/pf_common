@@ -23,7 +23,7 @@ constexpr bool OneOf_v = (std::same_as<T, Args> || ...);
 template<typename T, typename... Args>
 concept OneOf = (std::same_as<T, Args> || ...);
 
-template <auto Val, decltype(Val) ...Vals>
-constexpr bool OneOfValues_v = ((Val == Vals) || ...);
+template <auto Value, decltype(Value) ...Values>
+constexpr bool OneOfValues_v = ((Value == Values) || ...);
 }// namespace pf
 #endif//PF_COMMON_ONEOF_H

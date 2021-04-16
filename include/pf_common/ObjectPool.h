@@ -61,7 +61,7 @@ struct DefaultPoolAllocator {
   }
   void on_release(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse) {}
 
-  std::size_t capacity() { return data.capacity_; }
+  [[nodiscard]] std::size_t capacity() { return data.capacity_; }
 
   void shrink(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse) {
     const auto remove_cnt = inUse.size();
@@ -97,7 +97,7 @@ class ObjectPool {
   using const_pointer = std::experimental::observer_ptr<const T>;
 
   /**
-   * Construct ObjectPool. Only accessible if T is default initializable.
+   * Construct ObjectPool. Only accessible if T is default initialisable.
    */
   ObjectPool() requires std::default_initializable<T> : allocator([] { return T(); }, available_, inUse) {}
 

@@ -2,8 +2,8 @@
 // Created by petr on 11/1/20.
 //
 
-#ifndef PF_COMMONING_UTILS_RAII_H
-#define PF_COMMONING_UTILS_RAII_H
+#ifndef PF_COMMON_UTILS_RAII_H
+#define PF_COMMON_UTILS_RAII_H
 
 #include <concepts>
 #include <functional>
@@ -28,4 +28,4 @@ class RAII {
 };
 }// namespace pf
 
-#endif//PF_COMMONING_UTILS_RAII_H
+#endif//PF_COMMON_UTILS_RAII_H
