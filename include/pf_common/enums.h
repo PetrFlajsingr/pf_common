@@ -12,8 +12,13 @@
 
 namespace pf {
 
+/**
+ * Common enum Enabled.
+ */
 enum class Enabled { Yes, No };
-
+/**
+ * Enable |, |=, & and &= operator for enums of enum_type.
+ */
 #define ENABLE_BIT_MASK_ENUM(enum_type)                                                                                \
   inline enum_type operator|(enum_type lhs, enum_type rhs) {                                                           \
     using T = std::underlying_type_t<enum_type>;                                                                       \
@@ -36,33 +41,68 @@ enum class Enabled { Yes, No };
     return lhs;                                                                                                        \
   }
 
+/**
+ * @brief Detect enum class.
+ * @tparam T
+ */
 template<typename T>
 concept ScopedEnum = std::is_enum_v<T> && !std::convertible_to<T, typename std::underlying_type_t<T>>;
 
+/**
+ * @brief enum or enum class
+ * @tparam T
+ */
 template<typename T>
 concept Enum = std::is_enum_v<T> || ScopedEnum<T>;
 
+/**
+ * @brief Utility for using enums as flags.
+ *
+ * Inner value is not necessarily a valid value of E.
+ *
+ * @tparam E enum
+ * @tparam DefaultValue value after construction
+ */
 template<Enum E, E DefaultValue = E{}>
 class Flags {
   using UnderlyingType = std::underlying_type_t<E>;
 
  public:
+  /**
+   * Create Flags from multiple enum values
+   * @param args enum values
+   */
   explicit Flags(std::same_as<E> auto... args) {
     (operator|=(args), ...);
   }
+  /**
+   * Create Flags from range of enum values.
+   * @param vals enum values
+   */
   explicit Flags(const std::ranges::range auto &vals) requires(std::same_as<E, std::ranges::range_value_t<decltype(vals)>>) {
     std::ranges::for_each(vals, [this](auto val) {
       operator|=(val);
     });
   }
+  /**
+   * Copy assignment
+   * @param other
+   */
   Flags &operator=(const Flags &other) {
     value = other.value;
     return *this;
   }
+  /**
+   * Assignment form enum type. Overwrites inner state.
+   * @param other new value
+   */
   Flags &operator=(E other) {
     value = other;
     return *this;
   }
+  /**
+   * Flip flags.
+   */
   [[nodiscard]] Flags operator~() {
     auto result = *this;
     result.value = static_cast<E>(~static_cast<UnderlyingType>(value));
@@ -135,10 +175,19 @@ class Flags {
     return result;
   }
 
+  /**
+   * Check if the flag is contained within this object.
+   * @param other flag to check
+   * @return true if the value is contained in flags
+   */
   [[nodiscard]] bool operator&&(E other) {
     return ((*this) & other).is(other);
   }
-
+  /**
+   * Check if the flag is contained within this object.
+   * @param other flag to check
+   * @return true if the value is contained in flags
+   */
   [[nodiscard]] bool is(E other) const {
     const auto bitAnd = (static_cast<UnderlyingType>(value) & static_cast<UnderlyingType>(other));
     return bitAnd != 0 || bitAnd == static_cast<UnderlyingType>(other);
@@ -149,11 +198,24 @@ class Flags {
 };
 
 namespace enum_flag_operators {
+/**
+ * Create Flags from two enums.
+ * @tparam E enum type
+ * @param lhs
+ * @param rhs
+ * @return
+ */
 template<Enum E>
 Flags<E> operator|(E lhs, E rhs) {
   return Flags<E>{lhs, rhs};
 }
-
+/**
+ * Create Flags from two enums.
+ * @tparam E enum type
+ * @param lhs
+ * @param rhs
+ * @return
+ */
 template<Enum E>
 Flags<E> operator&(E lhs, E rhs) {
   auto result = Flags<E>{lhs};
