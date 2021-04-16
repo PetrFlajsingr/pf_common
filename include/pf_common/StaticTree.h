@@ -45,6 +45,11 @@ template<typename T, typename F>
 void postorderImpl(Leaf<T, 2> *node, F &&callable);
 }// namespace detail
 
+/**
+ * @brief Leaf node of StaticTree.
+ * @tparam T type stored inside
+ * @tparam ChildCount N-arity of the parent tree
+ */
 template<typename T, unsigned int ChildCount>
 class Leaf {
   friend class Node<T, ChildCount>;
@@ -145,6 +150,9 @@ class Leaf {
    * Undefined behavior if the node has no parent.
    */
   [[nodiscard]] Node<T, ChildCount> &getParent();
+  /**
+   * Undefined behavior if the node has no parent.
+   */
   [[nodiscard]] const Node<T, ChildCount> &getParent() const;
   [[nodiscard]] bool isRoot() const;
 
@@ -160,6 +168,11 @@ class Leaf {
   value_type value;
 };
 
+/**
+ * @brief Node of StaticTree.
+ * @tparam T type stored inside
+ * @tparam ChildCount N-arity of the parent tree
+ */
 template<typename T, unsigned int ChildCount>
 class Node : public Leaf<T, ChildCount> {
   using Base = Leaf<T, ChildCount>;

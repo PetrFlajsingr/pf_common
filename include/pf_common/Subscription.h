@@ -10,9 +10,16 @@
 #include <utility>
 
 namespace pf {
+/**
+ * @brief Object providing an option to unsubscribe from observing something.
+ */
 class Subscription {
  public:
   using Unsubscriber = std::function<void()>;
+  /**
+   * Construct Subscription.
+   * @param unsubscriber function doing the unsubscription
+   */
   inline explicit Subscription(std::invocable auto &&unsubscriber) : unsub(unsubscriber) {}
   Subscription(const Subscription &) = delete;
   Subscription &operator=(const Subscription &) = delete;
@@ -25,6 +32,9 @@ class Subscription {
     return *this;
   }
 
+  /**
+   * Unsubscribe.
+   */
   inline void unsubscribe() { unsub(); }
 
  private:
