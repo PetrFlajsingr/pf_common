@@ -8,10 +8,24 @@
 #include <mutex>
 
 namespace pf {
+
+/**
+ * @brief Wrapper class for safe access for objects which are not thread safe.
+ * @tparam T protected type
+ * @tparam Mutex mutex used for access locking
+ */
 template<typename T, typename Mutex = std::mutex>
 class Safe final {
  public:
+  /**
+   * Type of access to data.
+   */
   enum class AccessType { ReadWrite, ReadOnly };
+  /**
+   * @brief Object accessor providing locking.
+   *
+   * Upon creation this object locks Mutex and unlocks it when destroyed.
+   */
   template<AccessType = AccessType::ReadWrite>
   class Access;
 
@@ -26,8 +40,19 @@ class Safe final {
   using pointer = T *;
   using const_pointer = const T *;
 
+  /**
+   * Inplace construction of protected value.
+   * @tparam Args argument types for construction
+   * @param args arguments forwarded to constructor
+   */
   template<typename... Args>
   explicit Safe(Args &&...args) : value(std::forward<Args &&...>(args)...) {}
+  /**
+   * Inplace construction of protected value.
+   * @tparam Args argument types for construction
+   * @param mtx instance of mutex to be used for logging
+   * @param args arguments forwarded to constructor
+   */
   template<typename... Args>
   explicit Safe(Mutex &&mtx, Args &&...args) : mtx(std::move(mtx)), value(std::forward<Args &&...>(args)...) {}
   Safe(const Safe &other) : value(other.value), mtx(std::mutex{}) {}
@@ -40,16 +65,50 @@ class Safe final {
   Safe(Safe &&other) = delete;
   Safe &operator=(Safe &&other) = delete;
 
+  /**
+   * Get readwrite accessor to protected data.
+   * @return readwrite accessor to protected data
+   */
   ReadWriteAccess get() { return ReadWriteAccess{value, mtx}; }
+  /**
+   * Get readonly accessor to protected data.
+   * @return readonly accessor to protected data
+   */
   ReadOnlyAccess get() const { return ReadOnlyAccess{value, mtx}; }
 
+  /**
+   * Get readwrite accessor to protected data.
+   * @return readwrite accessor to protected data
+   */
   ReadWriteAccess writeAccess() { return ReadWriteAccess{value, mtx}; }
+  /**
+   * Get readonly accessor to protected data.
+   * @return readonly accessor to protected data
+   */
   ReadOnlyAccess readOnlyAccess() const { return ReadOnlyAccess{value, mtx}; }
 
+  /**
+   * Access inner data through an accessor with readwrite capabilities.
+   * @return readwrite accessor to protected data
+   */
   ReadWriteAccess operator->() { return get(); }
+  /**
+   * Access inner data through an accessor with readonly capabilities.
+   * @return readonly accessor to protected data
+   */
   ReadOnlyAccess operator->() const { return get(); }
 
+  // @todo: operator*
+
+  /**
+   * Unsafe access to underlying value. Mutex is not locked.
+   * @return reference to the underlying value
+   */
   reference unsafe() { return value; }
+  /**
+   * Unsafe access to underlying value. Mutex is not locked.
+   * @return const reference to the underlying value
+   */
   const_reference unsafe() const { return value; }
 
  private:

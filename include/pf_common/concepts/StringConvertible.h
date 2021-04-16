@@ -9,19 +9,35 @@
 #include <sstream>
 
 namespace pf {
-
+/**
+ * @brief A type which supports std::to_string
+ * @tparam T
+ */
 template<typename T>
 concept HasStdToString = requires(const T t) {
   { std::to_string(t) } -> std::convertible_to<std::string>;
 };
+/**
+ * @brief A type which has T::toString() method.
+ * @tparam T
+ */
 template<typename T>
 concept HasToString = requires(const T t) {
   { t.toString() } -> std::convertible_to<std::string>;
 };
-
+/**
+ * @brief A type which provides functionality to be converted into a string.
+ * @tparam T
+ */
 template<typename T>
 concept ToStringConvertible = StreamInputable<T> || HasStdToString<T> || HasToString<T>;
 
+/**
+ * Conversion of an object to string.
+ * @tparam T type of the converted object
+ * @param val value to be converted
+ * @return string representation of the provided value
+ */
 template<ToStringConvertible T>
 std::string toString(const T &val) {
   if constexpr (StreamInputable<T>) {

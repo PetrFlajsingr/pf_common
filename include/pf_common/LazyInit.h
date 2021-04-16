@@ -10,6 +10,13 @@
 #include <memory>
 
 namespace pf {
+
+/**
+ * @brief Lazy initialisation.
+ *
+ * Inner value is initialised on first access to it.
+ * @tparam T inner value type
+ */
 template<typename T>
 class LazyInit {
  public:
@@ -20,6 +27,10 @@ class LazyInit {
   using pointer = T *;
   using const_pointer = const T *;
 
+  /**
+   * Construct LazyInit.
+   * @param calc function calculation the inner value
+   */
   explicit LazyInit(std::invocable auto calc) : calc(calc) {}
 
   pointer operator->() {

@@ -9,7 +9,7 @@ TEST_CASE("ObjectPool", "[ObjectPool]") {
 
   SECTION("can lend up to PoolSize objects") {
     constexpr auto poolSize = 100;
-    auto pool = pf::object_pool<int, poolSize, pf::PoolAllocStrategy::Preallocate>();
+    auto pool = pf::ObjectPool<int, poolSize, pf::PoolAllocStrategy::Preallocate>();
     auto borrowed = std::vector<std::experimental::observer_ptr<int>>();
 
     for (std::size_t i = 0; i < poolSize; ++i) {
@@ -20,7 +20,7 @@ TEST_CASE("ObjectPool", "[ObjectPool]") {
 
   SECTION("recycles returned objects") {
     constexpr auto poolSize = 100;
-    auto pool = pf::object_pool<int, poolSize, pf::PoolAllocStrategy::Preallocate>();
+    auto pool = pf::ObjectPool<int, poolSize, pf::PoolAllocStrategy::Preallocate>();
     auto borrowed = std::vector<std::experimental::observer_ptr<int>>();
 
     for (std::size_t i = 0; i < poolSize; ++i) {

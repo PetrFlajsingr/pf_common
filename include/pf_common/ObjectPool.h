@@ -15,7 +15,14 @@
 
 namespace pf {
 
-enum class PoolAllocStrategy { Preallocate, IncreaseBy2x, OnDemand };
+/**
+ * Allocation strategy for ObjectPool.
+ */
+enum class PoolAllocStrategy {
+  Preallocate,  /**< Allocate whole pool on creation. */
+  IncreaseBy2x, /**< Allocate 2x the current capacity each time there's not enough objects. */
+  OnDemand      /**< Allocate capacity + 1 each time there's not enough objects. */
+};
 
 namespace details {
 template<PoolAllocStrategy Strategy>
@@ -70,8 +77,15 @@ struct DefaultPoolAllocator {
 };
 }// namespace details
 
+/**
+ * @brief Statically sized object pool to avoid multiple allocations and deallocations of objects.
+ * Thread-safe.
+ * @tparam T type of the stored objects
+ * @tparam PoolSize maximum size of the pool
+ * @tparam Strategy allocation strategy
+ */
 template<typename T, std::size_t PoolSize, PoolAllocStrategy Strategy = PoolAllocStrategy::Preallocate>
-class object_pool {
+class ObjectPool {
   using pool_allocator = details::DefaultPoolAllocator<T, PoolSize, Strategy>;
 
  public:
@@ -82,10 +96,24 @@ class object_pool {
   using pointer = std::experimental::observer_ptr<T>;
   using const_pointer = std::experimental::observer_ptr<const T>;
 
-  object_pool() requires std::default_initializable<T> : allocator([] { return T(); }, available_, inUse) {}
+  /**
+   * Construct ObjectPool. Only accessible if T is default initializable.
+   */
+  ObjectPool() requires std::default_initializable<T> : allocator([] { return T(); }, available_, inUse) {}
 
-  explicit object_pool(std::invocable auto &&generator) : allocator(generator, available_, inUse) {}
+  /**
+   * Construct ObjectPool with a generator to create stored instances.
+   * @param generator generator for T
+   */
+  explicit ObjectPool(std::invocable auto &&generator) requires(std::same_as<T, decltype(generator())>)
+      : allocator(std::forward<decltype(generator)>(generator), available_, inUse) {}
 
+  /**
+   * Get an available object from a pool.
+   * Objects has to be returned via release method for it to be available again.
+   * @return pointer to the leased object
+   * @throws std::runtime_error when there are no more objects available
+   */
   [[nodiscard]] pointer lease() {
     std::unique_lock lock{mutex};
     allocator.on_lease(available_, inUse);
@@ -96,6 +124,10 @@ class object_pool {
     return std::experimental::make_observer(ref.get());
   }
 
+  /**
+   * Return an object back to the pool for it to be made available.
+   * @param object object to return
+   */
   void release(pointer object) {
     std::unique_lock lock{mutex};
     if (auto iter =
@@ -107,6 +139,10 @@ class object_pool {
     }
   }
 
+  /**
+   * Get current capacity of the pool.
+   * @return capacity of the pool
+   */
   [[nodiscard]] constexpr size_type capacity() const {
     if constexpr (Strategy == PoolAllocStrategy::Preallocate) {
       return PoolSize;
@@ -115,10 +151,21 @@ class object_pool {
     }
   }
 
+  /**
+   * Deallocate objects which are currently not leased.
+   */
   void shrink_to_fit() requires(Strategy != PoolAllocStrategy::Preallocate) { allocator.shrink(available_, inUse); }
 
+  /**
+   * Get count of leased objects.
+   * @return count of leased objects
+   */
   [[nodiscard]] size_type used() const { return inUse.size(); }
 
+  /**
+   * Get count of available objects.
+   * @return count of available objects
+   */
   [[nodiscard]] size_type available() const { return available_.size(); }
 
  private:

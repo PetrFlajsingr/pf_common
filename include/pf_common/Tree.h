@@ -22,6 +22,10 @@ class TreeIteration;
 }// namespace tree_traversal
 
 //TODO: STL like iterators
+/**
+ * @brief Node of a tree with a variable amount of child nodes.
+ * @tparam T type of inner value
+ */
 template<typename T>
 class Node {
  public:

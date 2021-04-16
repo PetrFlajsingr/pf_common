@@ -6,6 +6,11 @@
 #define PF_COMMON_UTILS_VISITOR_H
 
 namespace pf {
+
+/**
+ * @brief Overloading of multiple callables via inheritance.
+ * @tparam Ts callables
+ */
 template<typename... Ts>
 struct Visitor : Ts... {
   using Ts::operator()...;
