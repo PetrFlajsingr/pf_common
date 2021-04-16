@@ -71,7 +71,7 @@ T loadFromFile(const std::filesystem::path &path) {
 
   auto data = std::vector<std::byte>(size);
   if (istream.read(reinterpret_cast<char *>(data.data()), size)) { return T::Deserialize(data); }
-  throw StackTraceException::fmt("Could not deserialize from '{}'", path.string());
+  throw StackTraceException("Could not deserialize from '{}'", path.string());
 }
 
 }// namespace pf

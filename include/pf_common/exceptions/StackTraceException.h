@@ -73,9 +73,6 @@ class StackTraceException : public std::exception {
 #endif
     whatStacktrace = ss.str();
   }
-  [[deprecated]] static StackTraceException fmt(std::string_view fmt, auto &&...args) {
-    return StackTraceException(fmt::format(fmt, args...));
-  }
 
   [[nodiscard]] inline const char *what() const noexcept override { return whatStacktrace.c_str(); }
 
