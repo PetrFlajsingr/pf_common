@@ -11,9 +11,15 @@
 #include <vector>
 
 namespace pf {
+/**
+ * List all files in folder.
+ * @param folder folder to search through
+ * @return all regular files in folder (absolute path)
+ * @throws InvalidArgumentException when folder is not path to a valid directory
+ */
 inline std::vector<std::filesystem::path> filesInFolder(const std::filesystem::path &folder) {
   if (!std::filesystem::is_directory(folder)) {
-    throw InvalidArgumentException::fmt("Path is not a directory: '{}'", folder.string());
+    throw InvalidArgumentException("Path is not a directory: '{}'", folder.string());
   }
   auto result = std::vector<std::filesystem::path>();
   for (const auto &p : std::filesystem::directory_iterator(folder)) {
