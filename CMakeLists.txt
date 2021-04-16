@@ -26,6 +26,12 @@ endif ()
 
 include(${CPM_DOWNLOAD_LOCATION})
 
+option(ENABLE_STACKTRACE "enable stacktrace in exceptions" OFF)
+
+if (ENABLE_STACKTRACE)
+    add_compile_definitions(STACKTRACE_ENABLE)
+endif()
+
 hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
 hunter_add_package(glm)

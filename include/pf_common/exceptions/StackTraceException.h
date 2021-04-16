@@ -5,11 +5,6 @@
 #ifndef PF_COMMON_STACKTRACEEXCEPTION_H
 #define PF_COMMON_STACKTRACEEXCEPTION_H
 
-/**
- * @todo: give an option to disable stack traces via cmake
- */
-#define STACKTRACE_ENABLE
-
 #include <exception>
 #include <fmt/format.h>
 #include <optional>
@@ -67,10 +62,10 @@ class StackTraceException : public std::exception {
     const auto traces = getTrace(STACKTRACE_SKIP_N);
 #endif
     auto ss = std::stringstream{};
-    if (!message.empty()) { ss << fmt::format("An exception occurred: {}\n", fmt::format(message, args...)); }
+    if (!fmt.empty()) { ss << fmt::format("An exception occurred: {}\n", fmt::format(fmt, args...)); }
 #ifdef STACKTRACE_ENABLE
-    const auto padding = std::string(CAUSED_BY.size(), ' ');
     const auto CAUSED_BY = "Caused by:\n"sv;
+    const auto padding = std::string(CAUSED_BY.size(), ' ');
     ss << CAUSED_BY;
     for (const auto &[idx, trace] : ranges::views::enumerate(traces)) {
       ss << fmt::format("{}#{} {} ({}:{})\n", padding, idx, trace.function, trace.file, trace.lineN);
@@ -90,12 +85,12 @@ class StackTraceException : public std::exception {
 
 class InvalidArgumentException : public StackTraceException {
  public:
-  inline explicit InvalidArgumentException(std::string_view message) : StackTraceException(message) {}
+  inline explicit InvalidArgumentException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
 };
 
 class NotImplementedException : public StackTraceException {
  public:
-  inline explicit NotImplementedException(std::string_view message) : StackTraceException(message) {}
+  inline explicit NotImplementedException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
 };
 
 }// namespace pf
