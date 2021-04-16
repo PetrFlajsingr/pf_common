@@ -15,6 +15,13 @@ struct is_direct_specialization<Template<Args...>, Template> : std::true_type {}
 template<typename T, template<class...> class U>
 constexpr static auto is_direct_specialization_v = is_direct_specialization<T, U>::value;
 
+/**
+ * @brief Check if T is a direct specialization of U.
+ *
+ * For example static_asssert(direct_specialization_of<std::vector<bool>, std::vector)
+ * @tparam T
+ * @tparam U
+ */
 template<typename T, template<class...> class U>
 concept direct_specialization_of = is_direct_specialization_v<T, U>;
 
@@ -33,7 +40,13 @@ struct is_derived_specialization {
 
 template<typename T, template<class...> class U>
 constexpr static auto is_derived_specialization_v = is_derived_specialization<T, U>::value;
-
+/**
+ * @brief Check if T is a direct or derived specialization of U.
+ *
+ * For example static_asssert(derived_specialization_of<DerivedFromStdVector<bool>, std::vector)
+ * @tparam T
+ * @tparam U
+ */
 template<typename T, template<class...> class U>
 concept derived_specialization_of = is_derived_specialization_v<T, U>;
 

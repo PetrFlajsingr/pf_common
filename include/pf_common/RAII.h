@@ -10,8 +10,15 @@
 #include <utility>
 
 namespace pf {
+/**
+ * @brief Equivalent to try finally.
+ */
 class RAII {
  public:
+  /**
+   * Construct RAII.
+   * @param callable function to be called upon object's destruction
+   */
   explicit RAII(std::invocable auto &&callable) : callable(std::forward<decltype(callable)>(callable)) {}
 
   inline ~RAII() { std::invoke(callable); }
