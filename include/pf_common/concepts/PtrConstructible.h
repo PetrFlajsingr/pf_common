@@ -7,6 +7,11 @@
 
 #include <memory>
 namespace pf {
+/**
+ * @brief An implementation of static member functions providing interface for creating smart pointers
+ * @tparam T
+ * @todo: support for observable_ptr?
+ */
 template<typename T>
 struct PtrConstructible {
   template<typename... Args>
