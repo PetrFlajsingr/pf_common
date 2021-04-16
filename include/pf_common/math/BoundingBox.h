@@ -8,11 +8,11 @@
 #include "common.h"
 #include <glm/glm.hpp>
 #include <ostream>
+#include <pf_common/concepts/OneOf.h>
 
 namespace pf::math {
 template<unsigned int Dimensions = 3>
-struct BoundingBox {
-  static_assert(Dimensions == 2 || Dimensions == 3);
+requires(OneOfValues_v<Dimensions, 2, 3>) struct BoundingBox {
   using Point = std::conditional_t<Dimensions == 3, glm::vec3, glm::vec2>;
   Point p1, p2;
 
