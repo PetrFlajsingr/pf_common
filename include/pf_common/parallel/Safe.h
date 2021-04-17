@@ -97,8 +97,16 @@ class Safe final {
    * @return readonly accessor to protected data
    */
   ReadOnlyAccess operator->() const { return get(); }
-
-  // @todo: operator*
+  /**
+   * Access inner data through an accessor with readwrite capabilities.
+   * @return readwrite accessor to protected data
+   */
+  ReadWriteAccess operator*() { return get(); }
+  /**
+   * Access inner data through an accessor with readonly capabilities.
+   * @return readonly accessor to protected data
+   */
+  ReadOnlyAccess operator*() const { return get(); }
 
   /**
    * Unsafe access to underlying value. Mutex is not locked.

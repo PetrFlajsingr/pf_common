@@ -65,9 +65,9 @@ concept Enum = std::is_enum_v<T> || ScopedEnum<T>;
  */
 template<Enum E, E DefaultValue = E{}>
 class Flags {
-  using UnderlyingType = std::underlying_type_t<E>;
-
  public:
+  using UnderlyingType = std::underlying_type_t<E>;
+  using EnumType = E;
   /**
    * Create Flags from multiple enum values
    * @param args enum values
@@ -126,7 +126,7 @@ class Flags {
   }
   [[nodiscard]] Flags operator|(const Flags &other) const {
     auto result = *this;
-    result.value |= other;
+    result |= other;
     return result;
   }
   Flags &operator|=(E other) {
@@ -144,7 +144,7 @@ class Flags {
   }
   [[nodiscard]] Flags operator&(const Flags &other) const {
     auto result = *this;
-    result.value &= other;
+    result &= other;
     return result;
   }
   Flags &operator&=(E other) {
@@ -156,11 +156,11 @@ class Flags {
     result &= other;
     return result;
   }
-  Flags &operator^=(const Flags *other) {
-    value = static_cast<E>(static_cast<UnderlyingType>(value) ^ static_cast<UnderlyingType>(other));
+  Flags &operator^=(const Flags &other) {
+    value = static_cast<E>(static_cast<UnderlyingType>(value) ^ static_cast<UnderlyingType>(other.value));
     return *this;
   }
-  [[nodiscard]] Flags operator^(const Flags *other) const {
+  [[nodiscard]] Flags operator^(const Flags &other) const {
     auto result = *this;
     result ^= other;
     return result;
@@ -221,6 +221,12 @@ Flags<E> operator&(E lhs, E rhs) {
   auto result = Flags<E>{lhs};
   result &= rhs;
   return result;
+}
+
+template<Enum E>
+E operator~(E value) {
+  using UnderlyingType = std::underlying_type_t<E>;
+  return static_cast<E>(~static_cast<UnderlyingType>(value));
 }
 }
 

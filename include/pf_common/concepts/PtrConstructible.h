@@ -5,12 +5,12 @@
 #ifndef PF_COMMON_PTRCONSTRUCTIBLE_H
 #define PF_COMMON_PTRCONSTRUCTIBLE_H
 
+#include <experimental/memory>
 #include <memory>
 namespace pf {
 /**
  * @brief An implementation of static member functions providing interface for creating smart pointers
  * @tparam T
- * @todo: support for observable_ptr?
  */
 template<typename T>
 struct PtrConstructible {
@@ -21,6 +21,9 @@ struct PtrConstructible {
   template<typename... Args>
   static std::unique_ptr<T> CreateUnique(Args &&...args) requires std::constructible_from<T, Args...> {
     return std::make_unique<T>(std::forward<Args>(args)...);
+  }
+  std::experimental::observer_ptr<T> createObserver() {
+    return std::experimental::make_observer(this);
   }
 };
 }// namespace pf
