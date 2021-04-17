@@ -1,7 +1,9 @@
-//
-// Created by petr on 4/12/21.
-//
-
+/**
+ * @file specializations.h
+ * @brief Concepts for checking if a type is specialization of another.
+ * @author Petr Flajšingr
+ * @date 12.4.21
+ */
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_SPECIALIZATIONS_H
 #define PF_COMMON_INCLUDE_PF_COMMON_SPECIALIZATIONS_H
 

@@ -1,7 +1,9 @@
-//
-// Created by Petr on 19.11.2019.
-//
-
+/**
+ * @file BoundingBox.h
+ * @brief Simple 2D or 3D bounding box.
+ * @author Petr Flajšingr
+ * @date 19.11.19
+ */
 #ifndef PF_COMMON_BOUNDINGBOX_H
 #define PF_COMMON_BOUNDINGBOX_H
 

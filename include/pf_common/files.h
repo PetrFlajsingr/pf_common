@@ -1,7 +1,9 @@
-//
-// Created by petr on 1/7/21.
-//
-
+/**
+ * @file file.h
+ * @brief Utility functions for working with filesystem.
+ * @author Petr Flajšingr
+ * @date 7.1.21
+ */
 #ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_FILES_H
 #define REALISTIC_VOXEL_RENDERING_SRC_UTILS_FILES_H
 

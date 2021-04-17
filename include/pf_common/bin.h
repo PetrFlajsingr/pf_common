@@ -1,7 +1,9 @@
-//
-// Created by petr on 1/4/21.
-//
-
+/**
+ * @file bin.h
+ * @brief Functions for raw data conversion.
+ * @author Petr Flajšingr
+ * @date 4.1.21
+ */
 #ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_BIN_H
 #define REALISTIC_VOXEL_RENDERING_SRC_UTILS_BIN_H
 

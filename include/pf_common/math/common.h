@@ -1,7 +1,9 @@
-//
-// Created by petr on 12/14/19.
-//
-
+/**
+ * @file common.h
+ * @brief Common types for pf::math.
+ * @author Petr Flajšingr
+ * @date 14.12.19
+ */
 #ifndef PF_COMMON_MATH_COMMON_H
 #define PF_COMMON_MATH_COMMON_H
 

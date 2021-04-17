@@ -1,7 +1,9 @@
-//
-// Created by petr on 11/1/20.
-//
-
+/**
+ * @file RAII.h
+ * @brief Utility to emulate try finally construct.
+ * @author Petr Flajšingr
+ * @date 1.11.20
+ */
 #ifndef PF_COMMON_UTILS_RAII_H
 #define PF_COMMON_UTILS_RAII_H
 

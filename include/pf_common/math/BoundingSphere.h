@@ -1,7 +1,9 @@
-//
-// Created by Petr on 19.11.2019.
-//
-
+/**
+ * @file BoundingSphere.h
+ * @brief A simple 2D or 3D bounding sphere
+ * @author Petr Flajšingr
+ * @date 19.11.19
+ */
 #ifndef PF_COMMON_BOUNDINGSPHERE_H
 #define PF_COMMON_BOUNDINGSPHERE_H
 

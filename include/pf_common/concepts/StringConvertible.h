@@ -1,7 +1,9 @@
-//
-// Created by xflajs00 on 25.01.2021.
-//
-
+/**
+ * @file StringConvertible.h
+ * @brief Provides concepts to check for to string conversion capabilities of a type along with a utility function for conversion.
+ * @author Petr Flajšingr
+ * @date 25.1.21
+ */
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_CONCEPTS_STRINGCONVERTIBLE_H
 #define PF_COMMON_INCLUDE_PF_COMMON_CONCEPTS_STRINGCONVERTIBLE_H
 

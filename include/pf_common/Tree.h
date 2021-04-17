@@ -1,7 +1,9 @@
-//
-// Created by petr on 1/7/21.
-//
-
+/**
+ * @file Tree.h
+ * @brief Tree with a dynamic child count.
+ * @author Petr Flajšingr
+ * @date 7.1.21
+ */
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_TREE_H
 #define PF_COMMON_INCLUDE_PF_COMMON_TREE_H
 

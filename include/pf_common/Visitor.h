@@ -1,7 +1,9 @@
-//
-// Created by petr on 11/1/20.
-//
-
+/**
+ * @file Visitor.h
+ * @brief Utility for lambda overloading.
+ * @author Petr Flajšingr
+ * @date 1.11.20
+ */
 #ifndef PF_COMMON_UTILS_VISITOR_H
 #define PF_COMMON_UTILS_VISITOR_H
 

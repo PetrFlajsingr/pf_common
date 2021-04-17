@@ -1,7 +1,9 @@
-//
-// Created by petr on 11/3/20.
-//
-
+/**
+ * @file ILogger.h
+ * @brief Logger interface mainly meant to be used across lib boundaries.
+ * @author Petr Flajšingr
+ * @date 3.11.20
+ */
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H
 #define PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H
 

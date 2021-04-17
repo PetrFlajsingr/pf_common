@@ -1,7 +1,12 @@
 //
 // Created by petr on 12/21/19.
 //
-
+/**
+ * @file StaticTree.h
+ * @brief N-ary tree, where N is known at compile time.
+ * @author Petr Flajšingr
+ * @date 21.12.19
+ */
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCDFAInspection"
 #ifndef UTILITIES_TREE_H

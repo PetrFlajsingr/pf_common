@@ -1,7 +1,9 @@
-//
-// Created by petr on 1/23/21.
-//
-
+/**
+ * @file enums.h
+ * @brief Common enums and utility for working with enums.
+ * @author Petr Flajšingr
+ * @date 23.1.21
+ */
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_ENUMS_H
 #define PF_COMMON_INCLUDE_PF_COMMON_ENUMS_H
 
@@ -222,7 +224,12 @@ Flags<E> operator&(E lhs, E rhs) {
   result &= rhs;
   return result;
 }
-
+/**
+ * Bitwise negation. Resulting value might not be a valid value of E.
+ * @tparam E type of enum
+ * @param value value to negate
+ * @return bitwise negated value
+ */
 template<Enum E>
 E operator~(E value) {
   using UnderlyingType = std::underlying_type_t<E>;

@@ -1,7 +1,9 @@
-//
-// Created by Petr on 15.09.2020.
-//
-
+/**
+ * @file LazyInit.h
+ * @brief Implementation of lazy initialization.
+ * @author Petr Flajšingr
+ * @date 15.9.20
+ */
 #ifndef PF_COMMON_LAZY_INIT_H
 #define PF_COMMON_LAZY_INIT_H
 

@@ -1,6 +1,9 @@
-//
-// Created by petr on 9/24/20.
-//
+/**
+ * @file Incrementable.h
+ * @brief Provides concepts to check for increment capabilities of a type.
+ * @author Petr Flajšingr
+ * @date 24.9.20
+ */
 
 #ifndef PF_COMMON_INCREMENTABLE_H
 #define PF_COMMON_INCREMENTABLE_H

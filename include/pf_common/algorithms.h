@@ -1,7 +1,9 @@
-//
-// Created by petr on 10/26/20.
-//
-
+/**
+ * @file algorithms.h
+ * @brief Convenience functions similar to those in <algortihm>.
+ * @author Petr Flajšingr
+ * @date 26.10.20
+ */
 #ifndef PF_COMMON_ALGORITHMS_H
 #define PF_COMMON_ALGORITHMS_H
 

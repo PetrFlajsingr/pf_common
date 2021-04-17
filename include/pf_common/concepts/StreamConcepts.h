@@ -1,7 +1,9 @@
-//
-// Created by petr on 9/24/20.
-//
-
+/**
+ * @file StreamConcepts.h
+ * @brief Concepts for checking type's stream interface.
+ * @author Petr Flajšingr
+ * @date 24.9.20
+ */
 #ifndef PF_COMMON_STREAMCONCEPTS_H
 #define PF_COMMON_STREAMCONCEPTS_H
 

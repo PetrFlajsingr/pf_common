@@ -1,7 +1,9 @@
-//
-// Created by petr on 9/24/20.
-//
-
+/**
+ * @file Sequence.h
+ * @brief Simple generator coroutines.
+ * @author Petr Flajšingr
+ * @date 24.9.20
+ */
 #ifndef PF_COMMON_SEQUENCE_H
 #define PF_COMMON_SEQUENCE_H
 

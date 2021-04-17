@@ -1,7 +1,9 @@
-//
-// Created by petr on 12/5/20.
-//
-
+/**
+ * @file const_init.h
+ * @brief Macro for simplification of IIFE.
+ * @author Petr Flajšingr
+ * @date 12.5.20
+ */
 #ifndef PF_COMMON_INCLUDE_PF_COMMON_CONST_INIT_H
 #define PF_COMMON_INCLUDE_PF_COMMON_CONST_INIT_H
 

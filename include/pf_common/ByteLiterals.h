@@ -1,7 +1,9 @@
-//
-// Created by Petr on 18.11.2019.
-//
-
+/**
+ * @file ByteLiterals.h
+ * @brief Utility user literals for bytes.
+ * @author Petr Flajšingr
+ * @date 18.11.19
+ */
 #ifndef PF_COMMON_BYTELITERALS_H
 #define PF_COMMON_BYTELITERALS_H
 

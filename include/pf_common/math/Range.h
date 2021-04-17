@@ -1,7 +1,12 @@
 //
 // Created by petr on 11/1/20.
 //
-
+/**
+ * @file Range.h
+ * @brief Range on a simple axis.
+ * @author Petr Flajšingr
+ * @date 1.11.20
+ */
 #ifndef PF_COMMON_UTILS_MATH_H
 #define PF_COMMON_UTILS_MATH_H
 

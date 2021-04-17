@@ -1,7 +1,9 @@
-//
-// Created by petr on 10/19/20.
-//
-
+/**
+ * @file OneOf.h
+ * @brief Static checking of types in type lists and values in value lists.
+ * @author Petr Flajšingr
+ * @date 19.10.20
+ */
 #ifndef PF_COMMON_ONEOF_H
 #define PF_COMMON_ONEOF_H
 

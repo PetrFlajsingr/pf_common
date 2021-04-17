@@ -1,7 +1,9 @@
-//
-// Created by petr on 1/2/21.
-//
-
+/**
+ * @file Serializable.h
+ * @brief Concepts for de/serializable objects and utility functions for de/serialization.
+ * @author Petr Flajšingr
+ * @date 2.1.21
+ */
 #ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H
 #define REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H
 

@@ -1,7 +1,9 @@
-//
-// Created by petr on 1/2/21.
-//
-
+/**
+ * @file bits.h
+ * @brief Functions for memory bit manipulation
+ * @author Petr Flajšingr
+ * @date 2.1.21
+ */
 #ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_BITS_H
 #define REALISTIC_VOXEL_RENDERING_SRC_UTILS_BITS_H
 

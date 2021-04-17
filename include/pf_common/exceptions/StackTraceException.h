@@ -1,7 +1,10 @@
-//
-// Created by petr on 9/23/20.
-//
-
+/**
+ * @file StackTraceException.h
+ * @brief Exceptions with built in stacktrace dumping.
+ * Macro STACKTRACE_ENABLE controls if the stacktrace reporting is enabled.
+ * @author Petr Flajšingr
+ * @date 23.9.20
+ */
 #ifndef PF_COMMON_STACKTRACEEXCEPTION_H
 #define PF_COMMON_STACKTRACEEXCEPTION_H
 
@@ -53,6 +56,9 @@ inline std::string traceToString(const std::vector<TraceData> &traceData) {
   return result;
 }
 
+/**
+ * @brief An exception providing stacktrace info.
+ */
 class StackTraceException : public std::exception {
  public:
   inline explicit StackTraceException(std::string_view fmt, auto &&...args) {
@@ -80,11 +86,16 @@ class StackTraceException : public std::exception {
   std::string whatStacktrace;
 };
 
+/**
+ * @brief Exception thrown when an invalid argument was provided.
+ */
 class InvalidArgumentException : public StackTraceException {
  public:
   inline explicit InvalidArgumentException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
 };
-
+/**
+ * @brief Exception thrown for not yet implemented functions etc.
+ */
 class NotImplementedException : public StackTraceException {
  public:
   inline explicit NotImplementedException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
