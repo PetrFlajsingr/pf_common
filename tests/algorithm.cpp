@@ -50,10 +50,3 @@ TEST_CASE("find first common", "[algorithm][findFirstCommon]") {
   }
 }
 
-TEST_CASE("fsdf", "adsdas") {
-  static_assert(std::forward_iterator<pf::tree_traversal::TreeIterator<int, false, true, pf::tree_traversal::Type::DepthFirst>>);
-
-  pf::Tree<int> tree;
-  for ([[maybe_unused]] auto &a : tree.iterBreadthFirst()) {}
-  for ([[maybe_unused]] auto &a : tree.iterDepthFirst()) {}
-}
