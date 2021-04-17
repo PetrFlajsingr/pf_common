@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['safe_48',['Safe',['../classpf_1_1Safe.html',1,'pf::Safe&lt; T, Mutex &gt;'],['../classpf_1_1Safe.html#a54e214af9163b7400694758b5721b3b4',1,'pf::Safe::Safe(Args &amp;&amp;...args)'],['../classpf_1_1Safe.html#af8e922da66d0ac39778d0f2cc5e3ac93',1,'pf::Safe::Safe(Mutex &amp;&amp;mtx, Args &amp;&amp;...args)']]],
-  ['shrink_5fto_5ffit_49',['shrink_to_fit',['../classpf_1_1ObjectPool.html#a7befa660d91664cdd2dde98af4f112cc',1,'pf::ObjectPool']]],
-  ['stacktraceexception_50',['StackTraceException',['../classpf_1_1StackTraceException.html',1,'pf']]],
-  ['start_51',['start',['../structpf_1_1math_1_1Range.html#a0a56d5f9266cda161847fee86686a2b3',1,'pf::math::Range']]],
-  ['statictree_52',['StaticTree',['../classpf_1_1static__tree_1_1StaticTree.html',1,'pf::static_tree']]],
-  ['subscription_53',['Subscription',['../classpf_1_1Subscription.html',1,'pf::Subscription'],['../classpf_1_1Subscription.html#a15c131dedcd29e0a9be9dfff27b1135a',1,'pf::Subscription::Subscription()']]]
+  ['raii_87',['RAII',['../classpf_1_1RAII.html',1,'pf::RAII'],['../classpf_1_1RAII.html#ae1b99df489c26c683c24607f1154d33e',1,'pf::RAII::RAII()']]],
+  ['raii_2eh_88',['RAII.h',['../RAII_8h.html',1,'']]],
+  ['range_89',['Range',['../structpf_1_1math_1_1Range.html',1,'pf::math::Range&lt; T &gt;'],['../Sequence_8h.html#a641f987fbb332cd325027b7febb1bfd8',1,'pf::range(T start, T end, T step=T(1))'],['../Sequence_8h.html#a28a797f822724da1cee323e25ae554e6',1,'pf::range(T end)']]],
+  ['range_2eh_90',['Range.h',['../Range_8h.html',1,'']]],
+  ['rangevaluetype_91',['RangeValueType',['../Range_8h.html#aeb2c8062b35ffdd4947d69aa4e932d73',1,'pf::math']]],
+  ['readonlyaccess_92',['readOnlyAccess',['../classpf_1_1Safe.html#accaf78c36f19ff71efe6df5badce0094',1,'pf::Safe']]],
+  ['relativeposition_93',['RelativePosition',['../common_8h.html#ab4c3ff516d3e9e5963ecaa796ca2ba1e',1,'pf::math']]],
+  ['release_94',['release',['../classpf_1_1ObjectPool.html#a9f34bb95bab682609cf4021735e17f7a',1,'pf::ObjectPool']]],
+  ['requires_95',['requires',['../BoundingBox_8h.html#a075d30d2dff73a580aa72a6afd432226',1,'pf::math']]]
 ];

@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 2.1.21
  */
-#ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_BITS_H
-#define REALISTIC_VOXEL_RENDERING_SRC_UTILS_BITS_H
+#ifndef PF_COMMON_BITS_H
+#define PF_COMMON_BITS_H
 
 #include <cassert>
 
@@ -53,4 +53,4 @@ inline void setBitValueAtIndex(T &data, std::size_t idx, bool value) {
 
 }// namespace pf
 
-#endif//REALISTIC_VOXEL_RENDERING_SRC_UTILS_BITS_H
+#endif//PF_COMMON_BITS_H

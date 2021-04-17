@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -71,44 +71,45 @@ $(function() {
 <div class="title">BoundingBox.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by Petr on 19.11.2019.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_BOUNDINGBOX_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define PF_COMMON_BOUNDINGBOX_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;common.h&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;glm/glm.hpp&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;ostream&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;pf_common/concepts/OneOf.h&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>pf::math {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Dimensions = 3&gt;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;requires(OneOfValues_v&lt;Dimensions, 2, 3&gt;) <span class="keyword">struct </span>BoundingBox {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keyword">using</span> Point = std::conditional_t&lt;Dimensions == 3, glm::vec3, glm::vec2&gt;;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  Point p1;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  Point p2;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  BoundingBox() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  BoundingBox(glm::vec3 p1, glm::vec3 p2) : p1(p1), p2(p2) {}</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> BoundingBox &amp;rhs) <span class="keyword">const</span>;</div>
+<a href="BoundingBox_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_MATH_BOUNDINGBOX_H</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PF_COMMON_MATH_BOUNDINGBOX_H</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_8h.html">common.h</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;glm/glm.hpp&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;ostream&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="OneOf_8h.html">pf_common/concepts/OneOf.h</a>&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>pf::math {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Dimensions = 3&gt;</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="BoundingBox_8h.html#a075d30d2dff73a580aa72a6afd432226">   21</a></span>&#160;<a class="code" href="BoundingBox_8h.html#a075d30d2dff73a580aa72a6afd432226">requires</a>(OneOfValues_v&lt;Dimensions, 2, 3&gt;) <span class="keyword">struct </span>BoundingBox {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keyword">using</span> Point = std::conditional_t&lt;Dimensions == 3, glm::vec3, glm::vec2&gt;;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  Point p1;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  Point p2;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  BoundingBox() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  BoundingBox(glm::vec3 p1, glm::vec3 p2) : p1(p1), p2(p2) {}</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> BoundingBox &amp;rhs) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> BoundingBox &amp;rhs) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  [[nodiscard]] RelativePosition contains(<span class="keyword">const</span> BoundingBox &amp;aabb) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  [[nodiscard]] <span class="keywordtype">bool</span> contains(Point point) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;};</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Dims&gt;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;std::ostream &amp;operator&lt;&lt;(std::ostream &amp;stream, <span class="keyword">const</span> BoundingBox&lt;Dims&gt; &amp;aabb);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}<span class="comment">// namespace pf::math</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &quot;BoundingBox.tpp&quot;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif// PF_COMMON_BOUNDINGBOX_H</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> BoundingBox &amp;rhs) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  [[nodiscard]] <a class="code" href="common_8h.html#ab4c3ff516d3e9e5963ecaa796ca2ba1e">RelativePosition</a> contains(<span class="keyword">const</span> BoundingBox &amp;aabb) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  [[nodiscard]] <span class="keywordtype">bool</span> contains(Point point) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">template</span>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Dims&gt;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;std::ostream &amp;operator&lt;&lt;(std::ostream &amp;stream, <span class="keyword">const</span> BoundingBox&lt;Dims&gt; &amp;aabb);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}<span class="comment">// namespace pf::math</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &quot;BoundingBox.tpp&quot;</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif// PF_COMMON_MATH_BOUNDINGBOX_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="acommon_8h_html_ab4c3ff516d3e9e5963ecaa796ca2ba1e"><div class="ttname"><a href="common_8h.html#ab4c3ff516d3e9e5963ecaa796ca2ba1e">pf::math::RelativePosition</a></div><div class="ttdeci">RelativePosition</div><div class="ttdef"><b>Definition:</b> common.h:14</div></div>
+<div class="ttc" id="aOneOf_8h_html"><div class="ttname"><a href="OneOf_8h.html">OneOf.h</a></div><div class="ttdoc">Static checking of types in type lists and values in value lists.</div></div>
+<div class="ttc" id="acommon_8h_html"><div class="ttname"><a href="common_8h.html">common.h</a></div><div class="ttdoc">Common types for pf::math.</div></div>
+<div class="ttc" id="aBoundingBox_8h_html_a075d30d2dff73a580aa72a6afd432226"><div class="ttname"><a href="BoundingBox_8h.html#a075d30d2dff73a580aa72a6afd432226">pf::math::requires</a></div><div class="ttdeci">requires(OneOfValues_v&lt; Dimensions, 2, 3 &gt;) struct BoundingBox</div><div class="ttdoc">Axis aligned bounding box.</div><div class="ttdef"><b>Definition:</b> BoundingBox.h:21</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -1,6 +1,3 @@
-//
-// Created by petr on 12/21/19.
-//
 /**
  * @file StaticTree.h
  * @brief N-ary tree, where N is known at compile time.
@@ -9,8 +6,8 @@
  */
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCDFAInspection"
-#ifndef UTILITIES_TREE_H
-#define UTILITIES_TREE_H
+#ifndef PF_COMMON_STATIC_TREE_H
+#define PF_COMMON_STATIC_TREE_H
 
 #include <memory>
 #include <queue>
@@ -296,6 +293,6 @@ class StaticTree {
 #include "detail/StaticTree_detail.tpp"
 #include "detail/StaticTree_node.tpp"
 }// namespace pf::static_tree
-#endif// UTILITIES_TREE_H
+#endif// PF_COMMON_STATIC_TREE_H
 
 #pragma clang diagnostic pop

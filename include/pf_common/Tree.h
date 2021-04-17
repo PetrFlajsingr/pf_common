@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 7.1.21
  */
-#ifndef PF_COMMON_INCLUDE_PF_COMMON_TREE_H
-#define PF_COMMON_INCLUDE_PF_COMMON_TREE_H
+#ifndef PF_COMMON_TREE_H
+#define PF_COMMON_TREE_H
 
 #include <memory>
 #include <queue>
@@ -372,4 +372,4 @@ template<typename T, bool IsConst, bool IsNode, pf::tree_traversal::Type TravTyp
 inline constexpr bool enable_borrowed_range<pf::tree_traversal::TreeIteration<T, IsConst, IsNode, TravType>> = true;
 }
 
-#endif//PF_COMMON_INCLUDE_PF_COMMON_TREE_H
+#endif//PF_COMMON_TREE_H

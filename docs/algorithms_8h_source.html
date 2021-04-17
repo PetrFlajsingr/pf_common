@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -71,47 +71,48 @@ $(function() {
 <div class="title">algorithms.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by petr on 10/26/20.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_ALGORITHMS_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define PF_COMMON_ALGORITHMS_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;optional&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;range/v3/range/concepts.hpp&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;range/v3/range/traits.hpp&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;ranges&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>pf {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">template</span>&lt;std::ranges::range Range&gt;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;[[nodiscard]] <span class="keywordtype">bool</span> isIn(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;needle, Range &amp;&amp;haystack) {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  static_assert(std::equality_comparable_with&lt;decltype(needle), std::ranges::range_value_t&lt;Range&gt;&gt;);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">return</span> std::ranges::any_of(haystack, [&amp;needle](<span class="keyword">const</span> <span class="keyword">auto</span> &amp;value) { <span class="keywordflow">return</span> needle == value; });</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;[[nodiscard]] <span class="keyword">auto</span> findFirstCommon(<span class="keyword">const</span> std::ranges::range <span class="keyword">auto</span> &amp;range1, <span class="keyword">const</span> std::ranges::range <span class="keyword">auto</span> &amp;range2) {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  static_assert(std::equality_comparable_with&lt;std::ranges::range_value_t&lt;decltype(range1)&gt;,</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                                              std::ranges::range_value_t&lt;decltype(range2)&gt;&gt;);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keyword">using</span> ResultType = std::ranges::range_value_t&lt;decltype(range1)&gt;;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">if</span> (<span class="keyword">auto</span> iter = std::ranges::find_if(range1, [&amp;range2](<span class="keyword">const</span> <span class="keyword">auto</span> &amp;val) { <span class="keywordflow">return</span> isIn(val, range2); });</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      iter != range1.end()) {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">return</span> std::optional&lt;ResultType&gt;{*iter};</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keywordflow">return</span> std::optional&lt;ResultType&gt;{};</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">template</span>&lt;ranges::range Range&gt;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;std::optional&lt;ranges::range_value_t&lt;Range&gt;&gt; findIf(Range &amp;&amp;range,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                                                   std::predicate&lt;ranges::range_value_t&lt;Range&gt;&gt; <span class="keyword">auto</span> &amp;&amp;predicate) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> iter = std::ranges::find_if(range, predicate); iter != ranges::end(range)) { <span class="keywordflow">return</span> *iter; }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span> std::nullopt;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}<span class="comment">// namespace pf</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif//PF_COMMON_ALGORITHMS_H</span></div>
+<a href="algorithms_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_ALGORITHMS_H</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PF_COMMON_ALGORITHMS_H</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;range/v3/range/concepts.hpp&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;range/v3/range/traits.hpp&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;ranges&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>pf {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">template</span>&lt;std::ranges::range Range&gt;</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="algorithms_8h.html#a23416e595a7533cfe676e5e4772ae2ce">   24</a></span>&#160;[[nodiscard]] <span class="keywordtype">bool</span> <a class="code" href="algorithms_8h.html#a23416e595a7533cfe676e5e4772ae2ce">isIn</a>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;needle, Range &amp;&amp;haystack) {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  static_assert(std::equality_comparable_with&lt;decltype(needle), std::ranges::range_value_t&lt;Range&gt;&gt;);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">return</span> std::ranges::any_of(haystack, [&amp;needle](<span class="keyword">const</span> <span class="keyword">auto</span> &amp;value) { <span class="keywordflow">return</span> needle == value; });</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="algorithms_8h.html#a1c93fb5d3c7a54614f9712d735279389">   35</a></span>&#160;[[nodiscard]] <span class="keyword">auto</span> <a class="code" href="algorithms_8h.html#a1c93fb5d3c7a54614f9712d735279389">findFirstCommon</a>(<span class="keyword">const</span> std::ranges::range <span class="keyword">auto</span> &amp;range1, <span class="keyword">const</span> std::ranges::range <span class="keyword">auto</span> &amp;range2) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  static_assert(std::equality_comparable_with&lt;std::ranges::range_value_t&lt;decltype(range1)&gt;,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                                              std::ranges::range_value_t&lt;decltype(range2)&gt;&gt;);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">using</span> ResultType = std::ranges::range_value_t&lt;decltype(range1)&gt;;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">if</span> (<span class="keyword">auto</span> iter = std::ranges::find_if(range1, [&amp;range2](<span class="keyword">const</span> <span class="keyword">auto</span> &amp;val) { <span class="keywordflow">return</span> <a class="code" href="algorithms_8h.html#a23416e595a7533cfe676e5e4772ae2ce">isIn</a>(val, range2); });</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      iter != range1.end()) {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">return</span> std::optional&lt;ResultType&gt;{*iter};</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">return</span> std::optional&lt;ResultType&gt;{};</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">template</span>&lt;ranges::range Range&gt;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="algorithms_8h.html#afb091ebcd55afd6560689d5bf2d93364">   53</a></span>&#160;std::optional&lt;ranges::range_value_t&lt;Range&gt;&gt; <a class="code" href="algorithms_8h.html#afb091ebcd55afd6560689d5bf2d93364">findIf</a>(Range &amp;&amp;range,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                                                   std::predicate&lt;ranges::range_value_t&lt;Range&gt;&gt; <span class="keyword">auto</span> &amp;&amp;predicate) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> iter = std::ranges::find_if(<a class="code" href="Sequence_8h.html#a641f987fbb332cd325027b7febb1bfd8">range</a>, predicate); iter != ranges::end(<a class="code" href="Sequence_8h.html#a641f987fbb332cd325027b7febb1bfd8">range</a>)) { <span class="keywordflow">return</span> *iter; }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">return</span> std::nullopt;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}<span class="comment">// namespace pf</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif//PF_COMMON_ALGORITHMS_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aSequence_8h_html_a641f987fbb332cd325027b7febb1bfd8"><div class="ttname"><a href="Sequence_8h.html#a641f987fbb332cd325027b7febb1bfd8">pf::range</a></div><div class="ttdeci">cppcoro::generator&lt; T &gt; range(T start, T end, T step=T(1))</div><div class="ttdef"><b>Definition:</b> Sequence.h:62</div></div>
+<div class="ttc" id="aalgorithms_8h_html_afb091ebcd55afd6560689d5bf2d93364"><div class="ttname"><a href="algorithms_8h.html#afb091ebcd55afd6560689d5bf2d93364">pf::findIf</a></div><div class="ttdeci">std::optional&lt; ranges::range_value_t&lt; Range &gt; &gt; findIf(Range &amp;&amp;range, std::predicate&lt; ranges::range_value_t&lt; Range &gt;&gt; auto &amp;&amp;predicate)</div><div class="ttdef"><b>Definition:</b> algorithms.h:53</div></div>
+<div class="ttc" id="aalgorithms_8h_html_a1c93fb5d3c7a54614f9712d735279389"><div class="ttname"><a href="algorithms_8h.html#a1c93fb5d3c7a54614f9712d735279389">pf::findFirstCommon</a></div><div class="ttdeci">auto findFirstCommon(const std::ranges::range auto &amp;range1, const std::ranges::range auto &amp;range2)</div><div class="ttdef"><b>Definition:</b> algorithms.h:35</div></div>
+<div class="ttc" id="aalgorithms_8h_html_a23416e595a7533cfe676e5e4772ae2ce"><div class="ttname"><a href="algorithms_8h.html#a23416e595a7533cfe676e5e4772ae2ce">pf::isIn</a></div><div class="ttdeci">bool isIn(const auto &amp;needle, Range &amp;&amp;haystack)</div><div class="ttdef"><b>Definition:</b> algorithms.h:24</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

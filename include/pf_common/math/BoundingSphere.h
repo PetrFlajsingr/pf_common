@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 19.11.19
  */
-#ifndef PF_COMMON_BOUNDINGSPHERE_H
-#define PF_COMMON_BOUNDINGSPHERE_H
+#ifndef PF_COMMON_MATH_BOUNDINGSPHERE_H
+#define PF_COMMON_MATH_BOUNDINGSPHERE_H
 
 #include <glm/geometric.hpp>
 #include <glm/vec3.hpp>
@@ -40,4 +40,4 @@ requires(OneOfValues_v<Dimensions, 2, 3>) struct BoundingSphere {
 }// namespace pf::math
 
 #include "BoundingSphere.tpp"
-#endif// PF_COMMON_BOUNDINGSPHERE_H
+#endif// PF_COMMON_MATH_BOUNDINGSPHERE_H

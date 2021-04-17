@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 1.11.20
  */
-#ifndef PF_COMMON_UTILS_RAII_H
-#define PF_COMMON_UTILS_RAII_H
+#ifndef PF_COMMON_RAII_H
+#define PF_COMMON_RAII_H
 
 #include <concepts>
 #include <functional>
@@ -30,4 +30,4 @@ class RAII {
 };
 }// namespace pf
 
-#endif//PF_COMMON_UTILS_RAII_H
+#endif//PF_COMMON_RAII_H

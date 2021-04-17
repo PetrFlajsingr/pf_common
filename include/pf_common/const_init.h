@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 12.5.20
  */
-#ifndef PF_COMMON_INCLUDE_PF_COMMON_CONST_INIT_H
-#define PF_COMMON_INCLUDE_PF_COMMON_CONST_INIT_H
+#ifndef PF_COMMON_CONST_INIT_H
+#define PF_COMMON_CONST_INIT_H
 
 /**
  * Shorthand for:
@@ -27,4 +27,4 @@
     init return result;                                                                                                \
   }()
 
-#endif//PF_COMMON_INCLUDE_PF_COMMON_CONST_INIT_H
+#endif//PF_COMMON_CONST_INIT_H

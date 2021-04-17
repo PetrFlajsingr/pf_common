@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -71,36 +71,36 @@ $(function() {
 <div class="title">bin.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by petr on 1/4/21.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_BIN_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define REALISTIC_VOXEL_RENDERING_SRC_UTILS_BIN_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;concepts/Serializable.h&quot;</span></div>
+<a href="bin_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_BIN_H</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PF_COMMON_BIN_H</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>pf {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;std::vector&lt;std::byte&gt; toBytes(<span class="keyword">const</span> T &amp;data) {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">if</span> constexpr (Serializable&lt;T&gt;) { <span class="keywordflow">return</span> data.serialize(); }</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keyword">auto</span> result = std::vector&lt;std::byte&gt;(<span class="keyword">sizeof</span>(data));</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  std::ranges::copy(std::span(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::byte *<span class="keyword">&gt;</span>(&amp;data), <span class="keyword">sizeof</span>(data)), result.begin());</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;requires std::is_default_constructible_v&lt;T&gt; T fromBytes(std::span&lt;const std::byte&gt; data) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  assert(data.size() == <span class="keyword">sizeof</span>(T));</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keyword">auto</span> result = T{};</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  std::ranges::copy(data, <span class="keyword">reinterpret_cast&lt;</span>std::byte *<span class="keyword">&gt;</span>(&amp;result));</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}<span class="comment">// namespace pf</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Serializable_8h.html">concepts/Serializable.h</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>pf {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="bin_8h.html#ada523dd34aec5acfedc8cad0b102768e">   20</a></span>&#160;std::vector&lt;std::byte&gt; <a class="code" href="bin_8h.html#ada523dd34aec5acfedc8cad0b102768e">toBytes</a>(<span class="keyword">const</span> T &amp;data) {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordflow">if</span> constexpr (Serializable&lt;T&gt;) { <span class="keywordflow">return</span> data.serialize(); }</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keyword">auto</span> result = std::vector&lt;std::byte&gt;(<span class="keyword">sizeof</span>(data));</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  std::ranges::copy(std::span(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::byte *<span class="keyword">&gt;</span>(&amp;data), <span class="keyword">sizeof</span>(data)), result.begin());</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="bin_8h.html#a89132bcdc9be84fc3759554f522bceea">   34</a></span>&#160;requires std::is_default_constructible_v&lt;T&gt; T <a class="code" href="bin_8h.html#a89132bcdc9be84fc3759554f522bceea">fromBytes</a>(std::span&lt;const std::byte&gt; data) {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  assert(data.size() == <span class="keyword">sizeof</span>(T));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keyword">auto</span> result = T{};</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  std::ranges::copy(data, <span class="keyword">reinterpret_cast&lt;</span>std::byte *<span class="keyword">&gt;</span>(&amp;result));</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif//REALISTIC_VOXEL_RENDERING_SRC_UTILS_BIN_H</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}<span class="comment">// namespace pf</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif//PF_COMMON_BIN_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="abin_8h_html_a89132bcdc9be84fc3759554f522bceea"><div class="ttname"><a href="bin_8h.html#a89132bcdc9be84fc3759554f522bceea">pf::fromBytes</a></div><div class="ttdeci">requires std::is_default_constructible_v&lt; T &gt; T fromBytes(std::span&lt; const std::byte &gt; data)</div><div class="ttdef"><b>Definition:</b> bin.h:34</div></div>
+<div class="ttc" id="aSerializable_8h_html"><div class="ttname"><a href="Serializable_8h.html">Serializable.h</a></div><div class="ttdoc">Concepts for de/serializable objects and utility functions for de/serialization.</div></div>
+<div class="ttc" id="abin_8h_html_ada523dd34aec5acfedc8cad0b102768e"><div class="ttname"><a href="bin_8h.html#ada523dd34aec5acfedc8cad0b102768e">pf::toBytes</a></div><div class="ttdeci">std::vector&lt; std::byte &gt; toBytes(const T &amp;data)</div><div class="ttdef"><b>Definition:</b> bin.h:20</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

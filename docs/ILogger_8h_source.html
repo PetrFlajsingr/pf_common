@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -71,52 +71,50 @@ $(function() {
 <div class="title">ILogger.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by petr on 11/3/20.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;fmt/format.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;string_view&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>pf {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">enum class</span> LogLevel { Trace, Debug, Info, Warn, Err, Critical, Off };</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classpf_1_1ILogger.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpf_1_1ILogger.html">ILogger</a> {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classpf_1_1ILogger.html#a7f673f4a3aeb360499c0d4b9a4cf24ad">   28</a></span>&#160;  <span class="keyword">inline</span> <span class="keyword">explicit</span> <a class="code" href="classpf_1_1ILogger.html#a7f673f4a3aeb360499c0d4b9a4cf24ad">ILogger</a>(std::string loggerName) : name(std::move(loggerName)) {}</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classpf_1_1ILogger.html#a2c2ca33118cb98804f95a5f0097284e2">   38</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpf_1_1ILogger.html#a2c2ca33118cb98804f95a5f0097284e2">logFmt</a>(LogLevel level, std::string_view tag, std::string_view format, Args &amp;&amp;...args) {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classpf_1_1ILogger.html#a4e4a781d3dd5b5923d3c362a4e89413b">log</a>(level, tag, fmt::format(format, std::forward&lt;Args&gt;(args)...));</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  }</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classpf_1_1ILogger.html#ad117f601397624833e4ff0cee8296aad">   45</a></span>&#160;  [[nodiscard]] <span class="keyword">virtual</span> std::string_view <a class="code" href="classpf_1_1ILogger.html#ad117f601397624833e4ff0cee8296aad">getName</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> name; }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classpf_1_1ILogger.html#a4e4a781d3dd5b5923d3c362a4e89413b">log</a>(LogLevel level, std::string_view tag, std::string_view msg) = 0;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">virtual</span> ~<a class="code" href="classpf_1_1ILogger.html">ILogger</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  std::string name;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;};</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classpf_1_1EmptyLogger.html">   62</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpf_1_1EmptyLogger.html">EmptyLogger</a> : <span class="keyword">public</span> <a class="code" href="classpf_1_1ILogger.html">ILogger</a> {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classpf_1_1EmptyLogger.html#a4f32be192a3c07f7404332455d22506b">   67</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="classpf_1_1EmptyLogger.html#a4f32be192a3c07f7404332455d22506b">EmptyLogger</a>() : <a class="code" href="classpf_1_1ILogger.html">ILogger</a>(<span class="stringliteral">&quot;&quot;</span>) {}</div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classpf_1_1EmptyLogger.html#a911e6b30b6b1eb7e4538680fc7d23f79">   68</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classpf_1_1EmptyLogger.html#a911e6b30b6b1eb7e4538680fc7d23f79">log</a>(LogLevel, std::string_view, std::string_view)<span class="keyword"> override </span>{}</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}<span class="comment">// namespace pf</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif//PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H</span></div>
+<a href="ILogger_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_ILOGGER_H</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PF_COMMON_ILOGGER_H</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;fmt/format.h&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>pf {</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="ILogger_8h.html#ad5bac746aab62b1e86c2f609c2c91f80">   18</a></span>&#160;<span class="keyword">enum class</span> <a class="code" href="ILogger_8h.html#ad5bac746aab62b1e86c2f609c2c91f80">LogLevel</a> { Trace, Debug, Info, Warn, Err, Critical, Off };</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classpf_1_1ILogger.html">   24</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpf_1_1ILogger.html">ILogger</a> {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classpf_1_1ILogger.html#a7f673f4a3aeb360499c0d4b9a4cf24ad">   30</a></span>&#160;  <span class="keyword">inline</span> <span class="keyword">explicit</span> <a class="code" href="classpf_1_1ILogger.html#a7f673f4a3aeb360499c0d4b9a4cf24ad">ILogger</a>(std::string loggerName) : name(std::move(loggerName)) {}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classpf_1_1ILogger.html#a2c2ca33118cb98804f95a5f0097284e2">   40</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classpf_1_1ILogger.html#a2c2ca33118cb98804f95a5f0097284e2">logFmt</a>(<a class="code" href="ILogger_8h.html#ad5bac746aab62b1e86c2f609c2c91f80">LogLevel</a> level, std::string_view tag, std::string_view format, Args &amp;&amp;...args) {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classpf_1_1ILogger.html#a4e4a781d3dd5b5923d3c362a4e89413b">log</a>(level, tag, fmt::format(format, std::forward&lt;Args&gt;(args)...));</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  }</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classpf_1_1ILogger.html#ad117f601397624833e4ff0cee8296aad">   47</a></span>&#160;  [[nodiscard]] <span class="keyword">virtual</span> std::string_view <a class="code" href="classpf_1_1ILogger.html#ad117f601397624833e4ff0cee8296aad">getName</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> name; }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classpf_1_1ILogger.html#a4e4a781d3dd5b5923d3c362a4e89413b">log</a>(<a class="code" href="ILogger_8h.html#ad5bac746aab62b1e86c2f609c2c91f80">LogLevel</a> level, std::string_view tag, std::string_view msg) = 0;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keyword">virtual</span> ~<a class="code" href="classpf_1_1ILogger.html">ILogger</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  std::string name;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classpf_1_1EmptyLogger.html">   64</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpf_1_1EmptyLogger.html">EmptyLogger</a> : <span class="keyword">public</span> <a class="code" href="classpf_1_1ILogger.html">ILogger</a> {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classpf_1_1EmptyLogger.html#a4f32be192a3c07f7404332455d22506b">   69</a></span>&#160;  <span class="keyword">inline</span> <a class="code" href="classpf_1_1EmptyLogger.html#a4f32be192a3c07f7404332455d22506b">EmptyLogger</a>() : <a class="code" href="classpf_1_1ILogger.html">ILogger</a>(<span class="stringliteral">&quot;&quot;</span>) {}</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classpf_1_1EmptyLogger.html#a911e6b30b6b1eb7e4538680fc7d23f79">   70</a></span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classpf_1_1EmptyLogger.html#a911e6b30b6b1eb7e4538680fc7d23f79">log</a>(<a class="code" href="ILogger_8h.html#ad5bac746aab62b1e86c2f609c2c91f80">LogLevel</a>, std::string_view, std::string_view)<span class="keyword"> override </span>{}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}<span class="comment">// namespace pf</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif//PF_COMMON_ILOGGER_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasspf_1_1ILogger_html_a7f673f4a3aeb360499c0d4b9a4cf24ad"><div class="ttname"><a href="classpf_1_1ILogger.html#a7f673f4a3aeb360499c0d4b9a4cf24ad">pf::ILogger::ILogger</a></div><div class="ttdeci">ILogger(std::string loggerName)</div><div class="ttdef"><b>Definition:</b> ILogger.h:28</div></div>
-<div class="ttc" id="aclasspf_1_1EmptyLogger_html_a911e6b30b6b1eb7e4538680fc7d23f79"><div class="ttname"><a href="classpf_1_1EmptyLogger.html#a911e6b30b6b1eb7e4538680fc7d23f79">pf::EmptyLogger::log</a></div><div class="ttdeci">void log(LogLevel, std::string_view, std::string_view) override</div><div class="ttdef"><b>Definition:</b> ILogger.h:68</div></div>
+<div class="ttc" id="aclasspf_1_1ILogger_html_a7f673f4a3aeb360499c0d4b9a4cf24ad"><div class="ttname"><a href="classpf_1_1ILogger.html#a7f673f4a3aeb360499c0d4b9a4cf24ad">pf::ILogger::ILogger</a></div><div class="ttdeci">ILogger(std::string loggerName)</div><div class="ttdef"><b>Definition:</b> ILogger.h:30</div></div>
+<div class="ttc" id="aclasspf_1_1EmptyLogger_html_a911e6b30b6b1eb7e4538680fc7d23f79"><div class="ttname"><a href="classpf_1_1EmptyLogger.html#a911e6b30b6b1eb7e4538680fc7d23f79">pf::EmptyLogger::log</a></div><div class="ttdeci">void log(LogLevel, std::string_view, std::string_view) override</div><div class="ttdef"><b>Definition:</b> ILogger.h:70</div></div>
 <div class="ttc" id="aclasspf_1_1ILogger_html_a4e4a781d3dd5b5923d3c362a4e89413b"><div class="ttname"><a href="classpf_1_1ILogger.html#a4e4a781d3dd5b5923d3c362a4e89413b">pf::ILogger::log</a></div><div class="ttdeci">virtual void log(LogLevel level, std::string_view tag, std::string_view msg)=0</div></div>
-<div class="ttc" id="aclasspf_1_1EmptyLogger_html"><div class="ttname"><a href="classpf_1_1EmptyLogger.html">pf::EmptyLogger</a></div><div class="ttdoc">ILogger implementation which does nothing.</div><div class="ttdef"><b>Definition:</b> ILogger.h:62</div></div>
-<div class="ttc" id="aclasspf_1_1ILogger_html_ad117f601397624833e4ff0cee8296aad"><div class="ttname"><a href="classpf_1_1ILogger.html#ad117f601397624833e4ff0cee8296aad">pf::ILogger::getName</a></div><div class="ttdeci">virtual std::string_view getName() const</div><div class="ttdef"><b>Definition:</b> ILogger.h:45</div></div>
-<div class="ttc" id="aclasspf_1_1EmptyLogger_html_a4f32be192a3c07f7404332455d22506b"><div class="ttname"><a href="classpf_1_1EmptyLogger.html#a4f32be192a3c07f7404332455d22506b">pf::EmptyLogger::EmptyLogger</a></div><div class="ttdeci">EmptyLogger()</div><div class="ttdef"><b>Definition:</b> ILogger.h:67</div></div>
-<div class="ttc" id="aclasspf_1_1ILogger_html_a2c2ca33118cb98804f95a5f0097284e2"><div class="ttname"><a href="classpf_1_1ILogger.html#a2c2ca33118cb98804f95a5f0097284e2">pf::ILogger::logFmt</a></div><div class="ttdeci">void logFmt(LogLevel level, std::string_view tag, std::string_view format, Args &amp;&amp;...args)</div><div class="ttdef"><b>Definition:</b> ILogger.h:38</div></div>
-<div class="ttc" id="aclasspf_1_1ILogger_html"><div class="ttname"><a href="classpf_1_1ILogger.html">pf::ILogger</a></div><div class="ttdoc">Common interface for logging.</div><div class="ttdef"><b>Definition:</b> ILogger.h:22</div></div>
+<div class="ttc" id="aILogger_8h_html_ad5bac746aab62b1e86c2f609c2c91f80"><div class="ttname"><a href="ILogger_8h.html#ad5bac746aab62b1e86c2f609c2c91f80">pf::LogLevel</a></div><div class="ttdeci">LogLevel</div><div class="ttdef"><b>Definition:</b> ILogger.h:18</div></div>
+<div class="ttc" id="aclasspf_1_1EmptyLogger_html"><div class="ttname"><a href="classpf_1_1EmptyLogger.html">pf::EmptyLogger</a></div><div class="ttdoc">ILogger implementation which does nothing.</div><div class="ttdef"><b>Definition:</b> ILogger.h:64</div></div>
+<div class="ttc" id="aclasspf_1_1ILogger_html_ad117f601397624833e4ff0cee8296aad"><div class="ttname"><a href="classpf_1_1ILogger.html#ad117f601397624833e4ff0cee8296aad">pf::ILogger::getName</a></div><div class="ttdeci">virtual std::string_view getName() const</div><div class="ttdef"><b>Definition:</b> ILogger.h:47</div></div>
+<div class="ttc" id="aclasspf_1_1EmptyLogger_html_a4f32be192a3c07f7404332455d22506b"><div class="ttname"><a href="classpf_1_1EmptyLogger.html#a4f32be192a3c07f7404332455d22506b">pf::EmptyLogger::EmptyLogger</a></div><div class="ttdeci">EmptyLogger()</div><div class="ttdef"><b>Definition:</b> ILogger.h:69</div></div>
+<div class="ttc" id="aclasspf_1_1ILogger_html_a2c2ca33118cb98804f95a5f0097284e2"><div class="ttname"><a href="classpf_1_1ILogger.html#a2c2ca33118cb98804f95a5f0097284e2">pf::ILogger::logFmt</a></div><div class="ttdeci">void logFmt(LogLevel level, std::string_view tag, std::string_view format, Args &amp;&amp;...args)</div><div class="ttdef"><b>Definition:</b> ILogger.h:40</div></div>
+<div class="ttc" id="aclasspf_1_1ILogger_html"><div class="ttname"><a href="classpf_1_1ILogger.html">pf::ILogger</a></div><div class="ttdoc">Common interface for logging.</div><div class="ttdef"><b>Definition:</b> ILogger.h:24</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

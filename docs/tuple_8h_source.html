@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -71,39 +71,38 @@ $(function() {
 <div class="title">tuple.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by petr on 10/26/20.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_TUPLE_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define PF_COMMON_TUPLE_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;tuple&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>pf {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>details {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span> T, std::size_t... Index&gt;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> iterateTupleImpl(F &amp;&amp;action, T <span class="keyword">const</span> &amp;tup, std::index_sequence&lt;Index...&gt; <span class="keyword">const</span> &amp;) {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  [[maybe_unused]] <span class="keywordtype">bool</span> ignore[] = {(action(std::get&lt;Index&gt;(tup)), <span class="keyword">true</span>)...};</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span> T, std::size_t... Index&gt;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">void</span> iterateTuplePairsImpl(F &amp;&amp;action, T <span class="keyword">const</span> &amp;tup, std::index_sequence&lt;Index...&gt; <span class="keyword">const</span> &amp;) {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  [[maybe_unused]] <span class="keywordtype">bool</span> ignore[] = {(action(std::get&lt;Index&gt;(tup), std::get&lt;Index + 1&gt;(tup)), <span class="keyword">true</span>)...};</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}<span class="comment">// namespace details</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Obj&gt;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> iterateTuple(F &amp;&amp;action, std::tuple&lt;Obj...&gt; <span class="keyword">const</span> &amp;tup) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  details::iterateTupleImpl(action, tup, std::make_index_sequence&lt;<span class="keyword">sizeof</span>...(Obj)&gt;());</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Obj&gt;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> iterateTuplePairs(F &amp;&amp;action, std::tuple&lt;Obj...&gt; <span class="keyword">const</span> &amp;tup) {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  details::iterateTuplePairsImpl(action, tup, std::make_index_sequence&lt;<span class="keyword">sizeof</span>...(Obj) - 1&gt;());</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}<span class="comment">// namespace pf</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif//PF_COMMON_TUPLE_H</span></div>
+<a href="tuple_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_TUPLE_H</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PF_COMMON_TUPLE_H</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;tuple&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>pf {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>details {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span> T, std::size_t... Index&gt;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">void</span> iterateTupleImpl(F &amp;&amp;action, T <span class="keyword">const</span> &amp;tup, std::index_sequence&lt;Index...&gt; <span class="keyword">const</span> &amp;) {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  [[maybe_unused]] <span class="keywordtype">bool</span> ignore[] = {(action(std::get&lt;Index&gt;(tup)), <span class="keyword">true</span>)...};</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span> T, std::size_t... Index&gt;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> iterateTuplePairsImpl(F &amp;&amp;action, T <span class="keyword">const</span> &amp;tup, std::index_sequence&lt;Index...&gt; <span class="keyword">const</span> &amp;) {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  [[maybe_unused]] <span class="keywordtype">bool</span> ignore[] = {(action(std::get&lt;Index&gt;(tup), std::get&lt;Index + 1&gt;(tup)), <span class="keyword">true</span>)...};</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}<span class="comment">// namespace details</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Obj&gt;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="tuple_8h.html#ad0c220c59f94eae1b8cced622d47aeff">   31</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="tuple_8h.html#ad0c220c59f94eae1b8cced622d47aeff">iterateTuple</a>(F &amp;&amp;action, std::tuple&lt;Obj...&gt; <span class="keyword">const</span> &amp;tup) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  details::iterateTupleImpl(action, tup, std::make_index_sequence&lt;<span class="keyword">sizeof</span>...(Obj)&gt;());</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> F, <span class="keyword">typename</span>... Obj&gt;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="tuple_8h.html#a4838eb7c6cabbdf58f59123a7e059399">   43</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="tuple_8h.html#a4838eb7c6cabbdf58f59123a7e059399">iterateTuplePairs</a>(F &amp;&amp;action, std::tuple&lt;Obj...&gt; <span class="keyword">const</span> &amp;tup) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  details::iterateTuplePairsImpl(action, tup, std::make_index_sequence&lt;<span class="keyword">sizeof</span>...(Obj) - 1&gt;());</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}<span class="comment">// namespace pf</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif//PF_COMMON_TUPLE_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="atuple_8h_html_ad0c220c59f94eae1b8cced622d47aeff"><div class="ttname"><a href="tuple_8h.html#ad0c220c59f94eae1b8cced622d47aeff">pf::iterateTuple</a></div><div class="ttdeci">void iterateTuple(F &amp;&amp;action, std::tuple&lt; Obj... &gt; const &amp;tup)</div><div class="ttdef"><b>Definition:</b> tuple.h:31</div></div>
+<div class="ttc" id="atuple_8h_html_a4838eb7c6cabbdf58f59123a7e059399"><div class="ttname"><a href="tuple_8h.html#a4838eb7c6cabbdf58f59123a7e059399">pf::iterateTuplePairs</a></div><div class="ttdeci">void iterateTuplePairs(F &amp;&amp;action, std::tuple&lt; Obj... &gt; const &amp;tup)</div><div class="ttdef"><b>Definition:</b> tuple.h:43</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

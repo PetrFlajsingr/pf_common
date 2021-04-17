@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['emptylogger_103',['EmptyLogger',['../classpf_1_1EmptyLogger.html#a4f32be192a3c07f7404332455d22506b',1,'pf::EmptyLogger']]]
+  ['deserialize_203',['deserialize',['../Serializable_8h.html#a777b40c572fc2970b6f66359fa8b7446',1,'pf']]]
 ];

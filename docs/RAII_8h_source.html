@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -71,33 +71,30 @@ $(function() {
 <div class="title">RAII.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by petr on 11/1/20.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef PF_COMMONING_UTILS_RAII_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define PF_COMMONING_UTILS_RAII_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;concepts&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;functional&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>pf {</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classpf_1_1RAII.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpf_1_1RAII.html">RAII</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classpf_1_1RAII.html#ae1b99df489c26c683c24607f1154d33e">   22</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpf_1_1RAII.html#ae1b99df489c26c683c24607f1154d33e">RAII</a>(std::invocable <span class="keyword">auto</span> &amp;&amp;callable) : callable(std::forward&lt;decltype(callable)&gt;(callable)) {}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">inline</span> ~<a class="code" href="classpf_1_1RAII.html">RAII</a>() { std::invoke(callable); }</div>
+<a href="RAII_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_RAII_H</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PF_COMMON_RAII_H</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;concepts&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>pf {</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classpf_1_1RAII.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpf_1_1RAII.html">RAII</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classpf_1_1RAII.html#ae1b99df489c26c683c24607f1154d33e">   24</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classpf_1_1RAII.html#ae1b99df489c26c683c24607f1154d33e">RAII</a>(std::invocable <span class="keyword">auto</span> &amp;&amp;callable) : callable(std::forward&lt;decltype(callable)&gt;(callable)) {}</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  std::function&lt;void()&gt; callable;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;};</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}<span class="comment">// namespace pf</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif//PF_COMMONING_UTILS_RAII_H</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">inline</span> ~<a class="code" href="classpf_1_1RAII.html">RAII</a>() { std::invoke(callable); }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  std::function&lt;void()&gt; callable;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}<span class="comment">// namespace pf</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif//PF_COMMON_RAII_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasspf_1_1RAII_html"><div class="ttname"><a href="classpf_1_1RAII.html">pf::RAII</a></div><div class="ttdoc">Equivalent to try finally.</div><div class="ttdef"><b>Definition:</b> RAII.h:16</div></div>
-<div class="ttc" id="aclasspf_1_1RAII_html_ae1b99df489c26c683c24607f1154d33e"><div class="ttname"><a href="classpf_1_1RAII.html#ae1b99df489c26c683c24607f1154d33e">pf::RAII::RAII</a></div><div class="ttdeci">RAII(std::invocable auto &amp;&amp;callable)</div><div class="ttdef"><b>Definition:</b> RAII.h:22</div></div>
+<div class="ttc" id="aclasspf_1_1RAII_html"><div class="ttname"><a href="classpf_1_1RAII.html">pf::RAII</a></div><div class="ttdoc">Equivalent to try finally.</div><div class="ttdef"><b>Definition:</b> RAII.h:18</div></div>
+<div class="ttc" id="aclasspf_1_1RAII_html_ae1b99df489c26c683c24607f1154d33e"><div class="ttname"><a href="classpf_1_1RAII.html#ae1b99df489c26c683c24607f1154d33e">pf::RAII::RAII</a></div><div class="ttdeci">RAII(std::invocable auto &amp;&amp;callable)</div><div class="ttdef"><b>Definition:</b> RAII.h:24</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

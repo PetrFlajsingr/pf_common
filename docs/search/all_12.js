@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['writeaccess_68',['writeAccess',['../classpf_1_1Safe.html#abc5446c3c1f916a58f8d4f0dff6c2796',1,'pf::Safe']]]
+  ['visitor_138',['Visitor',['../structpf_1_1Visitor.html',1,'pf']]],
+  ['visitor_2eh_139',['Visitor.h',['../Visitor_8h.html',1,'']]]
 ];

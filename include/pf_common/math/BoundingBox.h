@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 19.11.19
  */
-#ifndef PF_COMMON_BOUNDINGBOX_H
-#define PF_COMMON_BOUNDINGBOX_H
+#ifndef PF_COMMON_MATH_BOUNDINGBOX_H
+#define PF_COMMON_MATH_BOUNDINGBOX_H
 
 #include "common.h"
 #include <glm/glm.hpp>
@@ -56,4 +56,4 @@ std::ostream &operator<<(std::ostream &stream, const BoundingBox<Dims> &aabb);
 }// namespace pf::math
 
 #include "BoundingBox.tpp"
-#endif// PF_COMMON_BOUNDINGBOX_H
+#endif// PF_COMMON_MATH_BOUNDINGBOX_H

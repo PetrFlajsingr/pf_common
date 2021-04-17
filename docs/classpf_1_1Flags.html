@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classpf_1_1Flags-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -80,12 +81,21 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="enums_8h_source.html">enums.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a12aa25f97ded59d0ae3cc068a53d7bc3"><td class="memItemLeft" align="right" valign="top"><a id="a12aa25f97ded59d0ae3cc068a53d7bc3"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>UnderlyingType</b> = std::underlying_type_t&lt; E &gt;</td></tr>
+<tr class="separator:a12aa25f97ded59d0ae3cc068a53d7bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68fc513fcb022ec9c7968b8538728a93"><td class="memItemLeft" align="right" valign="top"><a id="a68fc513fcb022ec9c7968b8538728a93"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>EnumType</b> = E</td></tr>
+<tr class="separator:a68fc513fcb022ec9c7968b8538728a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa2cf671d4b5a149b370caaf0af65d236"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#aa2cf671d4b5a149b370caaf0af65d236">Flags</a> (std::same_as&lt; E &gt; auto... args)</td></tr>
 <tr class="separator:aa2cf671d4b5a149b370caaf0af65d236"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af405a957fe7b450e8bef489f8f3b3ca0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#af405a957fe7b450e8bef489f8f3b3ca0">Flags</a> (const std::ranges::range auto &amp;vals) requires(std</td></tr>
-<tr class="separator:af405a957fe7b450e8bef489f8f3b3ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82808ee472833ad6e526a1a19f1a97c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#a82808ee472833ad6e526a1a19f1a97c0">Flags</a> (const std::ranges::range auto &amp;values) requires(std</td></tr>
+<tr class="separator:a82808ee472833ad6e526a1a19f1a97c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c55fb2d12a0ecc401c852e9b0aa09d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#a4c55fb2d12a0ecc401c852e9b0aa09d9">operator=</a> (const <a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;other)</td></tr>
 <tr class="separator:a4c55fb2d12a0ecc401c852e9b0aa09d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a907de5db6ed9ee43bf51f6db6e408407"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#a907de5db6ed9ee43bf51f6db6e408407">operator=</a> (E other)</td></tr>
@@ -128,12 +138,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (E rhs
 <tr class="memitem:ac748d40f0f34cc4d24bcb4fa504b5792"><td class="memItemLeft" align="right" valign="top"><a id="ac748d40f0f34cc4d24bcb4fa504b5792"></a>
 <a class="el" href="classpf_1_1Flags.html">Flags</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator&amp;</b> (E other) const</td></tr>
 <tr class="separator:ac748d40f0f34cc4d24bcb4fa504b5792"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fc3b518d65f2a3d707efe23b4522fb9"><td class="memItemLeft" align="right" valign="top"><a id="a0fc3b518d65f2a3d707efe23b4522fb9"></a>
-<a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator^=</b> (const <a class="el" href="classpf_1_1Flags.html">Flags</a> *other)</td></tr>
-<tr class="separator:a0fc3b518d65f2a3d707efe23b4522fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabda93fc0e9e132cd3514cbb39f95fc1"><td class="memItemLeft" align="right" valign="top"><a id="aabda93fc0e9e132cd3514cbb39f95fc1"></a>
-<a class="el" href="classpf_1_1Flags.html">Flags</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator^</b> (const <a class="el" href="classpf_1_1Flags.html">Flags</a> *other) const</td></tr>
-<tr class="separator:aabda93fc0e9e132cd3514cbb39f95fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a315f43a4983c068cbe999c3d49d7dc0a"><td class="memItemLeft" align="right" valign="top"><a id="a315f43a4983c068cbe999c3d49d7dc0a"></a>
+<a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator^=</b> (const <a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;other)</td></tr>
+<tr class="separator:a315f43a4983c068cbe999c3d49d7dc0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ddb274bedf39d75709b8db32bcae41c"><td class="memItemLeft" align="right" valign="top"><a id="a6ddb274bedf39d75709b8db32bcae41c"></a>
+<a class="el" href="classpf_1_1Flags.html">Flags</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator^</b> (const <a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;other) const</td></tr>
+<tr class="separator:a6ddb274bedf39d75709b8db32bcae41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5ecfaaed31defd65dad3f662f1f111e"><td class="memItemLeft" align="right" valign="top"><a id="aa5ecfaaed31defd65dad3f662f1f111e"></a>
 <a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator^=</b> (E other)</td></tr>
 <tr class="separator:aa5ecfaaed31defd65dad3f662f1f111e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,8 +203,8 @@ template&lt;Enum E, E DefaultValue = E{}&gt; </div>
 
 </div>
 </div>
-<a id="af405a957fe7b450e8bef489f8f3b3ca0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af405a957fe7b450e8bef489f8f3b3ca0">&#9670;&nbsp;</a></span>Flags() <span class="overload">[2/2]</span></h2>
+<a id="a82808ee472833ad6e526a1a19f1a97c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82808ee472833ad6e526a1a19f1a97c0">&#9670;&nbsp;</a></span>Flags() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -208,7 +218,7 @@ template&lt;Enum E, E DefaultValue = E{}&gt; </div>
           <td class="memname"><a class="el" href="classpf_1_1Flags.html">pf::Flags</a>&lt; E, DefaultValue &gt;::<a class="el" href="classpf_1_1Flags.html">Flags</a> </td>
           <td>(</td>
           <td class="paramtype">const std::ranges::range auto &amp;&#160;</td>
-          <td class="paramname"><em>vals</em></td><td>)</td>
+          <td class="paramname"><em>values</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -220,7 +230,7 @@ template&lt;Enum E, E DefaultValue = E{}&gt; </div>
 </div><div class="memdoc">
 <p>Create <a class="el" href="classpf_1_1Flags.html" title="Utility for using enums as flags.">Flags</a> from range of enum values. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vals</td><td>enum values </td></tr>
+    <tr><td class="paramname">values</td><td>enum values </td></tr>
   </table>
   </dd>
 </dl>

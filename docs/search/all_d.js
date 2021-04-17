@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['raii_44',['RAII',['../classpf_1_1RAII.html',1,'pf::RAII'],['../classpf_1_1RAII.html#ae1b99df489c26c683c24607f1154d33e',1,'pf::RAII::RAII()']]],
-  ['range_45',['Range',['../structpf_1_1math_1_1Range.html',1,'pf::math']]],
-  ['readonlyaccess_46',['readOnlyAccess',['../classpf_1_1Safe.html#accaf78c36f19ff71efe6df5badce0094',1,'pf::Safe']]],
-  ['release_47',['release',['../classpf_1_1ObjectPool.html#a9f34bb95bab682609cf4021735e17f7a',1,'pf::ObjectPool']]]
+  ['poolallocstrategy_82',['PoolAllocStrategy',['../ObjectPool_8h.html#a6293252330b954e70acc45013b7e26af',1,'pf']]],
+  ['postorder_83',['postorder',['../classpf_1_1static__tree_1_1Leaf.html#a3cfaf79b2d99d5e10917590932661f04',1,'pf::static_tree::Leaf']]],
+  ['preorder_84',['preorder',['../classpf_1_1static__tree_1_1Leaf.html#a9c32ea3187a5298b31b0a042ccf01e82',1,'pf::static_tree::Leaf']]],
+  ['ptrconstructible_85',['PtrConstructible',['../structpf_1_1PtrConstructible.html',1,'pf']]],
+  ['ptrconstructible_2eh_86',['PtrConstructible.h',['../PtrConstructible_8h.html',1,'']]]
 ];

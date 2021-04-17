@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -71,26 +71,25 @@ $(function() {
 <div class="title">OneOf.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by petr on 10/19/20.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_ONEOF_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define PF_COMMON_ONEOF_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;concepts&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>pf {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;constexpr <span class="keywordtype">bool</span> OneOf_v = (std::same_as&lt;T, Args&gt; || ...);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;concept OneOf = (std::same_as&lt;T, Args&gt; || ...);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">auto</span> Val, decltype(Val) ...Vals&gt;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;constexpr <span class="keywordtype">bool</span> OneOfValues_v = (Val == Vals || ...);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}<span class="comment">// namespace pf</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif//PF_COMMON_ONEOF_H</span></div>
+<a href="OneOf_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef PF_COMMON_ONEOF_H</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PF_COMMON_ONEOF_H</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;concepts&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>pf {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="OneOf_8h.html#a8c168ef642794858ffa9aa0aa343d2f3">   18</a></span>&#160;constexpr <span class="keywordtype">bool</span> <a class="code" href="OneOf_8h.html#a8c168ef642794858ffa9aa0aa343d2f3">OneOf_v</a> = (std::same_as&lt;T, Args&gt; || ...);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="OneOf_8h.html#a39bf887238eb087fd68261bff2b833aa">   26</a></span>&#160;concept <a class="code" href="OneOf_8h.html#a39bf887238eb087fd68261bff2b833aa">OneOf</a> = (std::same_as&lt;T, Args&gt; || ...);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">auto</span> Value, decltype(Value) ...Values&gt;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;constexpr <span class="keywordtype">bool</span> OneOfValues_v = ((Value == Values) || ...);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}<span class="comment">// namespace pf</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif//PF_COMMON_ONEOF_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aOneOf_8h_html_a39bf887238eb087fd68261bff2b833aa"><div class="ttname"><a href="OneOf_8h.html#a39bf887238eb087fd68261bff2b833aa">pf::OneOf</a></div><div class="ttdeci">concept OneOf</div><div class="ttdoc">A type which is one of Args...</div><div class="ttdef"><b>Definition:</b> OneOf.h:26</div></div>
+<div class="ttc" id="aOneOf_8h_html_a8c168ef642794858ffa9aa0aa343d2f3"><div class="ttname"><a href="OneOf_8h.html#a8c168ef642794858ffa9aa0aa343d2f3">pf::OneOf_v</a></div><div class="ttdeci">constexpr bool OneOf_v</div><div class="ttdoc">Check if T is one of types provided in Args...</div><div class="ttdef"><b>Definition:</b> OneOf.h:18</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

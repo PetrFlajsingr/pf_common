@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 7.1.21
  */
-#ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_FILES_H
-#define REALISTIC_VOXEL_RENDERING_SRC_UTILS_FILES_H
+#ifndef PF_COMMON_FILES_H
+#define PF_COMMON_FILES_H
 
 #include <filesystem>
 #include <pf_common/exceptions/StackTraceException.h>
@@ -31,4 +31,4 @@ inline std::vector<std::filesystem::path> filesInFolder(const std::filesystem::p
 }
 }// namespace pf
 
-#endif//REALISTIC_VOXEL_RENDERING_SRC_UTILS_FILES_H
+#endif//PF_COMMON_FILES_H

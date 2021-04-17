@@ -2,8 +2,8 @@
 // Created by Petr on 21.02.2020.
 //
 
-#ifndef PF_COMMON_SAFE_H
-#define PF_COMMON_SAFE_H
+#ifndef PF_COMMON_PARALLEL_SAFE_H
+#define PF_COMMON_PARALLEL_SAFE_H
 
 #include <mutex>
 
@@ -154,4 +154,4 @@ using ReadOnlyAccess = typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::
 template<typename T, typename Mutex = std::mutex>
 using WriteAccess = typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadWrite>;
 }// namespace pf
-#endif// PF_COMMON_SAFE_H
+#endif// PF_COMMON_PARALLEL_SAFE_H

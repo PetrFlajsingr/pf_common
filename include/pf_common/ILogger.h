@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 3.11.20
  */
-#ifndef PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H
-#define PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H
+#ifndef PF_COMMON_ILOGGER_H
+#define PF_COMMON_ILOGGER_H
 
 #include <fmt/format.h>
 #include <string_view>
@@ -71,4 +71,4 @@ class EmptyLogger : public ILogger {
 };
 
 }// namespace pf
-#endif//PF_COMMON_INCLUDE_PF_COMMON_ILOGGER_H
+#endif//PF_COMMON_ILOGGER_H

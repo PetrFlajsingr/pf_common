@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.1</span>
+   &#160;<span id="projectnumber">1.0.3</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -71,55 +71,60 @@ $(function() {
 <div class="title">Serializable.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// Created by petr on 1/2/21.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;filesystem&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;pf_common/exceptions/StackTraceException.h&gt;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>pf {</div>
+<a href="Serializable_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;filesystem&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="StackTraceException_8h.html">pf_common/exceptions/StackTraceException.h</a>&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;concept Serializable = requires(<span class="keyword">const</span> T t) {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  { t.serialize() } -&gt; std::same_as&lt;std::vector&lt;std::byte&gt;&gt;;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;concept Deserializable = requires(std::span&lt;const std::byte&gt; data) {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  { T::Deserialize(data) } -&gt; std::same_as&lt;T&gt;;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;};</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;std::vector&lt;std::byte&gt; serialize(<span class="keyword">const</span> Serializable <span class="keyword">auto</span> &amp;obj) { <span class="keywordflow">return</span> obj.serialize(); }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span>&lt;Deserializable T&gt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;T deserialize(std::span&lt;const std::byte&gt; data) {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span> T::Deserialize(data);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> saveToFile(<span class="keyword">const</span> std::filesystem::path &amp;path, <span class="keyword">const</span> Serializable <span class="keyword">auto</span> &amp;obj) {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> data = obj.serialize();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keyword">auto</span> ostream = std::ofstream(path, std::ios::binary);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  ostream.write(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(data.data()), data.size());</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">template</span>&lt;Deserializable T&gt;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;T loadFromFile(<span class="keyword">const</span> std::filesystem::path &amp;path) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keyword">auto</span> istream = std::ifstream(path, std::ios::binary | std::ios::ate);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> size = istream.tellg();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  istream.seekg(0, std::ios::beg);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keyword">auto</span> data = std::vector&lt;std::byte&gt;(size);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordflow">if</span> (istream.read(<span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(data.data()), size)) { <span class="keywordflow">return</span> T::Deserialize(data); }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">throw</span> StackTraceException::fmt(<span class="stringliteral">&quot;Could not deserialize from &#39;{}&#39;&quot;</span>, path.string());</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}<span class="comment">// namespace pf</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif//REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>pf {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="Serializable_8h.html#ad0196d80ff4008909cc9eb719bd7b154">   21</a></span>&#160;concept <a class="code" href="Serializable_8h.html#ad0196d80ff4008909cc9eb719bd7b154">Serializable</a> = requires(<span class="keyword">const</span> T t) {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  { t.serialize() } -&gt; std::same_as&lt;std::vector&lt;std::byte&gt;&gt;;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;};</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="Serializable_8h.html#a6b9d0e98f0a55a89eef8eaa8a7c92d59">   29</a></span>&#160;concept <a class="code" href="Serializable_8h.html#a6b9d0e98f0a55a89eef8eaa8a7c92d59">Deserializable</a> = requires(std::span&lt;const std::byte&gt; data) {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  { T::Deserialize(data) } -&gt; std::same_as&lt;T&gt;;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;};</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="Serializable_8h.html#a919b16110003e93f01edf733536f9576">   38</a></span>&#160;std::vector&lt;std::byte&gt; <a class="code" href="Serializable_8h.html#a919b16110003e93f01edf733536f9576">serialize</a>(<span class="keyword">const</span> Serializable <span class="keyword">auto</span> &amp;obj) { <span class="keywordflow">return</span> obj.serialize(); }</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">template</span>&lt;Deserializable T&gt;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="Serializable_8h.html#a777b40c572fc2970b6f66359fa8b7446">   47</a></span>&#160;T <a class="code" href="Serializable_8h.html#a777b40c572fc2970b6f66359fa8b7446">deserialize</a>(std::span&lt;const std::byte&gt; data) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">return</span> T::Deserialize(data);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="Serializable_8h.html#a10ef681b1366d3f6e336eb20065f8b6d">   56</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="Serializable_8h.html#a10ef681b1366d3f6e336eb20065f8b6d">saveToFile</a>(<span class="keyword">const</span> std::filesystem::path &amp;path, <span class="keyword">const</span> Serializable <span class="keyword">auto</span> &amp;obj) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> data = obj.serialize();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keyword">auto</span> ostream = std::ofstream(path, std::ios::binary);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  ostream.write(<span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(data.data()), data.size());</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">template</span>&lt;Deserializable T&gt;</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="Serializable_8h.html#ab4a78f3dc865768f9fa0cf8d6380561a">   70</a></span>&#160;T <a class="code" href="Serializable_8h.html#ab4a78f3dc865768f9fa0cf8d6380561a">loadFromFile</a>(<span class="keyword">const</span> std::filesystem::path &amp;path) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keyword">auto</span> istream = std::ifstream(path, std::ios::binary | std::ios::ate);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> size = istream.tellg();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  istream.seekg(0, std::ios::beg);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keyword">auto</span> data = std::vector&lt;std::byte&gt;(size);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span> (istream.read(<span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(data.data()), size)) { <span class="keywordflow">return</span> T::Deserialize(data); }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordflow">throw</span> <a class="code" href="classpf_1_1StackTraceException.html">StackTraceException</a>(<span class="stringliteral">&quot;Could not deserialize from &#39;{}&#39;&quot;</span>, path.string());</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}<span class="comment">// namespace pf</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif//REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclasspf_1_1StackTraceException_html"><div class="ttname"><a href="classpf_1_1StackTraceException.html">pf::StackTraceException</a></div><div class="ttdoc">An exception providing stacktrace info.</div><div class="ttdef"><b>Definition:</b> StackTraceException.h:62</div></div>
+<div class="ttc" id="aSerializable_8h_html_a777b40c572fc2970b6f66359fa8b7446"><div class="ttname"><a href="Serializable_8h.html#a777b40c572fc2970b6f66359fa8b7446">pf::deserialize</a></div><div class="ttdeci">T deserialize(std::span&lt; const std::byte &gt; data)</div><div class="ttdef"><b>Definition:</b> Serializable.h:47</div></div>
+<div class="ttc" id="aSerializable_8h_html_a919b16110003e93f01edf733536f9576"><div class="ttname"><a href="Serializable_8h.html#a919b16110003e93f01edf733536f9576">pf::serialize</a></div><div class="ttdeci">std::vector&lt; std::byte &gt; serialize(const Serializable auto &amp;obj)</div><div class="ttdef"><b>Definition:</b> Serializable.h:38</div></div>
+<div class="ttc" id="aSerializable_8h_html_ad0196d80ff4008909cc9eb719bd7b154"><div class="ttname"><a href="Serializable_8h.html#ad0196d80ff4008909cc9eb719bd7b154">pf::Serializable</a></div><div class="ttdeci">concept Serializable</div><div class="ttdoc">An object which provides serialisation to binary data.</div><div class="ttdef"><b>Definition:</b> Serializable.h:21</div></div>
+<div class="ttc" id="aSerializable_8h_html_a6b9d0e98f0a55a89eef8eaa8a7c92d59"><div class="ttname"><a href="Serializable_8h.html#a6b9d0e98f0a55a89eef8eaa8a7c92d59">pf::Deserializable</a></div><div class="ttdeci">concept Deserializable</div><div class="ttdoc">An object which provides deserialization from binary data.</div><div class="ttdef"><b>Definition:</b> Serializable.h:29</div></div>
+<div class="ttc" id="aSerializable_8h_html_ab4a78f3dc865768f9fa0cf8d6380561a"><div class="ttname"><a href="Serializable_8h.html#ab4a78f3dc865768f9fa0cf8d6380561a">pf::loadFromFile</a></div><div class="ttdeci">T loadFromFile(const std::filesystem::path &amp;path)</div><div class="ttdef"><b>Definition:</b> Serializable.h:70</div></div>
+<div class="ttc" id="aSerializable_8h_html_a10ef681b1366d3f6e336eb20065f8b6d"><div class="ttname"><a href="Serializable_8h.html#a10ef681b1366d3f6e336eb20065f8b6d">pf::saveToFile</a></div><div class="ttdeci">void saveToFile(const std::filesystem::path &amp;path, const Serializable auto &amp;obj)</div><div class="ttdef"><b>Definition:</b> Serializable.h:56</div></div>
+<div class="ttc" id="aStackTraceException_8h_html"><div class="ttname"><a href="StackTraceException_8h.html">StackTraceException.h</a></div><div class="ttdoc">Exceptions with built in stacktrace dumping. Macro STACKTRACE_ENABLE controls if the stacktrace repor...</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

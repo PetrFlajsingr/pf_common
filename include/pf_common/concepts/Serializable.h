@@ -64,6 +64,7 @@ void saveToFile(const std::filesystem::path &path, const Serializable auto &obj)
  * @tparam T type to be deserialized
  * @param path path to source file
  * @return deserialized object
+ * @throws StackTraceException when file read fails
  */
 template<Deserializable T>
 T loadFromFile(const std::filesystem::path &path) {

@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 12.4.21
  */
-#ifndef PF_COMMON_INCLUDE_PF_COMMON_SPECIALIZATIONS_H
-#define PF_COMMON_INCLUDE_PF_COMMON_SPECIALIZATIONS_H
+#ifndef PF_COMMON_SPECIALIZATIONS_H
+#define PF_COMMON_SPECIALIZATIONS_H
 
 namespace pf {
 template<class T, template<class...> class Template>
@@ -54,4 +54,4 @@ concept derived_specialization_of = is_derived_specialization_v<T, U>;
 
 }// namespace pf
 
-#endif//PF_COMMON_INCLUDE_PF_COMMON_SPECIALIZATIONS_H
+#endif//PF_COMMON_SPECIALIZATIONS_H
