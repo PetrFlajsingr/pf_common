@@ -1,0 +1,6 @@
+<map id="include/pf_common/exceptions/StackTraceException.h" name="include/pf_common/exceptions/StackTraceException.h">
+<area shape="rect" id="node1" title="Exceptions with built in stacktrace dumping. Macro STACKTRACE_ENABLE controls if the stacktrace repor..." alt="" coords="112,5,337,47"/>
+<area shape="rect" id="node2" href="$Serializable_8h.html" title="Concepts for de/serializable objects and utility functions for de/serialization." alt="" coords="5,95,217,136"/>
+<area shape="rect" id="node4" href="$files_8h_source.html" title=" " alt="" coords="241,102,435,129"/>
+<area shape="rect" id="node3" href="$bin_8h.html" title="Functions for raw data conversion." alt="" coords="18,184,205,211"/>
+</map>

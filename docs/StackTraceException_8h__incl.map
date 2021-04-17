@@ -1,0 +1,11 @@
+<map id="include/pf_common/exceptions/StackTraceException.h" name="include/pf_common/exceptions/StackTraceException.h">
+<area shape="rect" id="node1" title="Exceptions with built in stacktrace dumping. Macro STACKTRACE_ENABLE controls if the stacktrace repor..." alt="" coords="313,5,539,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,92,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="116,95,221,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="245,95,319,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="343,95,418,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="442,95,501,121"/>
+<area shape="rect" id="node7" title=" " alt="" coords="525,95,623,121"/>
+<area shape="rect" id="node8" title=" " alt="" coords="647,95,709,121"/>
+<area shape="rect" id="node9" title=" " alt="" coords="733,95,951,121"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="include/pf_common/bin.h" name="include/pf_common/bin.h">
+<area shape="rect" id="node1" title="Functions for raw data conversion." alt="" coords="185,5,371,32"/>
+<area shape="rect" id="node2" href="$Serializable_8h.html" title="Concepts for de/serializable objects and utility functions for de/serialization." alt="" coords="192,80,364,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="126,162,217,189"/>
+<area shape="rect" id="node4" title=" " alt="" coords="241,162,315,189"/>
+<area shape="rect" id="node5" href="$StackTraceException_8h.html" title="Exceptions with built in stacktrace dumping. Macro STACKTRACE_ENABLE controls if the stacktrace repor..." alt="" coords="339,155,513,196"/>
+<area shape="rect" id="node6" title=" " alt="" coords="5,244,92,271"/>
+<area shape="rect" id="node7" title=" " alt="" coords="116,244,221,271"/>
+<area shape="rect" id="node8" title=" " alt="" coords="245,244,319,271"/>
+<area shape="rect" id="node9" title=" " alt="" coords="343,244,418,271"/>
+<area shape="rect" id="node10" title=" " alt="" coords="442,244,501,271"/>
+<area shape="rect" id="node11" title=" " alt="" coords="525,244,623,271"/>
+<area shape="rect" id="node12" title=" " alt="" coords="647,244,709,271"/>
+<area shape="rect" id="node13" title=" " alt="" coords="733,244,951,271"/>
+</map>
