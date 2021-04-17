@@ -192,7 +192,7 @@ class Flags {
    */
   [[nodiscard]] bool is(E other) const {
     const auto bitAnd = (static_cast<UnderlyingType>(value) & static_cast<UnderlyingType>(other));
-    return bitAnd != 0 || bitAnd == static_cast<UnderlyingType>(other);
+    return bitAnd == static_cast<UnderlyingType>(other);
   }
 
  private:

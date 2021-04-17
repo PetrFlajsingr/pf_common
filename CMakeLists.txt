@@ -7,7 +7,7 @@ HunterGate(
 )
 
 project(pf_common
-        VERSION 1.0.3
+        VERSION 1.0.5
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
@@ -127,7 +127,7 @@ if (BUILD_DOCS)
     find_package(Doxygen)
     if (DOXYGEN_FOUND)
         doxygen_add_docs(pf_common_doc ALL
-                ${CMAKE_SOURCE_DIR}/include
+                ${CMAKE_SOURCE_DIR}/include/pf_common
                 )
     endif()
 endif()
