@@ -39,8 +39,8 @@ hunter_add_package(glm)
 find_package(glm CONFIG REQUIRED)
 CPMAddPackage(
         NAME cppcoro
-        GITHUB_REPOSITORY dutow/cppcoro
-        GIT_TAG 4b1951ff3c25fea78198a5c0aabb50589946b694
+        GITHUB_REPOSITORY andreasbuhr/cppcoro
+        GIT_TAG master
 )
 CPMAddPackage(
         NAME backward_cpp
