@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.3</span>
+   &#160;<span id="projectnumber">1.0.5</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -84,16 +84,18 @@ $(function() {
 <code>#include &lt;concepts&gt;</code><br />
 <code>#include &lt;ranges&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
+<code>#include &lt;magic_enum.hpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for enums.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="enums_8h__incl.png" border="0" usemap="#include_2pf__common_2enums_8h" alt=""/></div>
 <map name="include_2pf__common_2enums_8h" id="include_2pf__common_2enums_8h">
-<area shape="rect" title="Common enums and utility for working with enums." alt="" coords="97,5,308,32"/>
+<area shape="rect" title="Common enums and utility for working with enums." alt="" coords="147,5,357,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,91,107"/>
 <area shape="rect" title=" " alt="" coords="115,80,195,107"/>
 <area shape="rect" title=" " alt="" coords="219,80,285,107"/>
 <area shape="rect" title=" " alt="" coords="310,80,402,107"/>
+<area shape="rect" title=" " alt="" coords="426,80,561,107"/>
 </map>
 </div>
 </div>
@@ -101,7 +103,7 @@ Include dependency graph for enums.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html">pf::Flags&lt; E, DefaultValue &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html">pf::Flags&lt; E &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility for using enums as flags.  <a href="classpf_1_1Flags.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -119,6 +121,9 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ab1e4556c6f7148ec0be5d83e9f9b988a"><td class="memItemLeft" align="right" valign="top"><a id="ab1e4556c6f7148ec0be5d83e9f9b988a"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>pf::operator&lt;&lt;</b> (std::ostream &amp;o, Enum auto e)</td></tr>
+<tr class="separator:ab1e4556c6f7148ec0be5d83e9f9b988a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c58e949abae6b1c4bf71bdae0e277ee"><td class="memTemplParams" colspan="2">template&lt;Enum E&gt; </td></tr>
 <tr class="memitem:a6c58e949abae6b1c4bf71bdae0e277ee"><td class="memTemplItemLeft" align="right" valign="top">Flags&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="enums_8h.html#a6c58e949abae6b1c4bf71bdae0e277ee">pf::enum_flag_operators::operator|</a> (E lhs, E rhs)</td></tr>
 <tr class="separator:a6c58e949abae6b1c4bf71bdae0e277ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -380,8 +385,8 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="aenums_8h_html_a6c58e949abae6b1c4bf71bdae0e277ee"><div class="ttname"><a href="enums_8h.html#a6c58e949abae6b1c4bf71bdae0e277ee">pf::enum_flag_operators::operator|</a></div><div class="ttdeci">Flags&lt; E &gt; operator|(E lhs, E rhs)</div><div class="ttdef"><b>Definition:</b> enums.h:211</div></div>
-<div class="ttc" id="aenums_8h_html_a0975069d339087f5dd10e0d49b16c94b"><div class="ttname"><a href="enums_8h.html#a0975069d339087f5dd10e0d49b16c94b">pf::enum_flag_operators::operator&amp;</a></div><div class="ttdeci">Flags&lt; E &gt; operator&amp;(E lhs, E rhs)</div><div class="ttdef"><b>Definition:</b> enums.h:222</div></div>
+<div class="ttc" id="aenums_8h_html_a6c58e949abae6b1c4bf71bdae0e277ee"><div class="ttname"><a href="enums_8h.html#a6c58e949abae6b1c4bf71bdae0e277ee">pf::enum_flag_operators::operator|</a></div><div class="ttdeci">Flags&lt; E &gt; operator|(E lhs, E rhs)</div><div class="ttdef"><b>Definition:</b> enums.h:230</div></div>
+<div class="ttc" id="aenums_8h_html_a0975069d339087f5dd10e0d49b16c94b"><div class="ttname"><a href="enums_8h.html#a0975069d339087f5dd10e0d49b16c94b">pf::enum_flag_operators::operator&amp;</a></div><div class="ttdeci">Flags&lt; E &gt; operator&amp;(E lhs, E rhs)</div><div class="ttdef"><b>Definition:</b> enums.h:241</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
