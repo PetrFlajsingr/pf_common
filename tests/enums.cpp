@@ -18,6 +18,7 @@ TEST_CASE("enum flags", "[enums][Flags]") {
     auto flags = pf::Flags<ScopedEnum> { ScopedEnum::A, ScopedEnum::B };
     REQUIRE(flags.is(ScopedEnum::A));
     REQUIRE(flags.is(ScopedEnum::B));
+    REQUIRE(false);
   }
 
   SECTION("enum operators create correct flags") {
