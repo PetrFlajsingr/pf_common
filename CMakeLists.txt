@@ -115,11 +115,12 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 include(CPack)
 
 if (PF_COMMON_TESTS)
+    enable_testing()
     list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10")
     include_directories(include)
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-            tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp tests/concepts.cpp tests/enums.cpp)
-    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro ${BACKWARD_ENABLE} range-v3 fmt::fmt)
+            tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp tests/concepts.cpp tests/enums.cpp ${BACKWARD_ENABLE})
+    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt)
     target_compile_options(pf_common_tests PRIVATE ${flags})
     add_backward(pf_common_tests)
 

@@ -31,17 +31,20 @@ TEST_CASE("enum flags", "[enums][Flags]") {
     REQUIRE((flags | ScopedEnum::A).is(ScopedEnum::A));
     REQUIRE((flags | ScopedEnum::B).is(ScopedEnum::B));
     flags |= ScopedEnum::A;
-    flags |= ScopedEnum::B;
     REQUIRE(flags.is(ScopedEnum::A));
+    REQUIRE(!flags.is(ScopedEnum::B));
+    flags |= ScopedEnum::B;
     REQUIRE(flags.is(ScopedEnum::B));
   }
   SECTION("operators & work for flags and enum value") {
     auto flags = pf::Flags<ScopedEnum> {ScopedEnum::A};
     REQUIRE((flags & ScopedEnum::A).is(ScopedEnum::A));
     REQUIRE(!(flags & ScopedEnum::B).is(ScopedEnum::B));
+    flags = ScopedEnum::A | ScopedEnum::B;
     flags &= ~ScopedEnum::A;
     REQUIRE(!flags.is(ScopedEnum::A));
-    REQUIRE(!flags.is(ScopedEnum::B));
+    REQUIRE(flags.is(ScopedEnum::B));
+    REQUIRE(!flags.is(ScopedEnum::C));
   }
   SECTION("operators ^ work for flags and enum value") {
     auto flags = pf::Flags<ScopedEnum> {ScopedEnum::B};
