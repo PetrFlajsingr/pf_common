@@ -63,13 +63,6 @@ CPMAddPackage(
         GIT_TAG v0.6.6
 )
 
-
-if (PF_COMMON_TESTS)
-    message("Downloading Catch2")
-    hunter_add_package(Catch)
-    find_package(Catch2 CONFIG REQUIRED)
-endif()
-
 include(GNUInstallDirs)
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -119,6 +112,8 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 include(CPack)
 
 if (PF_COMMON_TESTS)
+    hunter_add_package(Catch)
+    find_package(Catch2 CONFIG REQUIRED)
     enable_testing()
     include_directories(include)
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
