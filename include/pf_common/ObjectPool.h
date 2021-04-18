@@ -61,7 +61,8 @@ struct DefaultPoolAllocator {
       }
     }
   }
-  void on_release(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse) {}
+  void on_release([[maybe_unused]] std::list<std::unique_ptr<T>> &available,
+                  [[maybe_unused]] std::list<std::unique_ptr<T>> &inUse) {}
 
   [[nodiscard]] std::size_t capacity() { return data.capacity_; }
 
@@ -71,7 +72,8 @@ struct DefaultPoolAllocator {
     data.capacity_ -= remove_cnt;
   }
 
-  void alloc_n(std::list<std::unique_ptr<T>> &available, std::list<std::unique_ptr<T>> &inUse, std::size_t n) {
+  void alloc_n(std::list<std::unique_ptr<T>> &available, [[maybe_unused]] std::list<std::unique_ptr<T>> &inUse,
+               std::size_t n) {
     std::generate_n(std::back_inserter(available), n, [&] { return std::make_unique<T>(generator()); });
   }
 
@@ -135,7 +137,7 @@ class ObjectPool {
     if (auto iter =
             std::find_if(inUse.begin(), inUse.end(), [&object](const auto &obj) { return obj.get() == object.get(); });
         iter != inUse.end()) {
-      auto &ref = available_.emplace_back(std::move(*iter));
+      available_.emplace_back(std::move(*iter));
       inUse.erase(iter);
       allocator.on_release(available_, inUse);
     }

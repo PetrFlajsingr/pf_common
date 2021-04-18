@@ -41,7 +41,7 @@ struct WithToString {
   std::string toString() const { return "WithToString"; }
 };
 struct WithStreamOps {
-  friend std::ostream &operator<<(std::ostream &os, const WithStreamOps &ops) {
+  friend std::ostream &operator<<(std::ostream &os, const WithStreamOps &) {
     os << "WithStreamOps";
     return os;
   }

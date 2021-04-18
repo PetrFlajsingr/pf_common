@@ -12,7 +12,11 @@ project(pf_common
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
 
-option(PF_COMMON_TESTS "Enable test & download of test framework")
+list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return-type" "-fcoroutines"
+        "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
+        "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
+
+option(PF_COMMON_TESTS "Enable test & download of test framework" )
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -116,7 +120,6 @@ include(CPack)
 
 if (PF_COMMON_TESTS)
     enable_testing()
-    list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10")
     include_directories(include)
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
             tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp tests/concepts.cpp tests/enums.cpp ${BACKWARD_ENABLE})
