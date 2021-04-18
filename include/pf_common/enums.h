@@ -11,6 +11,7 @@
 #include <concepts>
 #include <ranges>
 #include <type_traits>
+#include <magic_enum.hpp>
 
 namespace pf {
 
@@ -57,6 +58,11 @@ concept ScopedEnum = std::is_enum_v<T> && !std::convertible_to<T, typename std::
 template<typename T>
 concept Enum = std::is_enum_v<T> || ScopedEnum<T>;
 
+inline std::ostream &operator<<(std::ostream &o, Enum auto e) {
+  o << magic_enum::enum_name(e);
+  return o;
+}
+
 /**
  * @brief Utility for using enums as flags.
  *
@@ -65,7 +71,7 @@ concept Enum = std::is_enum_v<T> || ScopedEnum<T>;
  * @tparam E enum
  * @tparam DefaultValue value after construction
  */
-template<Enum E, E DefaultValue = E{}>
+template<Enum E>
 class Flags {
  public:
   using UnderlyingType = std::underlying_type_t<E>;
@@ -85,6 +91,19 @@ class Flags {
     std::ranges::for_each(values, [this](auto val) {
       operator|=(val);
     });
+  }/**
+   * Copy assignment
+   * @param other
+   */
+  Flags(const Flags &other) {
+    value = other.value;
+  }
+  /**
+   * Assignment form enum type. Overwrites inner state.
+   * @param other new value
+   */
+  Flags(E other) {
+    value = other;
   }
   /**
    * Copy assignment
@@ -196,7 +215,7 @@ class Flags {
   }
 
  private:
-  E value = DefaultValue;
+  E value = E{};
 };
 
 namespace enum_flag_operators {

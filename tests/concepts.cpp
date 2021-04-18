@@ -10,6 +10,7 @@
 #include <pf_common/concepts/Serializable.h>
 #include <pf_common/concepts/StreamConcepts.h>
 #include <pf_common/concepts/StringConvertible.h>
+#include <pf_common/enums.h>
 
 TEST_CASE("One of", "[concepts][OneOf]") {
   SECTION("type is correctly detected in type list") {
@@ -61,6 +62,21 @@ TEST_CASE("String convertible", "[concepts][ToStringConvertible]") {
     REQUIRE(pf::toString(10) == std::string("10"));
     REQUIRE(pf::toString(test_details::WithToString{}) == std::string("WithToString"));
     REQUIRE(pf::toString(test_details::WithStreamOps{}) == std::string("WithStreamOps"));
+  }
+
+  SECTION("enums can be converted to string") {
+    enum class E1 {
+      A, B, C
+    };
+    enum E2 {
+      A, B, C
+    };
+    REQUIRE(pf::toString(E1::A) == std::string("A"));
+    REQUIRE(pf::toString(E1::B) == std::string("B"));
+    REQUIRE(pf::toString(E1::C) == std::string("C"));
+    REQUIRE(pf::toString(E2::A) == std::string("A"));
+    REQUIRE(pf::toString(E2::B) == std::string("B"));
+    REQUIRE(pf::toString(E2::C) == std::string("C"));
   }
 }
 
