@@ -3,5 +3,6 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/PetrFlajsingr/pf_common)](https://github.com/PetrFlajsingr/pf_common/releases)
 [![ubuntu-tests Actions Status](https://github.com/PetrFlajsingr/pf_common/workflows/ubuntu-tests/badge.svg)](https://github.com/PetrFlajsingr/pf_common/actions)
 [![macos-tests Actions Status](https://github.com/PetrFlajsingr/pf_common/workflows/macos-tests/badge.svg)](https://github.com/PetrFlajsingr/pf_common/actions)
+[![windows-tests Actions Status](https://github.com/PetrFlajsingr/pf_common/workflows/windows-tests/badge.svg)](https://github.com/PetrFlajsingr/pf_common/actions)
 
 [Documentation](https://petrflajsingr.github.io/pf_common/)
