@@ -10,6 +10,7 @@
 #include <pf_common/concepts/Serializable.h>
 #include <pf_common/concepts/StreamConcepts.h>
 #include <pf_common/concepts/StringConvertible.h>
+#define PF_ENUM_OUT
 #include <pf_common/enums.h>
 
 TEST_CASE("One of", "[concepts][OneOf]") {
