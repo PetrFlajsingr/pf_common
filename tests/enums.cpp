@@ -7,7 +7,7 @@
 #include <pf_common/enums.h>
 
 TEST_CASE("enum flags", "[enums][Flags]") {
-  using namespace pf::enum_flag_operators;
+  using namespace pf::enum_operators;
   enum SimpleEnum {};
   enum class ScopedEnum { A = 0x1, B = 0x2, C = 0x3 };
   SECTION("supports both simple and scoped enums") {

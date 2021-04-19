@@ -58,10 +58,6 @@ concept ScopedEnum = std::is_enum_v<T> && !std::convertible_to<T, typename std::
 template<typename T>
 concept Enum = std::is_enum_v<T> || ScopedEnum<T>;
 
-inline std::ostream &operator<<(std::ostream &o, Enum auto e) {
-  o << magic_enum::enum_name(e);
-  return o;
-}
 
 /**
  * @brief Utility for using enums as flags.
@@ -218,7 +214,7 @@ class Flags {
   E value = E{};
 };
 
-namespace enum_flag_operators {
+namespace enum_operators {
 /**
  * Create Flags from two enums.
  * @tparam E enum type
@@ -257,5 +253,12 @@ E operator~(E value) {
 }
 
 }// namespace pf
+
+#ifdef PF_ENUM_OUT
+inline std::ostream &operator<<(std::ostream &o, pf::Enum auto e) {
+  o << magic_enum::enum_name(e);
+  return o;
+}
+#endif
 
 #endif//PF_COMMON_ENUMS_H
