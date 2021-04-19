@@ -16,7 +16,7 @@ list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return
         "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
         "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
 
-option(PF_COMMON_TESTS "Enable test & download of test framework" )
+option(PF_COMMON_TESTS "Enable test & download of test framework")
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -34,8 +34,10 @@ option(ENABLE_STACKTRACE "enable stacktrace in exceptions" OFF)
 option(BUILD_DOCS "build doxygen docs" OFF)
 
 if (ENABLE_STACKTRACE)
-    add_compile_definitions(STACKTRACE_ENABLE)
-endif()
+    if (ENABLE_STACKTRACE)
+        add_compile_definitions(STACKTRACE_ENABLE)
+    endif ()
+endif ()
 
 hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
@@ -76,9 +78,9 @@ target_include_directories(
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 if (ENABLE_STACKTRACE)
     target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum ${BACKWARD_ENABLE} range-v3 fmt::fmt)
-    else()
+else ()
     target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3 fmt::fmt)
-endif()
+endif ()
 
 install(TARGETS ${PROJECT_NAME} magic_enum
         EXPORT ${PROJECT_NAME}_Targets
@@ -120,8 +122,14 @@ if (PF_COMMON_TESTS)
     find_package(Catch2 CONFIG REQUIRED)
     enable_testing()
     include_directories(include)
-    add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-            tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp tests/concepts.cpp tests/enums.cpp ${BACKWARD_ENABLE})
+    if (ENABLE_STACKTRACE)
+        add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
+                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp tests/concepts.cpp tests/enums.cpp ${BACKWARD_ENABLE})
+    else ()
+        add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
+                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp tests/concepts.cpp tests/enums.cpp)
+    endif ()
+
     target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt)
     target_compile_options(pf_common_tests PRIVATE ${flags})
     add_backward(pf_common_tests)
@@ -130,7 +138,7 @@ if (PF_COMMON_TESTS)
     include(Catch)
     include(ParseAndAddCatchTests)
     ParseAndAddCatchTests(pf_common_tests)
-endif()
+endif ()
 
 if (BUILD_DOCS)
     find_package(Doxygen)
@@ -138,5 +146,5 @@ if (BUILD_DOCS)
         doxygen_add_docs(pf_common_doc ALL
                 ${CMAKE_SOURCE_DIR}/include/pf_common
                 )
-    endif()
-endif()
+    endif ()
+endif ()
