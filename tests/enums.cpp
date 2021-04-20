@@ -79,4 +79,20 @@ TEST_CASE("enum flags", "[enums][Flags]") {
     REQUIRE(flags.is(ScopedEnum::A));
     REQUIRE(flags.is(ScopedEnum::B));
   }
+  SECTION("getSetFlags") {
+    auto flags = pf::Flags<ScopedEnum> {ScopedEnum::B};
+    auto setFlags = flags.getSetFlags();
+    for (auto flag : setFlags) {
+      REQUIRE(flag == ScopedEnum::B);
+    }
+    flags = ScopedEnum::A | ScopedEnum::B;
+    auto setFlags2 = flags.getSetFlags();
+    auto iter = setFlags2.begin();
+    REQUIRE(iter != setFlags2.end());
+    REQUIRE(*iter == ScopedEnum::A);
+    REQUIRE(++iter != setFlags2.end());
+    REQUIRE(*iter == ScopedEnum::B);
+    REQUIRE(++iter != setFlags2.end());
+    REQUIRE(*iter == ScopedEnum::C);
+  }
 }

@@ -9,9 +9,9 @@
 
 #include <algorithm>
 #include <concepts>
+#include <magic_enum.hpp>
 #include <ranges>
 #include <type_traits>
-#include <magic_enum.hpp>
 
 namespace pf {
 
@@ -58,7 +58,6 @@ concept ScopedEnum = std::is_enum_v<T> && !std::convertible_to<T, typename std::
 template<typename T>
 concept Enum = std::is_enum_v<T> || ScopedEnum<T>;
 
-
 /**
  * @brief Utility for using enums as flags.
  *
@@ -76,31 +75,24 @@ class Flags {
    * Create Flags from multiple enum values
    * @param args enum values
    */
-  explicit Flags(std::same_as<E> auto... args) {
-    (operator|=(args), ...);
-  }
+  explicit Flags(std::same_as<E> auto... args) { (operator|=(args), ...); }
   /**
    * Create Flags from range of enum values.
    * @param values enum values
    */
-  explicit Flags(const std::ranges::range auto &values) requires(std::same_as<E, std::ranges::range_value_t<decltype(values)>>) {
-    std::ranges::for_each(values, [this](auto val) {
-      operator|=(val);
-    });
-  }/**
+  explicit Flags(const std::ranges::range auto &values) requires(
+      std::same_as<E, std::ranges::range_value_t<decltype(values)>>) {
+    std::ranges::for_each(values, [this](auto val) { operator|=(val); });
+  } /**
    * Copy assignment
    * @param other
    */
-  Flags(const Flags &other) {
-    value = other.value;
-  }
+  Flags(const Flags &other) { value = other.value; }
   /**
    * Assignment form enum type. Overwrites inner state.
    * @param other new value
    */
-  Flags(E other) {
-    value = other;
-  }
+  Flags(E other) { value = other; }
   /**
    * Copy assignment
    * @param other
@@ -125,18 +117,10 @@ class Flags {
     result.value = static_cast<E>(~static_cast<UnderlyingType>(value));
     return result;
   }
-  [[nodiscard]] bool operator==(const Flags &rhs) const {
-    return value == rhs.value;
-  }
-  [[nodiscard]] bool operator!=(const Flags &rhs) const {
-    return !(rhs == *this);
-  }
-  [[nodiscard]] bool operator==(E rhs) const {
-    return value == rhs;
-  }
-  [[nodiscard]] bool operator!=(E rhs) const {
-    return !(rhs == *this);
-  }
+  [[nodiscard]] bool operator==(const Flags &rhs) const { return value == rhs.value; }
+  [[nodiscard]] bool operator!=(const Flags &rhs) const { return !(rhs == *this); }
+  [[nodiscard]] bool operator==(E rhs) const { return value == rhs; }
+  [[nodiscard]] bool operator!=(E rhs) const { return !(rhs == *this); }
   Flags &operator|=(const Flags &other) {
     value = static_cast<E>(static_cast<UnderlyingType>(value) | static_cast<UnderlyingType>(other.value));
     return *this;
@@ -197,9 +181,7 @@ class Flags {
    * @param other flag to check
    * @return true if the value is contained in flags
    */
-  [[nodiscard]] bool operator&&(E other) {
-    return ((*this) & other).is(other);
-  }
+  [[nodiscard]] bool operator&&(E other) { return ((*this) & other).is(other); }
   /**
    * Check if the flag is contained within this object.
    * @param other flag to check
@@ -208,6 +190,14 @@ class Flags {
   [[nodiscard]] bool is(E other) const {
     const auto bitAnd = (static_cast<UnderlyingType>(value) & static_cast<UnderlyingType>(other));
     return bitAnd == static_cast<UnderlyingType>(other);
+  }
+
+  /**
+   * List all flags which are currently set.
+   * @return flags which are currently set
+   */
+  [[nodiscard]] auto getSetFlags() const {
+    return magic_enum::enum_values<E>() | std::views::filter([this](const auto val) { return is(val); });
   }
 
  private:
@@ -250,7 +240,7 @@ E operator~(E value) {
   using UnderlyingType = std::underlying_type_t<E>;
   return static_cast<E>(~static_cast<UnderlyingType>(value));
 }
-}
+}// namespace enum_operators
 
 }// namespace pf
 
