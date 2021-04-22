@@ -124,10 +124,12 @@ if (PF_COMMON_TESTS)
     include_directories(include)
     if (ENABLE_STACKTRACE)
         add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp tests/concepts.cpp tests/enums.cpp ${BACKWARD_ENABLE})
+                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp
+                tests/concepts.cpp tests/enums.cpp tests/array.cpp ${BACKWARD_ENABLE})
     else ()
         add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp tests/concepts.cpp tests/enums.cpp)
+                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp
+                tests/concepts.cpp tests/enums.cpp tests/array.cpp)
     endif ()
 
     target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt)
