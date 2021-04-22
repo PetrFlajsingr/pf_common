@@ -59,6 +59,22 @@ template<typename T>
 concept Enum = std::is_enum_v<T> || ScopedEnum<T>;
 
 /**
+ * Check enum values so that there is no bit overlap.
+ * @tparam E type to check
+ * @return true if no values overlap, false otherwise
+ */
+template<Enum E>
+consteval bool IsPureFlags() {
+  using UnderlyingType = std::underlying_type_t<E>;
+  auto total = UnderlyingType{};
+  for (auto e : magic_enum::enum_values<E>()) {
+    if ((total & static_cast<UnderlyingType>(e)) != UnderlyingType{}) { return false; }
+    total |= static_cast<UnderlyingType>(e);
+  }
+  return true;
+}
+
+/**
  * @brief Utility for using enums as flags.
  *
  * Inner value is not necessarily a valid value of E.

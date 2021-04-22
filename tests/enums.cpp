@@ -10,6 +10,7 @@ TEST_CASE("enum flags", "[enums][Flags]") {
   using namespace pf::enum_operators;
   enum SimpleEnum {};
   enum class ScopedEnum { A = 0x1, B = 0x2, C = 0x3 };
+  enum class PureScopedEnum { A = 0x1, B = 0x2, C = 0x4 };
   SECTION("supports both simple and scoped enums") {
     REQUIRE(std::same_as<SimpleEnum, pf::Flags<SimpleEnum>::EnumType>);
     REQUIRE(std::same_as<ScopedEnum, pf::Flags<ScopedEnum>::EnumType>);
@@ -94,5 +95,9 @@ TEST_CASE("enum flags", "[enums][Flags]") {
     REQUIRE(*iter == ScopedEnum::B);
     REQUIRE(++iter != setFlags2.end());
     REQUIRE(*iter == ScopedEnum::C);
+  }
+  SECTION("pure enum flag detection") {
+    REQUIRE(!pf::IsPureFlags<ScopedEnum>());
+    REQUIRE(pf::IsPureFlags<PureScopedEnum>());
   }
 }
