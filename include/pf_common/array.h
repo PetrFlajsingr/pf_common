@@ -10,7 +10,7 @@
 
 namespace pf {
 template<typename... Args>
-constexpr auto make_array(Args &&...args) -> std::array<std::common_type_t<Args...>, sizeof...(Args)> {
+constexpr std::array<std::common_type_t<Args...>, sizeof...(Args)> make_array(Args &&...args) {
   return {std::forward<Args>(args)...};
 }
 }// namespace pf
