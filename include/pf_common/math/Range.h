@@ -18,7 +18,7 @@ namespace pf::math {
  * @tparam T
  */
 template<typename T>
-concept RangeValueType = std::equality_comparable<T> && requires(T t) {
+concept RangeValueType = std::totally_ordered<T> && requires(T t) {
   { t - t } -> std::convertible_to<T>;
 };
 
@@ -38,7 +38,7 @@ struct Range {
     if (start == rhs.start && end == rhs.end) { return std::strong_ordering::equal; }
     const auto thisSize = getSize();
     const auto rhsSize = rhs.getSize();
-    if (thisSize - rhsSize > 0) { return std::strong_ordering::greater; };
+    if (thisSize > rhsSize) { return std::strong_ordering::greater; };
     return std::strong_ordering::less;
   }
 

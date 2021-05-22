@@ -7,7 +7,7 @@ HunterGate(
 )
 
 project(pf_common
-        VERSION 1.0.5
+        VERSION 1.0.7
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
@@ -63,6 +63,13 @@ CPMAddPackage(
         NAME magic_enum
         GITHUB_REPOSITORY Neargye/magic_enum
         GIT_TAG v0.6.6
+)
+
+
+CPMAddPackage(
+        NAME StaticTypeInfo
+        GIT_TAG v1.3.1
+        GIT_REPOSITORY https://github.com/TheLartians/StaticTypeInfo
 )
 
 include(GNUInstallDirs)
@@ -132,7 +139,7 @@ if (PF_COMMON_TESTS)
                 tests/concepts.cpp tests/enums.cpp tests/array.cpp)
     endif ()
 
-    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt)
+    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt StaticTypeInfo)
     target_compile_options(pf_common_tests PRIVATE ${flags})
     add_backward(pf_common_tests)
 

@@ -4,6 +4,8 @@
 
 #include <catch2/catch.hpp>
 #include <pf_common/RAII.h>
+#include <unordered_map>
+
 
 TEST_CASE("RAII", "[RAII]") {
   auto testBool = true;

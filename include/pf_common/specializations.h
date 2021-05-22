@@ -41,7 +41,7 @@ struct is_derived_specialization {
 };
 
 template<typename T, template<class...> class U>
-constexpr static auto is_derived_specialization_v = is_derived_specialization<T, U>::value;
+constexpr static auto is_derived_specialization_v = is_direct_specialization_v<T, U>;
 /**
  * @brief Check if T is a direct or derived specialization of U.
  *
