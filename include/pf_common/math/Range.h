@@ -42,6 +42,11 @@ struct Range {
     return std::strong_ordering::less;
   }
 
+  bool operator<(const Range &rhs) const { return getSize() < rhs.getSize(); }
+  bool operator>(const Range &rhs) const { return rhs < *this; }
+  bool operator<=(const Range &rhs) const { return !(rhs < *this); }
+  bool operator>=(const Range &rhs) const { return !(*this < rhs); }
+
   /**
    * Width of the range.
    * @return width of the range

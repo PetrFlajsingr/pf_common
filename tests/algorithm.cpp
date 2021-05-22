@@ -3,7 +3,7 @@
 //
 
 #include <catch2/catch.hpp>
-#include <pf_common/Tree.h>
+#include <pf_common/math/Range.h>
 #include <pf_common/algorithms.h>
 #include <unordered_set>
 
