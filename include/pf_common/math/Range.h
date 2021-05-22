@@ -18,7 +18,7 @@ namespace pf::math {
  * @tparam T
  */
 template<typename T>
-concept RangeValueType = std::totally_ordered<T> && requires(T t) {
+concept RangeValueType = std::equality_comparable<T> && requires(T t) {
   { t - t } -> std::convertible_to<T>;
 };
 
@@ -31,21 +31,8 @@ struct Range {
   T start; /**< Starting position. */
   T end; /**< Ending position. */
 
-  constexpr bool operator==(const Range &rhs) const { return (*this <=> rhs) == std::strong_ordering::equal; }
+  constexpr bool operator==(const Range &rhs) const { return start == rhs.start && end == rhs.end; }
   constexpr bool operator!=(const Range &rhs) const { return !(rhs == *this); }
-
-  constexpr std::strong_ordering operator<=>(const Range &rhs) const {
-    if (start == rhs.start && end == rhs.end) { return std::strong_ordering::equal; }
-    const auto thisSize = getSize();
-    const auto rhsSize = rhs.getSize();
-    if (thisSize > rhsSize) { return std::strong_ordering::greater; };
-    return std::strong_ordering::less;
-  }
-
-  bool operator<(const Range &rhs) const { return getSize() < rhs.getSize(); }
-  bool operator>(const Range &rhs) const { return rhs < *this; }
-  bool operator<=(const Range &rhs) const { return !(rhs < *this); }
-  bool operator>=(const Range &rhs) const { return !(*this < rhs); }
 
   /**
    * Width of the range.
