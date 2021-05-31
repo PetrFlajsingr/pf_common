@@ -16,7 +16,7 @@ list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return
         "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
         "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
 
-option(PF_COMMON_TESTS "Enable test & download of test framework")
+option(PF_COMMON_TESTS "Enable test & download of test framework" OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 
