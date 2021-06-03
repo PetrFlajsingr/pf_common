@@ -9,6 +9,8 @@
 
 #include "common.h"
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 #include <ostream>
 #include <pf_common/concepts/OneOf.h>
 
@@ -55,6 +57,22 @@ requires(OneOfValues_v<Dimensions, 2, 3>) struct BoundingBox {
   [[nodiscard]] float height() const { return p2.y - p1.y; }
 
   [[nodiscard]] float depth() const requires(Dimensions == 3) { return p2.z - p1.z; }
+
+  inline friend BoundingBox operator*(const glm::mat3 &m, const BoundingBox &self) requires(Dimensions == 2) {
+    return BoundingBox{(m * glm::vec3{self.p1, 1}).xy(), (m * glm::vec3{self.p2, 1}).xy()};
+  }
+  inline friend BoundingBox operator*(const glm::mat4 &m, const BoundingBox &self) requires(Dimensions == 3) {
+    return BoundingBox{(m * glm::vec4{self.p1, 1}).xyz(), (m * glm::vec4{self.p2, 1}).xyz()};
+  }
+
+  inline friend BoundingBox &operator*=(const glm::mat3 &m, BoundingBox &self) requires(Dimensions == 2) {
+    self = m * self;
+    return self;
+  }
+  inline friend BoundingBox &operator*=(const glm::mat4 &m, BoundingBox &self) requires(Dimensions == 3) {
+    self = m * self;
+    return self;
+  }
 
   [[nodiscard]] float distance(const BoundingBox &other);
 
