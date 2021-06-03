@@ -62,7 +62,7 @@ requires(OneOfValues_v<Dimensions, 2, 3>) struct BoundingBox {
 };
 
 template<>
-float BoundingBox<2>::distance(const BoundingBox<2> &other) {
+inline float BoundingBox<2>::distance(const BoundingBox<2> &other) {
   const auto outterBB = BoundingBox<2>{{glm::min(p1.x, other.p1.x), glm::min(p1.y, other.p1.y)},
                                        {glm::max(p2.x, other.p2.x), glm::max(p2.y, other.p2.y)}};
   const auto innerWidth = outterBB.width() - width() - other.width();
@@ -72,7 +72,7 @@ float BoundingBox<2>::distance(const BoundingBox<2> &other) {
 }
 
 template<>
-float BoundingBox<3>::distance(const BoundingBox<3> &other) {
+inline float BoundingBox<3>::distance(const BoundingBox<3> &other) {
   const auto outterBB =
       BoundingBox<3>{{glm::min(p1.x, other.p1.x), glm::min(p1.y, other.p1.y), glm::min(p1.z, other.p1.z)},
                      {glm::max(p2.x, other.p2.x), glm::max(p2.y, other.p2.y), glm::max(p2.z, other.p2.z)}};
@@ -84,13 +84,13 @@ float BoundingBox<3>::distance(const BoundingBox<3> &other) {
 }
 
 template<>
-BoundingBox<2> BoundingBox<2>::combine(const BoundingBox<2> &other) const {
+inline BoundingBox<2> BoundingBox<2>::combine(const BoundingBox<2> &other) const {
   return BoundingBox<2>{{glm::min(p1.x, other.p1.x), glm::min(p1.y, other.p1.y)},
                         {glm::max(p2.x, other.p2.x), glm::max(p2.y, other.p2.y)}};
 }
 
 template<>
-BoundingBox<3> BoundingBox<3>::combine(const BoundingBox<3> &other) const {
+inline BoundingBox<3> BoundingBox<3>::combine(const BoundingBox<3> &other) const {
   return BoundingBox<3>{{glm::min(p1.x, other.p1.x), glm::min(p1.y, other.p1.y), glm::min(p1.z, other.p1.z)},
                         {glm::max(p2.x, other.p2.x), glm::max(p2.y, other.p2.y), glm::max(p2.z, other.p2.z)}};
 }
