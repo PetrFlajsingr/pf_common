@@ -186,6 +186,14 @@ class Flags {
   }
 
   /**
+   * Get underlying value.
+   * @return underlying value
+   */
+  [[nodiscard]] UnderlyingType operator*() const {
+    return value;
+  }
+
+  /**
    * List all flags which are currently set.
    * @return flags which are currently set
    */
