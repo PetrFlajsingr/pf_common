@@ -113,7 +113,7 @@ class Flags {
   [[nodiscard]] bool operator!=(const Flags &rhs) const { return !(rhs == *this); }
   [[nodiscard]] bool operator==(E rhs) const { return value == rhs; }
   [[nodiscard]] bool operator!=(E rhs) const { return !(rhs == *this); }
-  
+
   Flags &operator|=(const Flags &other) {
     value = value | other.value;
     return *this;
@@ -243,5 +243,13 @@ inline std::ostream &operator<<(std::ostream &o, pf::Enum auto e) {
   return o;
 }
 #endif
+
+#define ENABLE_PF_ENUM_OUT_FOR_NAMESPACE(ns_name)                                                                      \
+  namespace ns_name {                                                                                                  \
+  inline std::ostream &operator<<(std::ostream &o, pf::Enum auto e) {                                                  \
+    o << magic_enum::enum_name(e);                                                                                     \
+    return o;                                                                                                          \
+  }                                                                                                                    \
+  }
 
 #endif//PF_COMMON_ENUMS_H

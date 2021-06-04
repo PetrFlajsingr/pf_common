@@ -4,13 +4,19 @@
 
 #include <catch2/catch.hpp>
 #include <concepts>
+#include <pf_common/concepts/StringConvertible.h>
 #include <pf_common/enums.h>
-
+using namespace pf::enum_operators;
+enum SimpleEnum {};
+namespace EnumNs {
+enum class ScopedEnum { A = 0x1, B = 0x2, C = 0x3 };
+enum class PureScopedEnum { A = 0x1, B = 0x2, C = 0x4 };
+}
+using namespace EnumNs;
+ENABLE_PF_ENUM_OUT_FOR_NAMESPACE(EnumNs)
 TEST_CASE("enum flags", "[enums][Flags]") {
-  using namespace pf::enum_operators;
-  enum SimpleEnum {};
-  enum class ScopedEnum { A = 0x1, B = 0x2, C = 0x3 };
-  enum class PureScopedEnum { A = 0x1, B = 0x2, C = 0x4 };
+
+
   SECTION("supports both simple and scoped enums") {
     REQUIRE(std::same_as<SimpleEnum, pf::Flags<SimpleEnum>::EnumType>);
     REQUIRE(std::same_as<ScopedEnum, pf::Flags<ScopedEnum>::EnumType>);
@@ -100,4 +106,9 @@ TEST_CASE("enum flags", "[enums][Flags]") {
     REQUIRE(!pf::IsPureFlags<ScopedEnum>());
     REQUIRE(pf::IsPureFlags<PureScopedEnum>());
   }
+  SECTION("enum to string") {
+    REQUIRE(pf::toString(ScopedEnum::A) == "A");
+    REQUIRE(pf::toString(ScopedEnum::B) == "B");
+  }
+
 }
