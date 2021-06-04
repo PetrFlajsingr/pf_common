@@ -352,7 +352,7 @@ void cBreadthFirst(const Node<T> &node, std::invocable<const Node<T> &> auto cal
     callable(*currentNode);
     auto children = currentNode->children();
     for (const auto &child : children) { queue.push(&child); }
-  }a
+  }
 }
 template<typename T>
 void cBreadthFirst(const Tree<T> &tree, std::invocable<const Node<T> &> auto callable) {
