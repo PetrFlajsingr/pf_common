@@ -8,9 +8,9 @@
 #ifndef HUFF_CODEC__VECTOR2D_H
 #define HUFF_CODEC__VECTOR2D_H
 
+#include <memory>
 #include <ranges>
 #include <span>
-#include "utils.h"
 
 namespace pf {
 /**
@@ -20,7 +20,8 @@ namespace pf {
 template<std::ranges::contiguous_range R, bool IsConst>
 class View2D {
  public:
-  using range_storage = std::conditional_t<IsConst, std::observer_ptr<const R>, std::observer_ptr<R>>;
+  using range_storage =
+  std::conditional_t<IsConst, std::experimental::observer_ptr<const R>, std::experimental::observer_ptr<R>>;
   using range_reference = std::conditional_t<IsConst, const R &, R &>;
   using value_type = std::ranges::range_value_t<R>;
   using reference = std::ranges::range_reference_t<R>;
@@ -72,7 +73,7 @@ class View2D {
   [[nodiscard]] RowAccessor<true> operator[](std::size_t index) const { return RowAccessor<true>{range, index, width}; }
 
   [[nodiscard]] R &operator*() requires(!IsConst) { return getRange(); }
-  [[nodiscard]] R* operator->() requires(!IsConst) { return range.get(); }
+  [[nodiscard]] R *operator->() requires(!IsConst) { return range.get(); }
 
   [[nodiscard]] const R &operator*() { return getRange(); }
 
