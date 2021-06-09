@@ -10,11 +10,13 @@
 #include <mutex>
 #include <queue>
 
+namespace pf {
 /**
  * @brief A template queue to pass data between threads - thread safe
  */
-template <typename T> class SafeQueue {
-public:
+template<typename T>
+class SafeQueue {
+ public:
   SafeQueue() : keep_running(true){};
   SafeQueue(SafeQueue &&other) noexcept {
     queue = std::move(other.queue);
@@ -36,16 +38,13 @@ public:
     queue.push(std::move(item));
     lock.unlock();
 
-    if (wasEmpty)
-      conditionVariable.notify_one();
+    if (wasEmpty) conditionVariable.notify_one();
     return queue.front();
   }
 
-  std::optional<T> dequeue() {
+  [[nodiscard]] std::optional<T> dequeue() {
     std::unique_lock<std::mutex> lock(queueMutex);
-    while (keep_running && queue.empty()) {
-      conditionVariable.wait(lock);
-    }
+    while (keep_running && queue.empty()) { conditionVariable.wait(lock); }
 
     if (keep_running && !queue.empty()) {
       auto item = std::move(queue.front());
@@ -55,20 +54,26 @@ public:
     return std::nullopt;
   }
 
-  bool isEmpty() { return queue.empty(); }
+  bool isEmpty() {
+    std::unique_lock<std::mutex> lock(queueMutex);
+    return queue.empty();
+  }
 
   void shutdown() {
     keep_running = false;
     conditionVariable.notify_all();
   }
 
-  std::size_t size() { return queue.size(); }
+  [[nodiscard]] std::size_t size() {
+    std::unique_lock<std::mutex> lock(queueMutex);
+    return queue.size();
+  }
 
-private:
+ private:
   std::mutex queueMutex;
   std::condition_variable conditionVariable;
   std::queue<T> queue;
   std::atomic<bool> keep_running;
 };
-
-#endif // UTILITIES_SAFEQUEUE_H
+}// namespace pf
+#endif// UTILITIES_SAFEQUEUE_H
