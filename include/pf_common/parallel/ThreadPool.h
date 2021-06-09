@@ -36,9 +36,8 @@ enum class ThreadPoolState { Run, Stop, FinishAndStop };
 class ThreadPool {
  public:
   inline explicit ThreadPool(std::size_t threadCount) {
-    using namespace MakeRange;
     threads.resize(threadCount);
-    std::ranges::generate(threads.begin(), [this {return [this] { threadLoop(); }}]);
+    std::ranges::generate(threads.begin(), threads.end(), [this] { return std::thread{[this] { threadLoop(); }}; });
   }
   ThreadPool(const ThreadPool &) = delete;
   ThreadPool &operator=(const ThreadPool &) = delete;
@@ -46,7 +45,7 @@ class ThreadPool {
   ThreadPool &operator=(ThreadPool &&) = default;
 
   auto enqueue(std::invocable auto &&callable) {
-    if (state != ThreadPoolState::Run) { return InvalidArgumentException{"Threadpool is not in Run state."}; }
+    if (state != ThreadPoolState::Run) { throw InvalidArgumentException{"Threadpool is not in Run state."}; }
     using result_type = std::invoke_result_t<decltype(callable)>;
     auto task = std::packaged_task<result_type()>(std::forward<decltype(callable)>(callable));
     auto future = task.get_future();
@@ -64,7 +63,7 @@ class ThreadPool {
     if (state == ThreadPoolState::Run) { state = ThreadPoolState::FinishAndStop; }
     queue.shutdown();
     if (state == ThreadPoolState::FinishAndStop) {
-      while (!queue.isEmpty()){};
+      while (!queue.isEmpty()) {};
     }
     for (auto &thread : threads) { thread.join(); }
   }
