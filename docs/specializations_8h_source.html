@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.5</span>
+   &#160;<span id="projectnumber">1.0.9</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -102,7 +102,7 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;};</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">template</span>&lt;<span class="keyword">class</span>...&gt; <span class="keyword">class </span>U&gt;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;constexpr <span class="keyword">static</span> <span class="keyword">auto</span> is_derived_specialization_v = <a class="code" href="structpf_1_1is__derived__specialization.html">is_derived_specialization&lt;T, U&gt;::value</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;constexpr <span class="keyword">static</span> <span class="keyword">auto</span> is_derived_specialization_v = is_direct_specialization_v&lt;T, U&gt;;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">template</span>&lt;<span class="keyword">class</span>...&gt; <span class="keyword">class </span>U&gt;</div>
 <div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="specializations_8h.html#a1b075c387600911e9a15400e655ee7be">   53</a></span>&#160;concept <a class="code" href="specializations_8h.html#a1b075c387600911e9a15400e655ee7be">derived_specialization_of</a> = is_derived_specialization_v&lt;T, U&gt;;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>

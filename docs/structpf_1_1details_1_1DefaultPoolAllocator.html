@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.5</span>
+   &#160;<span id="projectnumber">1.0.9</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -84,18 +84,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa7c631d82680fc69a5c31da243300036"><td class="memItemLeft" align="right" valign="top"><a id="aa7c631d82680fc69a5c31da243300036"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>on_lease</b> (std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;available, std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;inUse)</td></tr>
 <tr class="separator:aa7c631d82680fc69a5c31da243300036"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cbe38dddbb21db8b16c3f15e46484de"><td class="memItemLeft" align="right" valign="top"><a id="a2cbe38dddbb21db8b16c3f15e46484de"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>on_release</b> (std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;available, std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;inUse)</td></tr>
-<tr class="separator:a2cbe38dddbb21db8b16c3f15e46484de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade0721575fa4537301998cf56efc0f02"><td class="memItemLeft" align="right" valign="top"><a id="ade0721575fa4537301998cf56efc0f02"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>on_release</b> ([[maybe_unused]] std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;available, [[maybe_unused]] std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;inUse)</td></tr>
+<tr class="separator:ade0721575fa4537301998cf56efc0f02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a304ee223d8ca205c482a9b1e7d8316f3"><td class="memItemLeft" align="right" valign="top"><a id="a304ee223d8ca205c482a9b1e7d8316f3"></a>
 std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>capacity</b> ()</td></tr>
 <tr class="separator:a304ee223d8ca205c482a9b1e7d8316f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27dda17e060e1705de00a72e9b49f7e1"><td class="memItemLeft" align="right" valign="top"><a id="a27dda17e060e1705de00a72e9b49f7e1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>shrink</b> (std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;available, std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;inUse)</td></tr>
 <tr class="separator:a27dda17e060e1705de00a72e9b49f7e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f95d6c634503b557ef85222e7858955"><td class="memItemLeft" align="right" valign="top"><a id="a2f95d6c634503b557ef85222e7858955"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>alloc_n</b> (std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;available, std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;inUse, std::size_t n)</td></tr>
-<tr class="separator:a2f95d6c634503b557ef85222e7858955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d66f32be75a26e03268f62471a0b5b7"><td class="memItemLeft" align="right" valign="top"><a id="a6d66f32be75a26e03268f62471a0b5b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>alloc_n</b> (std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;available, [[maybe_unused]] std::list&lt; std::unique_ptr&lt; T &gt;&gt; &amp;inUse, std::size_t n)</td></tr>
+<tr class="separator:a6d66f32be75a26e03268f62471a0b5b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>

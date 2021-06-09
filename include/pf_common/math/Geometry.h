@@ -1,6 +1,9 @@
-//
-// Created by Petr on 19.11.2019.
-//
+/**
+ * @file Geometry.h
+ * @brief Basic functions for geom calculations
+ * @author Petr Flajšingr
+ * @date 19.11.19
+ */
 
 #ifndef UTILITIES_GEOMETRY_H
 #define UTILITIES_GEOMETRY_H

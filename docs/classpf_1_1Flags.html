@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.5</span>
+   &#160;<span id="projectnumber">1.0.9</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -94,8 +94,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>EnumType</b> = E</td
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad7e93fe3d31cb0a363529d52d61e21cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#ad7e93fe3d31cb0a363529d52d61e21cf">Flags</a> (std::same_as&lt; E &gt; auto... args)</td></tr>
 <tr class="separator:ad7e93fe3d31cb0a363529d52d61e21cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81eb264fb84735b729db14be77dd9532"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#a81eb264fb84735b729db14be77dd9532">Flags</a> (const std::ranges::range auto &amp;values) requires(std</td></tr>
-<tr class="separator:a81eb264fb84735b729db14be77dd9532"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa444cd90ce901d90d897be00c692a54c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#aa444cd90ce901d90d897be00c692a54c">Flags</a> (std::ranges::range auto &amp;&amp;values) requires(std</td></tr>
+<tr class="separator:aa444cd90ce901d90d897be00c692a54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bbb7a3447438300a1dd01bc0f127a97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#a5bbb7a3447438300a1dd01bc0f127a97">Flags</a> (const <a class="el" href="classpf_1_1Flags.html">Flags</a> &amp;other)</td></tr>
 <tr class="separator:a5bbb7a3447438300a1dd01bc0f127a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67c79db442bd753e3bbbf2586f534465"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#a67c79db442bd753e3bbbf2586f534465">Flags</a> (E other)</td></tr>
@@ -158,6 +158,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (E rhs
 <tr class="separator:ad1dc1d3347c1db779705e045aa95bbf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b64418bb749e9b0399a57f9d88ba177"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#a5b64418bb749e9b0399a57f9d88ba177">is</a> (E other) const</td></tr>
 <tr class="separator:a5b64418bb749e9b0399a57f9d88ba177"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedbade3ebb4886d7ff1ec01d1bb102b7"><td class="memItemLeft" align="right" valign="top">UnderlyingType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#aedbade3ebb4886d7ff1ec01d1bb102b7">operator*</a> () const</td></tr>
+<tr class="separator:aedbade3ebb4886d7ff1ec01d1bb102b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88c595037819758a0982ebaf70816c82"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpf_1_1Flags.html#a88c595037819758a0982ebaf70816c82">getSetFlags</a> () const</td></tr>
+<tr class="separator:a88c595037819758a0982ebaf70816c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;Enum E&gt;<br />
@@ -207,8 +211,8 @@ template&lt;Enum E&gt; </div>
 
 </div>
 </div>
-<a id="a81eb264fb84735b729db14be77dd9532"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81eb264fb84735b729db14be77dd9532">&#9670;&nbsp;</a></span>Flags() <span class="overload">[2/4]</span></h2>
+<a id="aa444cd90ce901d90d897be00c692a54c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa444cd90ce901d90d897be00c692a54c">&#9670;&nbsp;</a></span>Flags() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,7 +225,7 @@ template&lt;Enum E&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classpf_1_1Flags.html">pf::Flags</a>&lt; E &gt;::<a class="el" href="classpf_1_1Flags.html">Flags</a> </td>
           <td>(</td>
-          <td class="paramtype">const std::ranges::range auto &amp;&#160;</td>
+          <td class="paramtype">std::ranges::range auto &amp;&amp;&#160;</td>
           <td class="paramname"><em>values</em></td><td>)</td>
           <td></td>
         </tr>
@@ -310,6 +314,34 @@ template&lt;Enum E&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a88c595037819758a0982ebaf70816c82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88c595037819758a0982ebaf70816c82">&#9670;&nbsp;</a></span>getSetFlags()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;Enum E&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="classpf_1_1Flags.html">pf::Flags</a>&lt; E &gt;::getSetFlags </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>List all flags which are currently set. </p><dl class="section return"><dt>Returns</dt><dd>flags which are currently set </dd></dl>
+
+</div>
+</div>
 <a id="a5b64418bb749e9b0399a57f9d88ba177"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5b64418bb749e9b0399a57f9d88ba177">&#9670;&nbsp;</a></span>is()</h2>
 
@@ -377,6 +409,34 @@ template&lt;Enum E&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the value is contained in flags </dd></dl>
+
+</div>
+</div>
+<a id="aedbade3ebb4886d7ff1ec01d1bb102b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedbade3ebb4886d7ff1ec01d1bb102b7">&#9670;&nbsp;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;Enum E&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">UnderlyingType <a class="el" href="classpf_1_1Flags.html">pf::Flags</a>&lt; E &gt;::operator* </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get underlying value. </p><dl class="section return"><dt>Returns</dt><dd>underlying value </dd></dl>
 
 </div>
 </div>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.5</span>
+   &#160;<span id="projectnumber">1.0.9</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -78,6 +78,8 @@ $(function() {
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="common_8h_source.html">common.h</a>&quot;</code><br />
 <code>#include &lt;glm/glm.hpp&gt;</code><br />
+<code>#include &lt;glm/gtc/matrix_transform.hpp&gt;</code><br />
+<code>#include &lt;glm/gtx/transform.hpp&gt;</code><br />
 <code>#include &lt;ostream&gt;</code><br />
 <code>#include &lt;<a class="el" href="OneOf_8h_source.html">pf_common/concepts/OneOf.h</a>&gt;</code><br />
 <code>#include &quot;BoundingBox.tpp&quot;</code><br />
@@ -86,13 +88,15 @@ Include dependency graph for BoundingBox.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="BoundingBox_8h__incl.png" border="0" usemap="#include_2pf__common_2math_2BoundingBox_8h" alt=""/></div>
 <map name="include_2pf__common_2math_2BoundingBox_8h" id="include_2pf__common_2math_2BoundingBox_8h">
-<area shape="rect" title="Simple 2D or 3D bounding box." alt="" coords="193,5,381,47"/>
+<area shape="rect" title="Simple 2D or 3D bounding box." alt="" coords="481,5,669,47"/>
 <area shape="rect" href="common_8h.html" title="Common types for pf::math." alt="" coords="5,102,96,129"/>
 <area shape="rect" title=" " alt="" coords="120,102,224,129"/>
-<area shape="rect" title=" " alt="" coords="249,102,325,129"/>
-<area shape="rect" href="OneOf_8h.html" title="Static checking of types in type lists and values in value lists." alt="" coords="349,95,510,136"/>
-<area shape="rect" title=" " alt="" coords="535,102,668,129"/>
-<area shape="rect" title=" " alt="" coords="389,184,469,211"/>
+<area shape="rect" title=" " alt="" coords="249,102,466,129"/>
+<area shape="rect" title=" " alt="" coords="491,102,659,129"/>
+<area shape="rect" title=" " alt="" coords="683,102,759,129"/>
+<area shape="rect" href="OneOf_8h.html" title="Static checking of types in type lists and values in value lists." alt="" coords="783,95,945,136"/>
+<area shape="rect" title=" " alt="" coords="969,102,1103,129"/>
+<area shape="rect" title=" " alt="" coords="824,184,904,211"/>
 </map>
 </div>
 </div>
@@ -104,10 +108,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a075d30d2dff73a580aa72a6afd432226"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="BoundingBox_8h.html#a075d30d2dff73a580aa72a6afd432226">pf::math::requires</a> (OneOfValues_v&lt; Dimensions, 2, 3 &gt;) struct BoundingBox</td></tr>
 <tr class="memdesc:a075d30d2dff73a580aa72a6afd432226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Axis aligned bounding box.  <a href="BoundingBox_8h.html#a075d30d2dff73a580aa72a6afd432226">More...</a><br /></td></tr>
 <tr class="separator:a075d30d2dff73a580aa72a6afd432226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12498e192dd7efbca7f23acf7d9d7050"><td class="memTemplParams" colspan="2"><a id="a12498e192dd7efbca7f23acf7d9d7050"></a>
+<tr class="memitem:a23050be44a9d00afcb1c53bbfa63849a"><td class="memTemplParams" colspan="2"><a id="a23050be44a9d00afcb1c53bbfa63849a"></a>
 template&lt;unsigned int Dims&gt; </td></tr>
-<tr class="memitem:a12498e192dd7efbca7f23acf7d9d7050"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>pf::math::operator&lt;&lt;</b> (std::ostream &amp;stream, const BoundingBox&lt; Dims &gt; &amp;aabb)</td></tr>
-<tr class="separator:a12498e192dd7efbca7f23acf7d9d7050"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23050be44a9d00afcb1c53bbfa63849a"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>pf::math::operator&lt;&lt;</b> (std::ostream &amp;stream, const BoundingBox&lt; Dims &gt; &amp;aabb)</td></tr>
+<tr class="separator:a23050be44a9d00afcb1c53bbfa63849a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple 2D or 3D bounding box. </p>
@@ -133,7 +137,6 @@ template&lt;unsigned int Dimensions = 3&gt; </div>
 </div><div class="memdoc">
 
 <p>Axis aligned bounding box. </p>
-<p>Bounding sphere or circle.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Dimensions</td><td>2D or 3D </td></tr>
@@ -162,34 +165,50 @@ template&lt;unsigned int Dimensions = 3&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the point is contained within the bounding box, false otherwise</dd></dl>
-<p>Construct BoundingSphere. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Construct BoundingBox. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">center</td><td>center of the sphere </td></tr>
-    <tr><td class="paramname">radius</td><td>radius</td></tr>
+    <tr><td class="paramname">p1</td><td>first point </td></tr>
+    <tr><td class="paramname">p2</td><td>second point</td></tr>
   </table>
   </dd>
 </dl>
-<p>Distance to a point from sphere's surface. If the point is inside the sphere negative distance is returned. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Check relative position of another BoundingBox. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">point</td><td></td></tr>
+    <tr><td class="paramname">aabb</td><td>other bounding box </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<p>Construct BoundingSphere. </p><dl class="params"><dt>Parameters</dt><dd>
+<dl class="section return"><dt>Returns</dt><dd>relative position </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>RelativePosition</dd></dl>
+<p>Check whether the bounding box contains a point or not. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">center</td><td>center of the sphere </td></tr>
-    <tr><td class="paramname">radius</td><td>radius</td></tr>
+    <tr><td class="paramname">point</td><td>point to check for </td></tr>
   </table>
   </dd>
 </dl>
-<p>Distance to a point from sphere's surface. If the point is inside the sphere negative distance is returned. </p><dl class="params"><dt>Parameters</dt><dd>
+<dl class="section return"><dt>Returns</dt><dd>true if the point is contained within the bounding box, false otherwise</dd></dl>
+<p>Construct BoundingBox. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">point</td><td></td></tr>
+    <tr><td class="paramname">p1</td><td>first point </td></tr>
+    <tr><td class="paramname">p2</td><td>second point</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Check relative position of another BoundingBox. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">aabb</td><td>other bounding box </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>relative position </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>RelativePosition</dd></dl>
+<p>Check whether the bounding box contains a point or not. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">point</td><td>point to check for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the point is contained within the bounding box, false otherwise</dd></dl>
 
 </div>
 </div>

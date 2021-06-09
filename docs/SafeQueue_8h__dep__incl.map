@@ -1,0 +1,4 @@
+<map id="include/pf_common/parallel/SafeQueue.h" name="include/pf_common/parallel/SafeQueue.h">
+<area shape="rect" id="node1" title="A queue providing thread safe data passing between threads." alt="" coords="5,5,208,47"/>
+<area shape="rect" id="node2" href="$ThreadPool_8h.html" title="Basic ThreadPool." alt="" coords="5,95,208,136"/>
+</map>

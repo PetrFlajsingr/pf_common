@@ -1,6 +1,9 @@
-//
-// Created by petr on 12/26/19.
-//
+/**
+ * @file ThreadPool.h
+ * @brief Basic ThreadPool
+ * @author Petr Flajšingr
+ * @date 26.12.19
+ */
 
 #ifndef UTILITIES_THREADPOOL_H
 #define UTILITIES_THREADPOOL_H
@@ -33,8 +36,15 @@ struct PTask : public Task {
 
 enum class ThreadPoolState { Run, Stop, FinishAndStop };
 
+/**
+ * @brief A thread pool running queued tasks in threads.
+ */
 class ThreadPool {
  public:
+  /**
+   * Construct ThreadPool.
+   * @param threadCount count of threads handling tasks
+   */
   inline explicit ThreadPool(std::size_t threadCount) {
     threads.resize(threadCount);
     std::ranges::generate(threads.begin(), threads.end(), [this] { return std::thread{[this] { threadLoop(); }}; });
@@ -44,6 +54,11 @@ class ThreadPool {
   ThreadPool(ThreadPool &&) = default;
   ThreadPool &operator=(ThreadPool &&) = default;
 
+  /**
+   * Enqueue a task to be executed when possible.
+   * @param callable task to be run
+   * @return future, resolved when task is finished
+   */
   auto enqueue(std::invocable auto &&callable) {
     if (state != ThreadPoolState::Run) { throw InvalidArgumentException{"Threadpool is not in Run state."}; }
     using result_type = std::invoke_result_t<decltype(callable)>;
@@ -53,7 +68,13 @@ class ThreadPool {
     return future;
   }
 
+  /**
+   * Finish remaining tasks and stop.
+   */
   inline void finishAndStop() { state = ThreadPoolState::FinishAndStop; }
+  /**
+   * Clear remaining tasks and stop.
+   */
   inline void cancelAndStop() {
     state = ThreadPoolState::Stop;
     queue.shutdown();

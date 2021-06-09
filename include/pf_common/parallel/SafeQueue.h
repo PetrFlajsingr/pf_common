@@ -1,6 +1,9 @@
-//
-// Created by Petr Flajsingr on 07/04/2018.
-//
+/**
+ * @file SafeQueue.h
+ * @brief A queue providing thread safe data passing between threads.
+ * @author Petr Flajšingr
+ * @date 7.4.18
+ */
 
 #ifndef UTILITIES_SAFEQUEUE_H
 #define UTILITIES_SAFEQUEUE_H

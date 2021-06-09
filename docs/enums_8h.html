@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">pf_common
-   &#160;<span id="projectnumber">1.0.5</span>
+   &#160;<span id="projectnumber">1.0.9</span>
    </div>
    <div id="projectbrief">Header only library with concepts and other commonly used things</div>
   </td>
@@ -82,20 +82,20 @@ $(function() {
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;concepts&gt;</code><br />
+<code>#include &lt;magic_enum.hpp&gt;</code><br />
 <code>#include &lt;ranges&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
-<code>#include &lt;magic_enum.hpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for enums.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="enums_8h__incl.png" border="0" usemap="#include_2pf__common_2enums_8h" alt=""/></div>
 <map name="include_2pf__common_2enums_8h" id="include_2pf__common_2enums_8h">
-<area shape="rect" title="Common enums and utility for working with enums." alt="" coords="147,5,357,32"/>
+<area shape="rect" title="Common enums and utility for working with enums." alt="" coords="181,5,392,32"/>
 <area shape="rect" title=" " alt="" coords="5,80,91,107"/>
 <area shape="rect" title=" " alt="" coords="115,80,195,107"/>
-<area shape="rect" title=" " alt="" coords="219,80,285,107"/>
-<area shape="rect" title=" " alt="" coords="310,80,402,107"/>
-<area shape="rect" title=" " alt="" coords="426,80,561,107"/>
+<area shape="rect" title=" " alt="" coords="219,80,354,107"/>
+<area shape="rect" title=" " alt="" coords="379,80,445,107"/>
+<area shape="rect" title=" " alt="" coords="470,80,562,107"/>
 </map>
 </div>
 </div>
@@ -109,8 +109,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a4a34745fc8ef15a34b836b6c676608f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="enums_8h.html#a4a34745fc8ef15a34b836b6c676608f5">ENABLE_BIT_MASK_ENUM</a>(enum_type)</td></tr>
-<tr class="separator:a4a34745fc8ef15a34b836b6c676608f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6bd1d71e418d8e68be008356329d867"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>ENABLE_PF_ENUM_OUT_FOR_NAMESPACE</b>(ns_name)</td></tr>
+<tr class="separator:ac6bd1d71e418d8e68be008356329d867"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -121,18 +121,18 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab1e4556c6f7148ec0be5d83e9f9b988a"><td class="memItemLeft" align="right" valign="top"><a id="ab1e4556c6f7148ec0be5d83e9f9b988a"></a>
-std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>pf::operator&lt;&lt;</b> (std::ostream &amp;o, Enum auto e)</td></tr>
-<tr class="separator:ab1e4556c6f7148ec0be5d83e9f9b988a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c58e949abae6b1c4bf71bdae0e277ee"><td class="memTemplParams" colspan="2">template&lt;Enum E&gt; </td></tr>
-<tr class="memitem:a6c58e949abae6b1c4bf71bdae0e277ee"><td class="memTemplItemLeft" align="right" valign="top">Flags&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="enums_8h.html#a6c58e949abae6b1c4bf71bdae0e277ee">pf::enum_flag_operators::operator|</a> (E lhs, E rhs)</td></tr>
-<tr class="separator:a6c58e949abae6b1c4bf71bdae0e277ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0975069d339087f5dd10e0d49b16c94b"><td class="memTemplParams" colspan="2">template&lt;Enum E&gt; </td></tr>
-<tr class="memitem:a0975069d339087f5dd10e0d49b16c94b"><td class="memTemplItemLeft" align="right" valign="top">Flags&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="enums_8h.html#a0975069d339087f5dd10e0d49b16c94b">pf::enum_flag_operators::operator&amp;</a> (E lhs, E rhs)</td></tr>
-<tr class="separator:a0975069d339087f5dd10e0d49b16c94b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac36156e9e42e2b23e6fec368cbfa4d1f"><td class="memTemplParams" colspan="2">template&lt;Enum E&gt; </td></tr>
-<tr class="memitem:ac36156e9e42e2b23e6fec368cbfa4d1f"><td class="memTemplItemLeft" align="right" valign="top">E&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="enums_8h.html#ac36156e9e42e2b23e6fec368cbfa4d1f">pf::enum_flag_operators::operator~</a> (E value)</td></tr>
-<tr class="separator:ac36156e9e42e2b23e6fec368cbfa4d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af689f9f36257a6261df6731a5d8aad73"><td class="memTemplParams" colspan="2">template&lt;Enum E&gt; </td></tr>
+<tr class="memitem:af689f9f36257a6261df6731a5d8aad73"><td class="memTemplItemLeft" align="right" valign="top">consteval bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="enums_8h.html#af689f9f36257a6261df6731a5d8aad73">pf::IsPureFlags</a> ()</td></tr>
+<tr class="separator:af689f9f36257a6261df6731a5d8aad73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2ae4060ac41fa3ecc710c203dde80bd"><td class="memTemplParams" colspan="2">template&lt;Enum E&gt; </td></tr>
+<tr class="memitem:aa2ae4060ac41fa3ecc710c203dde80bd"><td class="memTemplItemLeft" align="right" valign="top">Flags&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="enums_8h.html#aa2ae4060ac41fa3ecc710c203dde80bd">pf::enum_operators::operator|</a> (E lhs, E rhs)</td></tr>
+<tr class="separator:aa2ae4060ac41fa3ecc710c203dde80bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c138c315d16b7a10eae3f479ada19a7"><td class="memTemplParams" colspan="2">template&lt;Enum E&gt; </td></tr>
+<tr class="memitem:a2c138c315d16b7a10eae3f479ada19a7"><td class="memTemplItemLeft" align="right" valign="top">Flags&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="enums_8h.html#a2c138c315d16b7a10eae3f479ada19a7">pf::enum_operators::operator&amp;</a> (E lhs, E rhs)</td></tr>
+<tr class="separator:a2c138c315d16b7a10eae3f479ada19a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2f12b5e9e4ff3610d82a63eca923b19"><td class="memTemplParams" colspan="2">template&lt;Enum E&gt; </td></tr>
+<tr class="memitem:ab2f12b5e9e4ff3610d82a63eca923b19"><td class="memTemplItemLeft" align="right" valign="top">E&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="enums_8h.html#ab2f12b5e9e4ff3610d82a63eca923b19">pf::enum_operators::operator~</a> (E value)</td></tr>
+<tr class="separator:ab2f12b5e9e4ff3610d82a63eca923b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -150,43 +150,28 @@ Variables</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Petr Flajšingr </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>23.1.21 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a4a34745fc8ef15a34b836b6c676608f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a34745fc8ef15a34b836b6c676608f5">&#9670;&nbsp;</a></span>ENABLE_BIT_MASK_ENUM</h2>
+<a id="ac6bd1d71e418d8e68be008356329d867"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6bd1d71e418d8e68be008356329d867">&#9670;&nbsp;</a></span>ENABLE_PF_ENUM_OUT_FOR_NAMESPACE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ENABLE_BIT_MASK_ENUM</td>
+          <td class="memname">#define ENABLE_PF_ENUM_OUT_FOR_NAMESPACE</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">enum_type</td><td>)</td>
+          <td class="paramname">ns_name</td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">inline</span> enum_type <a class="code" href="enums_8h.html#a6c58e949abae6b1c4bf71bdae0e277ee">operator|</a>(enum_type lhs, enum_type rhs) {                                                           \</div>
-<div class="line">    using T = std::underlying_type_t&lt;enum_type&gt;;                                                                       \</div>
-<div class="line">    return <span class="keyword">static_cast&lt;</span>enum_type<span class="keyword">&gt;</span>(<span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(lhs) | <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(rhs));                                          \</div>
+<b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">namespace </span>ns_name {                                                                                                  \</div>
+<div class="line">  inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;o, pf::Enum <span class="keyword">auto</span> e) {                                                  \</div>
+<div class="line">    o &lt;&lt; magic_enum::enum_name(e);                                                                                     \</div>
+<div class="line">    return o;                                                                                                          \</div>
 <div class="line">  }                                                                                                                    \</div>
-<div class="line">  inline enum_type &amp;operator|=(enum_type &amp;lhs, enum_type rhs) {                                                        \</div>
-<div class="line">    lhs = lhs | rhs;                                                                                                   \</div>
-<div class="line">    return lhs;                                                                                                        \</div>
-<div class="line">  }                                                                                                                    \</div>
-<div class="line">  inline <span class="keywordtype">bool</span> is(enum_type <span class="keyword">self</span>, enum_type other) {                                                                    \</div>
-<div class="line">    using T = std::underlying_type_t&lt;enum_type&gt;;                                                                       \</div>
-<div class="line">    return (<span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(<span class="keyword">self</span>) &amp; <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(other)) != 0;                                                        \</div>
-<div class="line">  }                                                                                                                    \</div>
-<div class="line">  inline enum_type <a class="code" href="enums_8h.html#a0975069d339087f5dd10e0d49b16c94b">operator&amp;</a>(enum_type lhs, enum_type rhs) {                                                           \</div>
-<div class="line">    using T = std::underlying_type_t&lt;enum_type&gt;;                                                                       \</div>
-<div class="line">    return <span class="keyword">static_cast&lt;</span>enum_type<span class="keyword">&gt;</span>(<span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(lhs) | <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(rhs));                                          \</div>
-<div class="line">  }                                                                                                                    \</div>
-<div class="line">  inline enum_type &amp;operator&amp;=(enum_type &amp;lhs, enum_type rhs) {                                                        \</div>
-<div class="line">    lhs = lhs &amp; rhs;                                                                                                   \</div>
-<div class="line">    return lhs;                                                                                                        \</div>
 <div class="line">  }</div>
-</div><!-- fragment --><p>Enable |, |=, &amp; and &amp;= operator for enums of enum_type. </p>
-
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
@@ -214,8 +199,8 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a0975069d339087f5dd10e0d49b16c94b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0975069d339087f5dd10e0d49b16c94b">&#9670;&nbsp;</a></span>operator&amp;()</h2>
+<a id="af689f9f36257a6261df6731a5d8aad73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af689f9f36257a6261df6731a5d8aad73">&#9670;&nbsp;</a></span>IsPureFlags()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -223,7 +208,33 @@ Variables</h2></td></tr>
 template&lt;Enum E&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Flags&lt;E&gt; pf::enum_flag_operators::operator&amp; </td>
+          <td class="memname">consteval bool pf::IsPureFlags </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check enum values so that there is no bit overlap. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">E</td><td>type to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if no values overlap, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a2c138c315d16b7a10eae3f479ada19a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c138c315d16b7a10eae3f479ada19a7">&#9670;&nbsp;</a></span>operator&amp;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;Enum E&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Flags&lt;E&gt; pf::enum_operators::operator&amp; </td>
           <td>(</td>
           <td class="paramtype">E&#160;</td>
           <td class="paramname"><em>lhs</em>, </td>
@@ -258,8 +269,8 @@ template&lt;Enum E&gt; </div>
 
 </div>
 </div>
-<a id="a6c58e949abae6b1c4bf71bdae0e277ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c58e949abae6b1c4bf71bdae0e277ee">&#9670;&nbsp;</a></span>operator|()</h2>
+<a id="aa2ae4060ac41fa3ecc710c203dde80bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2ae4060ac41fa3ecc710c203dde80bd">&#9670;&nbsp;</a></span>operator|()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -267,7 +278,7 @@ template&lt;Enum E&gt; </div>
 template&lt;Enum E&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Flags&lt;E&gt; pf::enum_flag_operators::operator| </td>
+          <td class="memname">Flags&lt;E&gt; pf::enum_operators::operator| </td>
           <td>(</td>
           <td class="paramtype">E&#160;</td>
           <td class="paramname"><em>lhs</em>, </td>
@@ -302,8 +313,8 @@ template&lt;Enum E&gt; </div>
 
 </div>
 </div>
-<a id="ac36156e9e42e2b23e6fec368cbfa4d1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac36156e9e42e2b23e6fec368cbfa4d1f">&#9670;&nbsp;</a></span>operator~()</h2>
+<a id="ab2f12b5e9e4ff3610d82a63eca923b19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2f12b5e9e4ff3610d82a63eca923b19">&#9670;&nbsp;</a></span>operator~()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -311,7 +322,7 @@ template&lt;Enum E&gt; </div>
 template&lt;Enum E&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">E pf::enum_flag_operators::operator~ </td>
+          <td class="memname">E pf::enum_operators::operator~ </td>
           <td>(</td>
           <td class="paramtype">E&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -385,8 +396,6 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="aenums_8h_html_a6c58e949abae6b1c4bf71bdae0e277ee"><div class="ttname"><a href="enums_8h.html#a6c58e949abae6b1c4bf71bdae0e277ee">pf::enum_flag_operators::operator|</a></div><div class="ttdeci">Flags&lt; E &gt; operator|(E lhs, E rhs)</div><div class="ttdef"><b>Definition:</b> enums.h:230</div></div>
-<div class="ttc" id="aenums_8h_html_a0975069d339087f5dd10e0d49b16c94b"><div class="ttname"><a href="enums_8h.html#a0975069d339087f5dd10e0d49b16c94b">pf::enum_flag_operators::operator&amp;</a></div><div class="ttdeci">Flags&lt; E &gt; operator&amp;(E lhs, E rhs)</div><div class="ttdef"><b>Definition:</b> enums.h:241</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
