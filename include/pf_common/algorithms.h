@@ -21,7 +21,7 @@ namespace pf {
  * @return true if the value is found, false otherwise
  */
 template<std::ranges::range Range>
-[[nodiscard]] bool isIn(const auto &needle, Range &&haystack) {
+[[nodiscard]] constexpr bool isIn(const auto &needle, Range &&haystack) {
   static_assert(std::equality_comparable_with<decltype(needle), std::ranges::range_value_t<Range>>);
   return std::ranges::any_of(haystack, [&needle](const auto &value) { return needle == value; });
 }
