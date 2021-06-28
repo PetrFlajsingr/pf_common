@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <optional>
+#include <ranges>
 #include <range/v3/range/concepts.hpp>
 #include <range/v3/range/traits.hpp>
 
@@ -16,8 +17,10 @@ bool isIn(const T &val, Container &&vals) {
   return std::ranges::any_of(vals, [&val](const auto &v) { return val == v; });
 }
 
-template<typename T, template<class> typename Container, template<class> typename Container2>
-std::optional<T> findFirstCommon(const Container<T> &vals, const Container2<T> &vals2) {
+template<std::ranges::range R1, std::ranges::range R2>
+std::optional<std::ranges::range_value_t<R1>> findFirstCommon(R1 &&vals, R2 &&vals2)
+requires(std::same_as<std::ranges::range_value_t<decltype(vals)>, std::ranges::range_value_t<decltype(vals2)>>)
+{
   for (const auto &val : vals) {
     if (isIn(val, vals2)) { return val; }
   }

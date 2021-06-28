@@ -24,6 +24,9 @@ if (NOT (EXISTS ${CPM_DOWNLOAD_LOCATION} AND CPM_VERSION STREQUAL CPM_DOWNLOAD_V
     file(DOWNLOAD https://github.com/TheLartians/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake ${CPM_DOWNLOAD_LOCATION})
 endif ()
 
+
+option(ENABLE_STACKTRACE "enable stacktrace in exceptions" OFF)
+
 include(${CPM_DOWNLOAD_LOCATION})
 
 hunter_add_package(fmt)
@@ -32,14 +35,19 @@ hunter_add_package(glm)
 find_package(glm CONFIG REQUIRED)
 CPMAddPackage(
         NAME cppcoro
-        GITHUB_REPOSITORY dutow/cppcoro
-        GIT_TAG 4b1951ff3c25fea78198a5c0aabb50589946b694
+        GITHUB_REPOSITORY andreasbuhr/cppcoro
+        GIT_TAG master
 )
+if (ENABLE_STACKTRACE)
+    add_compile_definitions(STACKTRACE_ENABLE)
+endif ()
+if (ENABLE_STACKTRACE)
 CPMAddPackage(
         NAME backward_cpp
         GITHUB_REPOSITORY bombela/backward-cpp
         GIT_TAG v1.5
 )
+endif ()
 set(RANGE_V3_TESTS OFF)
 CPMAddPackage(
         NAME range-v3
@@ -64,7 +72,12 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
+
+if (ENABLE_STACKTRACE)
 target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro ${BACKWARD_ENABLE} range-v3 fmt::fmt)
+else()
+    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro range-v3 fmt::fmt)
+endif()
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
@@ -102,9 +115,14 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 include(CPack)
 
 if (PF_COMMON_TESTS)
-    list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10")
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        list(APPEND flags "/std:c++latest")
+    else()
+        list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10")
+    endif()
+
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-            tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp)
+            tests/ByteLiterals.cpp tests/algorithm.cpp tests/coroutines.cpp)
     target_link_libraries(pf_common_tests Catch2::Catch2 ${PROJECT_NAME})
     target_compile_options(pf_common_tests PRIVATE ${flags})
 
