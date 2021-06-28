@@ -1,13 +1,21 @@
-//
-// Created by petr on 1/4/21.
-//
-
-#ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_BIN_H
-#define REALISTIC_VOXEL_RENDERING_SRC_UTILS_BIN_H
+/**
+ * @file bin.h
+ * @brief Functions for raw data conversion.
+ * @author Petr Flajšingr
+ * @date 4.1.21
+ */
+#ifndef PF_COMMON_BIN_H
+#define PF_COMMON_BIN_H
 
 #include "concepts/Serializable.h"
 
 namespace pf {
+/**
+ * Raw type to binary data conversion.
+ * @tparam T type to convert
+ * @param data data to convert
+ * @return data as binary data
+ */
 template<typename T>
 std::vector<std::byte> toBytes(const T &data) {
   if constexpr (Serializable<T>) { return data.serialize(); }
@@ -16,6 +24,12 @@ std::vector<std::byte> toBytes(const T &data) {
   return result;
 }
 
+/**
+ * Reconstruct T from provided binary data.
+ * @tparam T type to reconstruct
+ * @param data binary input data
+ * @return reconstructed value
+ */
 template<typename T>
 requires std::is_default_constructible_v<T> T fromBytes(std::span<const std::byte> data) {
   assert(data.size() == sizeof(T));
@@ -26,4 +40,4 @@ requires std::is_default_constructible_v<T> T fromBytes(std::span<const std::byt
 
 }// namespace pf
 
-#endif//REALISTIC_VOXEL_RENDERING_SRC_UTILS_BIN_H
+#endif//PF_COMMON_BIN_H

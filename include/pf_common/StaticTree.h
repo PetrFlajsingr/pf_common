@@ -1,11 +1,13 @@
-//
-// Created by petr on 12/21/19.
-//
-
+/**
+ * @file StaticTree.h
+ * @brief N-ary tree, where N is known at compile time.
+ * @author Petr Flajšingr
+ * @date 21.12.19
+ */
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCDFAInspection"
-#ifndef UTILITIES_TREE_H
-#define UTILITIES_TREE_H
+#ifndef PF_COMMON_STATIC_TREE_H
+#define PF_COMMON_STATIC_TREE_H
 
 #include <memory>
 #include <queue>
@@ -45,6 +47,11 @@ template<typename T, typename F>
 void postorderImpl(Leaf<T, 2> *node, F &&callable);
 }// namespace detail
 
+/**
+ * @brief Leaf node of StaticTree.
+ * @tparam T type stored inside
+ * @tparam ChildCount N-arity of the parent tree
+ */
 template<typename T, unsigned int ChildCount>
 class Leaf {
   friend class Node<T, ChildCount>;
@@ -145,6 +152,9 @@ class Leaf {
    * Undefined behavior if the node has no parent.
    */
   [[nodiscard]] Node<T, ChildCount> &getParent();
+  /**
+   * Undefined behavior if the node has no parent.
+   */
   [[nodiscard]] const Node<T, ChildCount> &getParent() const;
   [[nodiscard]] bool isRoot() const;
 
@@ -160,6 +170,11 @@ class Leaf {
   value_type value;
 };
 
+/**
+ * @brief Node of StaticTree.
+ * @tparam T type stored inside
+ * @tparam ChildCount N-arity of the parent tree
+ */
 template<typename T, unsigned int ChildCount>
 class Node : public Leaf<T, ChildCount> {
   using Base = Leaf<T, ChildCount>;
@@ -278,6 +293,6 @@ class StaticTree {
 #include "detail/StaticTree_detail.tpp"
 #include "detail/StaticTree_node.tpp"
 }// namespace pf::static_tree
-#endif// UTILITIES_TREE_H
+#endif// PF_COMMON_STATIC_TREE_H
 
 #pragma clang diagnostic pop

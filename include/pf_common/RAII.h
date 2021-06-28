@@ -1,18 +1,27 @@
-//
-// Created by petr on 11/1/20.
-//
-
-#ifndef PF_COMMONING_UTILS_RAII_H
-#define PF_COMMONING_UTILS_RAII_H
+/**
+ * @file RAII.h
+ * @brief Utility to emulate try finally construct.
+ * @author Petr Flajšingr
+ * @date 1.11.20
+ */
+#ifndef PF_COMMON_RAII_H
+#define PF_COMMON_RAII_H
 
 #include <concepts>
 #include <functional>
 #include <utility>
 
 namespace pf {
+/**
+ * @brief Equivalent to try finally.
+ */
 class RAII {
  public:
-  inline explicit RAII(std::invocable auto &&callable) : callable(std::forward<decltype(callable)>(callable)) {}
+  /**
+   * Construct RAII.
+   * @param callable function to be called upon object's destruction
+   */
+  explicit RAII(std::invocable auto &&callable) : callable(std::forward<decltype(callable)>(callable)) {}
 
   inline ~RAII() { std::invoke(callable); }
 
@@ -21,4 +30,4 @@ class RAII {
 };
 }// namespace pf
 
-#endif//PF_COMMONING_UTILS_RAII_H
+#endif//PF_COMMON_RAII_H

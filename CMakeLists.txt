@@ -7,27 +7,37 @@ HunterGate(
 )
 
 project(pf_common
-        VERSION 0.1.0
+        VERSION 1.1.0
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
 
-option(PF_COMMON_TESTS "Enable test & download of test framework")
+list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return-type" "-fcoroutines"
+        "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
+        "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
+
+option(PF_COMMON_TESTS "Enable test & download of test framework" OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 
 set(CPM_DOWNLOAD_LOCATION "${CMAKE_SOURCE_DIR}/cmake/CPM.cmake")
-set(CPM_DOWNLOAD_VERSION 0.27.4)
+set(CPM_DOWNLOAD_VERSION 0.32.2)
 
 if (NOT (EXISTS ${CPM_DOWNLOAD_LOCATION} AND CPM_VERSION STREQUAL CPM_DOWNLOAD_VERSION))
     message(STATUS "Downloading CPM.cmake")
     file(DOWNLOAD https://github.com/TheLartians/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake ${CPM_DOWNLOAD_LOCATION})
 endif ()
 
+include(${CPM_DOWNLOAD_LOCATION})
 
 option(ENABLE_STACKTRACE "enable stacktrace in exceptions" OFF)
+option(BUILD_DOCS "build doxygen docs" OFF)
 
-include(${CPM_DOWNLOAD_LOCATION})
+if (ENABLE_STACKTRACE)
+    if (ENABLE_STACKTRACE)
+        add_compile_definitions(STACKTRACE_ENABLE)
+    endif ()
+endif ()
 
 hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
@@ -38,10 +48,6 @@ CPMAddPackage(
         GITHUB_REPOSITORY andreasbuhr/cppcoro
         GIT_TAG master
 )
-if (ENABLE_STACKTRACE)
-    add_compile_definitions(STACKTRACE_ENABLE)
-endif ()
-if (ENABLE_STACKTRACE)
 CPMAddPackage(
         NAME backward_cpp
         GITHUB_REPOSITORY bombela/backward-cpp
@@ -54,12 +60,18 @@ CPMAddPackage(
         GITHUB_REPOSITORY ericniebler/range-v3
         GIT_TAG 0.11.0
 )
+CPMAddPackage(
+        NAME magic_enum
+        GITHUB_REPOSITORY Neargye/magic_enum
+        GIT_TAG v0.6.6
+)
 
-if (PF_COMMON_TESTS)
-    message("Downloading Catch2")
-    hunter_add_package(Catch)
-    find_package(Catch2 CONFIG REQUIRED)
-endif()
+
+CPMAddPackage(
+        NAME StaticTypeInfo
+        GIT_TAG v1.3.1
+        GIT_REPOSITORY https://github.com/TheLartians/StaticTypeInfo
+)
 
 include(GNUInstallDirs)
 
@@ -72,14 +84,13 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-
 if (ENABLE_STACKTRACE)
-target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro ${BACKWARD_ENABLE} range-v3 fmt::fmt)
-else()
-    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro range-v3 fmt::fmt)
-endif()
+    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum ${BACKWARD_ENABLE} range-v3 fmt::fmt)
+else ()
+    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3 fmt::fmt)
+endif ()
 
-install(TARGETS ${PROJECT_NAME}
+install(TARGETS ${PROJECT_NAME} magic_enum
         EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -115,19 +126,35 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 include(CPack)
 
 if (PF_COMMON_TESTS)
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-        list(APPEND flags "/std:c++latest")
-    else()
-        list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10")
-    endif()
+    hunter_add_package(Catch)
+    find_package(Catch2 CONFIG REQUIRED)
+    enable_testing()
+    include_directories(include)
+    if (ENABLE_STACKTRACE)
+        add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
+                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp
+                tests/concepts.cpp tests/enums.cpp tests/array.cpp ${BACKWARD_ENABLE})
+    else ()
+        add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
+                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp
+                tests/concepts.cpp tests/enums.cpp tests/array.cpp)
+    endif ()
 
-    add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-            tests/ByteLiterals.cpp tests/algorithm.cpp tests/coroutines.cpp)
-    target_link_libraries(pf_common_tests Catch2::Catch2 ${PROJECT_NAME})
+    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt StaticTypeInfo)
     target_compile_options(pf_common_tests PRIVATE ${flags})
+    add_backward(pf_common_tests)
 
     include(CTest)
     include(Catch)
     include(ParseAndAddCatchTests)
     ParseAndAddCatchTests(pf_common_tests)
-endif()
+endif ()
+
+if (BUILD_DOCS)
+    find_package(Doxygen)
+    if (DOXYGEN_FOUND)
+        doxygen_add_docs(pf_common_doc ALL
+                ${CMAKE_SOURCE_DIR}/include/pf_common
+                )
+    endif ()
+endif ()

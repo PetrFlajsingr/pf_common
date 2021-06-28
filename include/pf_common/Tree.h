@@ -1,10 +1,13 @@
-//
-// Created by petr on 1/7/21.
-//
+/**
+ * @file Tree.h
+ * @brief Tree with a dynamic child count.
+ * @author Petr Flajšingr
+ * @date 7.1.21
+ */
+#ifndef PF_COMMON_TREE_H
+#define PF_COMMON_TREE_H
 
-#ifndef PF_COMMON_INCLUDE_PF_COMMON_TREE_H
-#define PF_COMMON_INCLUDE_PF_COMMON_TREE_H
-
+#include <algorithm>
 #include <memory>
 #include <queue>
 #include <range/v3/action/sort.hpp>
@@ -22,6 +25,10 @@ class TreeIteration;
 }// namespace tree_traversal
 
 //TODO: STL like iterators
+/**
+ * @brief Node of a tree with a variable amount of child nodes.
+ * @tparam T type of inner value
+ */
 template<typename T>
 class Node {
  public:
@@ -33,7 +40,8 @@ class Node {
   using rvalue = T &&;
   using size_type = std::size_t;
 
-  Node() requires std::is_default_constructible_v<T> = default;
+  Node() requires std::is_default_constructible_v<T>
+  = default;
   explicit Node(rvalue val) : value_(std::move(val)) {}
   explicit Node(const_reference val) : value_(val) {}
   Node(const Node &) = delete;
@@ -365,4 +373,4 @@ template<typename T, bool IsConst, bool IsNode, pf::tree_traversal::Type TravTyp
 inline constexpr bool enable_borrowed_range<pf::tree_traversal::TreeIteration<T, IsConst, IsNode, TravType>> = true;
 }
 
-#endif//PF_COMMON_INCLUDE_PF_COMMON_TREE_H
+#endif//PF_COMMON_TREE_H

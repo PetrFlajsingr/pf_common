@@ -1,7 +1,9 @@
-//
-// Created by Petr on 18.11.2019.
-//
-
+/**
+ * @file ByteLiterals.h
+ * @brief Utility user literals for bytes.
+ * @author Petr Flajšingr
+ * @date 18.11.19
+ */
 #ifndef PF_COMMON_BYTELITERALS_H
 #define PF_COMMON_BYTELITERALS_H
 
@@ -18,6 +20,7 @@ inline constexpr unsigned long long pow(unsigned long long a, unsigned long long
   return result;
 }
 }// namespace detail
+
 constexpr unsigned long long operator"" _B(unsigned long long value) { return value; }
 constexpr unsigned long long operator"" _KB(unsigned long long value) { return value * detail::byteOrderMultiplier; }
 constexpr unsigned long long operator"" _MB(unsigned long long value) {

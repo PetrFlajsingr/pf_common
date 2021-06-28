@@ -1,7 +1,10 @@
-//
-// Created by petr on 9/23/20.
-//
-
+/**
+ * @file StackTraceException.h
+ * @brief Exceptions with built in stacktrace dumping.
+ * Macro STACKTRACE_ENABLE controls if the stacktrace reporting is enabled.
+ * @author Petr Flajšingr
+ * @date 23.9.20
+ */
 #ifndef PF_COMMON_STACKTRACEEXCEPTION_H
 #define PF_COMMON_STACKTRACEEXCEPTION_H
 
@@ -12,9 +15,11 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#ifdef STACKTRACE_ENABLE
 #undef BACKWARD_HAS_BFD
 #define BACKWARD_HAS_BFD 1
 #include <backward.hpp>
+#endif
 #include <range/v3/view/enumerate.hpp>
 
 namespace pf {
@@ -25,7 +30,7 @@ struct TraceData {
   inline TraceData(std::string filename, std::string fncName, uint32_t lineNumber)
       : file(std::move(filename)), function(std::move(fncName)), lineN(lineNumber) {}
 };
-
+#ifdef STACKTRACE_ENABLE
 inline std::vector<TraceData> getTrace(std::size_t skipN = 0) {
   auto result = std::vector<TraceData>{};
   auto stackTrace = backward::StackTrace{};
@@ -40,6 +45,7 @@ inline std::vector<TraceData> getTrace(std::size_t skipN = 0) {
 
   return result;
 }
+#endif
 
 inline std::string traceToString(const std::vector<TraceData> &traceData) {
   using namespace std::string_literals;
@@ -50,25 +56,28 @@ inline std::string traceToString(const std::vector<TraceData> &traceData) {
   return result;
 }
 
+/**
+ * @brief An exception providing stacktrace info.
+ */
 class StackTraceException : public std::exception {
  public:
-  inline explicit StackTraceException(std::string_view message) {
+  inline explicit StackTraceException(std::string_view fmt, auto &&...args) {
     using namespace std::string_view_literals;
+#ifdef STACKTRACE_ENABLE
     constexpr auto STACKTRACE_SKIP_N = 4;
     const auto traces = getTrace(STACKTRACE_SKIP_N);
+#endif
     auto ss = std::stringstream{};
-    if (!message.empty()) { ss << fmt::format("An exception occurred: {}\n", message); }
+    if (!fmt.empty()) { ss << fmt::format("An exception occurred: {}\n", fmt::format(fmt, args...)); }
+#ifdef STACKTRACE_ENABLE
     const auto CAUSED_BY = "Caused by:\n"sv;
-    ss << CAUSED_BY;
-
     const auto padding = std::string(CAUSED_BY.size(), ' ');
+    ss << CAUSED_BY;
     for (const auto &[idx, trace] : ranges::views::enumerate(traces)) {
       ss << fmt::format("{}#{} {} ({}:{})\n", padding, idx, trace.function, trace.file, trace.lineN);
     }
+#endif
     whatStacktrace = ss.str();
-  }
-  static StackTraceException fmt(std::string_view fmt, auto &&...args) {
-    return StackTraceException(fmt::format(fmt, args...));
   }
 
   [[nodiscard]] inline const char *what() const noexcept override { return whatStacktrace.c_str(); }
@@ -77,14 +86,19 @@ class StackTraceException : public std::exception {
   std::string whatStacktrace;
 };
 
+/**
+ * @brief Exception thrown when an invalid argument was provided.
+ */
 class InvalidArgumentException : public StackTraceException {
  public:
-  inline explicit InvalidArgumentException(std::string_view message) : StackTraceException(message) {}
+  inline explicit InvalidArgumentException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
 };
-
+/**
+ * @brief Exception thrown for not yet implemented functions etc.
+ */
 class NotImplementedException : public StackTraceException {
  public:
-  inline explicit NotImplementedException(std::string_view message) : StackTraceException(message) {}
+  inline explicit NotImplementedException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
 };
 
 }// namespace pf

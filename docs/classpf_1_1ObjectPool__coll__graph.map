@@ -1,0 +1,4 @@
+<map id="pf::ObjectPool&lt; T, PoolSize, Strategy &gt;" name="pf::ObjectPool&lt; T, PoolSize, Strategy &gt;">
+<area shape="rect" id="node1" title="Statically sized object pool to avoid multiple allocations and deallocations of objects...." alt="" coords="44,124,203,165"/>
+<area shape="rect" id="node2" href="$structpf_1_1details_1_1DefaultPoolAllocator.html" title=" " alt="" coords="5,5,241,61"/>
+</map>
