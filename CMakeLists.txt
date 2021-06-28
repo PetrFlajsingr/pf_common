@@ -12,9 +12,6 @@ project(pf_common
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
 
-list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return-type" "-fcoroutines"
-        "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
-        "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
 
 option(PF_COMMON_TESTS "Enable test & download of test framework" OFF)
 
@@ -33,11 +30,9 @@ include(${CPM_DOWNLOAD_LOCATION})
 option(ENABLE_STACKTRACE "enable stacktrace in exceptions" OFF)
 option(BUILD_DOCS "build doxygen docs" OFF)
 
-if (ENABLE_STACKTRACE)
     if (ENABLE_STACKTRACE)
         add_compile_definitions(STACKTRACE_ENABLE)
     endif ()
-endif ()
 
 hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
@@ -48,6 +43,8 @@ CPMAddPackage(
         GITHUB_REPOSITORY andreasbuhr/cppcoro
         GIT_TAG master
 )
+
+if (ENABLE_STACKTRACE)
 CPMAddPackage(
         NAME backward_cpp
         GITHUB_REPOSITORY bombela/backward-cpp
@@ -126,23 +123,32 @@ set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 include(CPack)
 
 if (PF_COMMON_TESTS)
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        list(APPEND flags "/std:c++latest" "/Wall")
+    else()
+        list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return-type" "-fcoroutines"
+        "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
+        "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
+    endif()
     hunter_add_package(Catch)
     find_package(Catch2 CONFIG REQUIRED)
     enable_testing()
     include_directories(include)
     if (ENABLE_STACKTRACE)
         add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp
+                tests/ByteLiterals.cpp tests/algorithm.cpp tests/coroutines.cpp
                 tests/concepts.cpp tests/enums.cpp tests/array.cpp ${BACKWARD_ENABLE})
     else ()
         add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-                tests/ByteLiterals.cpp tests/algorithm.cpp tests/ObjectPool.cpp tests/coroutines.cpp
+                tests/ByteLiterals.cpp tests/algorithm.cpp tests/coroutines.cpp
                 tests/concepts.cpp tests/enums.cpp tests/array.cpp)
     endif ()
 
     target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt StaticTypeInfo)
     target_compile_options(pf_common_tests PRIVATE ${flags})
-    add_backward(pf_common_tests)
+    if (ENABLE_STACKTRACE)
+        add_backward(pf_common_tests)
+    endif()
 
     include(CTest)
     include(Catch)

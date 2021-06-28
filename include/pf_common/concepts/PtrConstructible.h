@@ -7,7 +7,9 @@
 #ifndef PF_COMMON_PTRCONSTRUCTIBLE_H
 #define PF_COMMON_PTRCONSTRUCTIBLE_H
 
+#ifndef _MSC_VER
 #include <experimental/memory>
+#endif
 #include <memory>
 namespace pf {
 /**
@@ -24,9 +26,11 @@ struct PtrConstructible {
   static std::unique_ptr<T> CreateUnique(Args &&...args) requires std::constructible_from<T, Args...> {
     return std::make_unique<T>(std::forward<Args>(args)...);
   }
+#ifndef _MSC_VER
   std::experimental::observer_ptr<T> createObserver() {
     return std::experimental::make_observer(this);
   }
+#endif
 };
 }// namespace pf
 #endif//PF_COMMON_PTRCONSTRUCTIBLE_H
