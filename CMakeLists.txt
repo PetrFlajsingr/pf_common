@@ -90,9 +90,9 @@ target_include_directories(
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 if (ENABLE_STACKTRACE)
-    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum ${BACKWARD_ENABLE} range-v3)
+    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum ${BACKWARD_ENABLE} range-v3 glm)
 else ()
-    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3)
+    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3 glm)
 endif ()
 
 install(TARGETS ${PROJECT_NAME} magic_enum
