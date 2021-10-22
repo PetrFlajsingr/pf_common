@@ -34,11 +34,9 @@ option(BUILD_DOCS "build doxygen docs" OFF)
         add_compile_definitions(STACKTRACE_ENABLE)
     endif ()
 
-CPMAddPackage(
-        NAME fmt
-        GITHUB_REPOSITORY fmtlib/fmt
-        GIT_TAG 8.0.1
-)
+add_compile_definitions(FMT_HEADER_ONLY)
+add_subdirectory(include/fmt)
+
 hunter_add_package(glm)
 find_package(glm CONFIG REQUIRED)
 CPMAddPackage(
@@ -73,6 +71,7 @@ CPMAddPackage(
         GIT_REPOSITORY https://github.com/TheLartians/StaticTypeInfo
 )
 
+
 include(GNUInstallDirs)
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -85,12 +84,12 @@ target_include_directories(
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 if (ENABLE_STACKTRACE)
-    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum ${BACKWARD_ENABLE} range-v3 fmt::fmt)
+    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum ${BACKWARD_ENABLE} range-v3)
 else ()
-    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3 fmt::fmt)
+    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3)
 endif ()
 
-install(TARGETS ${PROJECT_NAME} magic_enum fmt
+install(TARGETS ${PROJECT_NAME} magic_enum
         EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -147,7 +146,7 @@ if (PF_COMMON_TESTS)
                 tests/concepts.cpp tests/enums.cpp tests/array.cpp)
     endif ()
 
-    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt StaticTypeInfo)
+    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 StaticTypeInfo)
     target_compile_options(pf_common_tests PRIVATE ${flags})
     if (ENABLE_STACKTRACE)
         add_backward(pf_common_tests)
