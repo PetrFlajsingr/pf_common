@@ -61,14 +61,15 @@ inline std::string traceToString(const std::vector<TraceData> &traceData) {
  */
 class StackTraceException : public std::exception {
  public:
-  explicit StackTraceException(std::string_view fmt, auto &&...args) {
+  inline explicit StackTraceException(std::string_view fmt, auto &&...args) {
     using namespace std::string_view_literals;
-
-    auto ss = std::stringstream{};
-    if (!fmt.empty()) { ss << fmt::format("An exception occurred: {}\n", fmt::format(fmt, args...)); }
 #ifdef STACKTRACE_ENABLE
     constexpr auto STACKTRACE_SKIP_N = 4;
     const auto traces = getTrace(STACKTRACE_SKIP_N);
+#endif
+    auto ss = std::stringstream{};
+    if (!fmt.empty()) { ss << fmt::format("An exception occurred: {}\n", fmt::format(fmt, args...)); }
+#ifdef STACKTRACE_ENABLE
     const auto CAUSED_BY = "Caused by:\n"sv;
     const auto padding = std::string(CAUSED_BY.size(), ' ');
     ss << CAUSED_BY;
@@ -90,14 +91,14 @@ class StackTraceException : public std::exception {
  */
 class InvalidArgumentException : public StackTraceException {
  public:
-  explicit InvalidArgumentException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
+  inline explicit InvalidArgumentException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
 };
 /**
  * @brief Exception thrown for not yet implemented functions etc.
  */
 class NotImplementedException : public StackTraceException {
  public:
-  explicit NotImplementedException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
+  inline explicit NotImplementedException(std::string_view fmt, auto &&...args) : StackTraceException(fmt, std::forward<decltype(args)>(args)...) {}
 };
 
 }// namespace pf
