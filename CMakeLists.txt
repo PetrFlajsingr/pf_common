@@ -36,6 +36,7 @@ option(BUILD_DOCS "build doxygen docs" OFF)
 
 add_compile_definitions(FMT_HEADER_ONLY)
 add_subdirectory(include/fmt)
+include_directories(include/fmt/include)
 
 hunter_add_package(glm)
 find_package(glm CONFIG REQUIRED)
