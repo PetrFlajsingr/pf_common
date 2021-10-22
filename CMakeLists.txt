@@ -30,9 +30,9 @@ include(${CPM_DOWNLOAD_LOCATION})
 option(ENABLE_STACKTRACE "enable stacktrace in exceptions" OFF)
 option(BUILD_DOCS "build doxygen docs" OFF)
 
-    if (ENABLE_STACKTRACE)
-        add_compile_definitions(STACKTRACE_ENABLE)
-    endif ()
+if (ENABLE_STACKTRACE)
+    add_compile_definitions(STACKTRACE_ENABLE)
+endif ()
 
 add_compile_definitions(FMT_HEADER_ONLY)
 add_subdirectory(include/fmt)
@@ -47,11 +47,11 @@ CPMAddPackage(
 )
 
 if (ENABLE_STACKTRACE)
-CPMAddPackage(
-        NAME backward_cpp
-        GITHUB_REPOSITORY bombela/backward-cpp
-        GIT_TAG v1.5
-)
+    CPMAddPackage(
+            NAME backward_cpp
+            GITHUB_REPOSITORY bombela/backward-cpp
+            GIT_TAG v1.5
+    )
 endif ()
 set(RANGE_V3_TESTS OFF)
 CPMAddPackage(
@@ -81,6 +81,11 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(
         ${PROJECT_NAME}
         INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
+target_include_directories(
+        ${PROJECT_NAME}
+        INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include/fmt/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
@@ -130,8 +135,8 @@ if (PF_COMMON_TESTS)
         list(APPEND flags "/std:c++latest" "/Wall")
     else()
         list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return-type" "-fcoroutines"
-        "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
-        "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
+                "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
+                "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
     endif()
     hunter_add_package(Catch)
     find_package(Catch2 CONFIG REQUIRED)
