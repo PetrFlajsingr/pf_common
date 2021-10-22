@@ -34,8 +34,11 @@ option(BUILD_DOCS "build doxygen docs" OFF)
         add_compile_definitions(STACKTRACE_ENABLE)
     endif ()
 
-hunter_add_package(fmt)
-find_package(fmt CONFIG REQUIRED)
+CPMAddPackage(
+        NAME fmt
+        GITHUB_REPOSITORY fmtlib/fmt
+        GIT_TAG 8.0.1
+)
 hunter_add_package(glm)
 find_package(glm CONFIG REQUIRED)
 CPMAddPackage(
@@ -87,7 +90,7 @@ else ()
     target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3 fmt::fmt)
 endif ()
 
-install(TARGETS ${PROJECT_NAME} magic_enum
+install(TARGETS ${PROJECT_NAME} magic_enum fmt
         EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
