@@ -13,7 +13,6 @@
 #include <glm/vec4.hpp>
 
 namespace pf::math {
-enum class RelativePosition { Inside, Outside, Intersection };
 
 class ViewFrustum {
   std::array<glm::vec4, 6> planes;
