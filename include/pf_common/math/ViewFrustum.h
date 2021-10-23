@@ -6,7 +6,6 @@
 #define UTILITIES_VIEWFRUSTUM_H
 
 #include "BoundingBox.h"
-#include "BoundingSphere.h"
 #include "common.h"
 #include <array>
 #include <glm/glm.hpp>
@@ -17,9 +16,9 @@ namespace pf::math {
 class ViewFrustum {
   std::array<glm::vec4, 6> planes;
 
-public:
+ public:
   inline static ViewFrustum FromProjectionView(const glm::mat4 &viewMatrix,
-                                        const glm::mat4 &projectionMatrix)   {
+                                               const glm::mat4 &projectionMatrix)   {
     ViewFrustum result;
     const auto &v = viewMatrix;
     const auto &p = projectionMatrix;
