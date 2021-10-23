@@ -95,25 +95,7 @@ public:
     return result;
   }
 
-  [[nodiscard]] RelativePosition contains(const BoundingBox<3> &aabb) const {
-    auto center = glm::vec4{bs.center, 1.0};
-    auto dist01 = std::min(distanceToPlane(planes[0], center),
-                           distanceToPlane(planes[1], center));
-    if (dist01 <= 0)
-      return RelativePosition::Outside;
-    auto dist23 = std::min(distanceToPlane(planes[2], center),
-                           distanceToPlane(planes[3], center));
-    if (dist23 <= 0)
-      return RelativePosition::Outside;
-    auto dist45 = std::min(distanceToPlane(planes[4], center),
-                           distanceToPlane(planes[5], center));
-    if (dist45 > 0) {
-      return RelativePosition::Inside;
-    }
-    return RelativePosition::Intersection;
-  }
-
-  [[nodiscard]] inline RelativePosition contains(const BoundingSphere<3> &bs) const {
+  [[nodiscard]] RelativePosition contains(const BoundingBox<3> &aabb) const{
     static auto createPoint = [](auto &first, auto &second, auto &normal) {
       glm::vec3 result = first;
 
