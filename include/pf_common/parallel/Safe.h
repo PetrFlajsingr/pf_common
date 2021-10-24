@@ -26,7 +26,7 @@ class Safe final {
    *
    * Upon creation this object locks Mutex and unlocks it when destroyed.
    */
-  template<AccessType = AccessType::ReadWrite>
+  template<AccessType AccessPolicy = AccessType::ReadWrite>
   class Access;
 
  private:
@@ -119,34 +119,34 @@ class Safe final {
    */
   const_reference unsafe() const { return value; }
 
+  template<AccessType AccessPolicy>
+  class Access final {
+    using reference_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, reference, const_reference>;
+    using pointer_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, pointer, const_pointer>;
+
+   public:
+    Access(reference_type value, Mutex &mtx) : value(value), lck(mtx) {}
+    explicit Access(Safe<T, Mutex> &safe) : Access(safe.value, safe.mtx) {}
+    Access(const Access &other) = delete;
+    Access(Access &&other) = delete;
+    Access &operator=(const Access &other) = delete;
+    Access &operator=(Access &&other) = delete;
+
+    reference_type operator*() noexcept { return value; }
+    const_reference operator*() const noexcept { return value; }
+    pointer_type operator->() noexcept { return &value; }
+    const_pointer operator->() const noexcept { return &value; }
+
+   private:
+    reference_type value;
+    std::unique_lock<Mutex> lck;
+  };
+
  private:
   mutable Mutex mtx;
   value_type value;
 };
 
-template<typename T, typename Mutex>
-template<typename Safe<T, Mutex>::AccessType AccessPolicy>
-class Safe<T, Mutex>::Access final {
-  using reference_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, reference, const_reference>;
-  using pointer_type = std::conditional_t<AccessPolicy == Safe<T>::AccessType::ReadWrite, pointer, const_pointer>;
-
- public:
-  Access(reference_type value, const Mutex &mtx) : value(value), lck(mtx) {}
-  explicit Access(Safe<T, Mutex> &safe) : Access(safe.value, safe.mtx) {}
-  Access(const Access &other) = delete;
-  Access(Access &&other) = delete;
-  Access &operator=(const Access &other) = delete;
-  Access &operator=(Access &&other) = delete;
-
-  reference_type operator*() noexcept { return value; }
-  const_reference operator*() const noexcept { return value; }
-  pointer_type operator->() noexcept { return &value; }
-  const_pointer operator->() const noexcept { return &value; }
-
- private:
-  reference_type value;
-  std::unique_lock<Mutex> lck;
-};
 
 template<typename T, typename Mutex = std::mutex>
 using ReadOnlyAccess = typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadOnly>;
