@@ -49,7 +49,7 @@ CPMAddPackage(
 CPMAddPackage(
         NAME magic_enum
         GITHUB_REPOSITORY Neargye/magic_enum
-        GIT_TAG v0.6.6
+        GIT_TAG v0.7.3
 )
 
 CPMAddPackage(
