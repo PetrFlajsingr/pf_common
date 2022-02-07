@@ -120,7 +120,7 @@ if (PF_COMMON_TESTS)
     include_directories(include)
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
             tests/ByteLiterals.cpp tests/algorithm.cpp
-            tests/concepts.cpp tests/enums.cpp tests/array.cpp)
+            tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/FixedString.cpp)
 
     target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 range-v3 fmt::fmt StaticTypeInfo)
     target_compile_options(pf_common_tests PRIVATE ${flags})
