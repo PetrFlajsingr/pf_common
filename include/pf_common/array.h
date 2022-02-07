@@ -6,10 +6,11 @@
 #define PF_COMMON_INCLUDE_PF_COMMON_ARRAY_H
 
 #include <array>
+#include <pf_common/concepts/CommonType.h>
 #include <type_traits>
 
 namespace pf {
-template<typename... Args>
+template<HaveCommonType... Args>
 constexpr std::array<std::common_type_t<Args...>, sizeof...(Args)> make_array(Args &&...args) {
   return {std::forward<Args>(args)...};
 }
