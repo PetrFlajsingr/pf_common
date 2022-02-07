@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 include("cmake/HunterGate.cmake")
 HunterGate(
-        URL "https://github.com/cpp-pm/hunter/archive/v0.23.315.tar.gz"
-        SHA1 "ea5d72afc0df67f2126e7fd069f20c5f723709e1"
+        URL "https://github.com/cpp-pm/hunter/archive/v0.23.321.tar.gz"
+        SHA1 "5e53cbb0429037ea8e2592bfd92704b8ff3ab492"
 )
 
 project(pf_common
@@ -15,7 +15,11 @@ project(pf_common
 
 option(PF_COMMON_TESTS "Enable test & download of test framework" OFF)
 
-set(CMAKE_CXX_STANDARD 20)
+if (MSVC AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 19.29.30129 AND CMAKE_VERSION VERSION_GREATER 3.20.3)
+    set(CMAKE_CXX_STANDARD 23) # /std:c++latest - unlocks the non stable cpp20 features. For new 16.11 versions
+else ()
+    set(CMAKE_CXX_STANDARD 20) # /std:c++latest for msvc and -std=c++20 for everyone else.
+endif ()
 
 set(CPM_DOWNLOAD_LOCATION "${CMAKE_SOURCE_DIR}/cmake/CPM.cmake")
 set(CPM_DOWNLOAD_VERSION 0.32.2)
@@ -27,12 +31,7 @@ endif ()
 
 include(${CPM_DOWNLOAD_LOCATION})
 
-option(ENABLE_STACKTRACE "enable stacktrace in exceptions" OFF)
 option(BUILD_DOCS "build doxygen docs" OFF)
-
-    if (ENABLE_STACKTRACE)
-        add_compile_definitions(STACKTRACE_ENABLE)
-    endif ()
 
 hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
@@ -44,13 +43,6 @@ CPMAddPackage(
         GIT_TAG master
 )
 
-if (ENABLE_STACKTRACE)
-CPMAddPackage(
-        NAME backward_cpp
-        GITHUB_REPOSITORY bombela/backward-cpp
-        GIT_TAG v1.5
-)
-endif ()
 set(RANGE_V3_TESTS OFF)
 CPMAddPackage(
         NAME range-v3
@@ -81,11 +73,7 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-if (ENABLE_STACKTRACE)
-    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum ${BACKWARD_ENABLE} range-v3 fmt::fmt)
-else ()
-    target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3 fmt::fmt)
-endif ()
+target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3 fmt::fmt)
 
 install(TARGETS ${PROJECT_NAME} magic_enum
         EXPORT ${PROJECT_NAME}_Targets
@@ -134,21 +122,12 @@ if (PF_COMMON_TESTS)
     find_package(Catch2 CONFIG REQUIRED)
     enable_testing()
     include_directories(include)
-    if (ENABLE_STACKTRACE)
-        add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-                tests/ByteLiterals.cpp tests/algorithm.cpp tests/coroutines.cpp
-                tests/concepts.cpp tests/enums.cpp tests/array.cpp ${BACKWARD_ENABLE})
-    else ()
-        add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-                tests/ByteLiterals.cpp tests/algorithm.cpp tests/coroutines.cpp
-                tests/concepts.cpp tests/enums.cpp tests/array.cpp)
-    endif ()
+    add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
+            tests/ByteLiterals.cpp tests/algorithm.cpp tests/coroutines.cpp
+            tests/concepts.cpp tests/enums.cpp tests/array.cpp)
 
     target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt StaticTypeInfo)
     target_compile_options(pf_common_tests PRIVATE ${flags})
-    if (ENABLE_STACKTRACE)
-        add_backward(pf_common_tests)
-    endif()
 
     include(CTest)
     include(Catch)

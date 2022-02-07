@@ -9,7 +9,8 @@
 
 #include <filesystem>
 #include <fstream>
-#include <pf_common/exceptions/StackTraceException.h>
+#include <span>
+#include <pf_common/exceptions/Exceptions.h>
 
 namespace pf {
 
@@ -64,7 +65,7 @@ void saveToFile(const std::filesystem::path &path, const Serializable auto &obj)
  * @tparam T type to be deserialized
  * @param path path to source file
  * @return deserialized object
- * @throws StackTraceException when file read fails
+ * @throws Exception when file read fails
  */
 template<Deserializable T>
 T loadFromFile(const std::filesystem::path &path) {
@@ -74,7 +75,7 @@ T loadFromFile(const std::filesystem::path &path) {
 
   auto data = std::vector<std::byte>(size);
   if (istream.read(reinterpret_cast<char *>(data.data()), size)) { return T::Deserialize(data); }
-  throw StackTraceException("Could not deserialize from '{}'", path.string());
+  throw Exception("Could not deserialize from '{}'", path.string());
 }
 
 }// namespace pf

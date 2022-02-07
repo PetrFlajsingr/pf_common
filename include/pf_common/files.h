@@ -8,7 +8,7 @@
 #define PF_COMMON_FILES_H
 
 #include <filesystem>
-#include <pf_common/exceptions/StackTraceException.h>
+#include <pf_common/exceptions/Exceptions.h>
 #include <ranges>
 #include <vector>
 

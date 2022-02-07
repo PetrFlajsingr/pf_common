@@ -77,7 +77,7 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;filesystem&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="StackTraceException_8h.html">pf_common/exceptions/StackTraceException.h</a>&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="StackTraceException_8h.html">pf_common/exceptions/Exception.h</a>&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>pf {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
@@ -111,20 +111,20 @@ $(function() {
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keyword">auto</span> data = std::vector&lt;std::byte&gt;(size);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span> (istream.read(<span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(data.data()), size)) { <span class="keywordflow">return</span> T::Deserialize(data); }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordflow">throw</span> <a class="code" href="classpf_1_1StackTraceException.html">StackTraceException</a>(<span class="stringliteral">&quot;Could not deserialize from &#39;{}&#39;&quot;</span>, path.string());</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordflow">throw</span> <a class="code" href="classpf_1_1StackTraceException.html">Exception</a>(<span class="stringliteral">&quot;Could not deserialize from &#39;{}&#39;&quot;</span>, path.string());</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}<span class="comment">// namespace pf</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif//REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasspf_1_1StackTraceException_html"><div class="ttname"><a href="classpf_1_1StackTraceException.html">pf::StackTraceException</a></div><div class="ttdoc">An exception providing stacktrace info.</div><div class="ttdef"><b>Definition:</b> StackTraceException.h:62</div></div>
+<div class="ttc" id="aclasspf_1_1StackTraceException_html"><div class="ttname"><a href="classpf_1_1StackTraceException.html">pf::Exception</a></div><div class="ttdoc">An exception providing stacktrace info.</div><div class="ttdef"><b>Definition:</b> Exception.h:62</div></div>
 <div class="ttc" id="aSerializable_8h_html_a777b40c572fc2970b6f66359fa8b7446"><div class="ttname"><a href="Serializable_8h.html#a777b40c572fc2970b6f66359fa8b7446">pf::deserialize</a></div><div class="ttdeci">T deserialize(std::span&lt; const std::byte &gt; data)</div><div class="ttdef"><b>Definition:</b> Serializable.h:47</div></div>
 <div class="ttc" id="aSerializable_8h_html_a919b16110003e93f01edf733536f9576"><div class="ttname"><a href="Serializable_8h.html#a919b16110003e93f01edf733536f9576">pf::serialize</a></div><div class="ttdeci">std::vector&lt; std::byte &gt; serialize(const Serializable auto &amp;obj)</div><div class="ttdef"><b>Definition:</b> Serializable.h:38</div></div>
 <div class="ttc" id="aSerializable_8h_html_ad0196d80ff4008909cc9eb719bd7b154"><div class="ttname"><a href="Serializable_8h.html#ad0196d80ff4008909cc9eb719bd7b154">pf::Serializable</a></div><div class="ttdeci">concept Serializable</div><div class="ttdoc">An object which provides serialisation to binary data.</div><div class="ttdef"><b>Definition:</b> Serializable.h:21</div></div>
 <div class="ttc" id="aSerializable_8h_html_a6b9d0e98f0a55a89eef8eaa8a7c92d59"><div class="ttname"><a href="Serializable_8h.html#a6b9d0e98f0a55a89eef8eaa8a7c92d59">pf::Deserializable</a></div><div class="ttdeci">concept Deserializable</div><div class="ttdoc">An object which provides deserialization from binary data.</div><div class="ttdef"><b>Definition:</b> Serializable.h:29</div></div>
 <div class="ttc" id="aSerializable_8h_html_ab4a78f3dc865768f9fa0cf8d6380561a"><div class="ttname"><a href="Serializable_8h.html#ab4a78f3dc865768f9fa0cf8d6380561a">pf::loadFromFile</a></div><div class="ttdeci">T loadFromFile(const std::filesystem::path &amp;path)</div><div class="ttdef"><b>Definition:</b> Serializable.h:70</div></div>
 <div class="ttc" id="aSerializable_8h_html_a10ef681b1366d3f6e336eb20065f8b6d"><div class="ttname"><a href="Serializable_8h.html#a10ef681b1366d3f6e336eb20065f8b6d">pf::saveToFile</a></div><div class="ttdeci">void saveToFile(const std::filesystem::path &amp;path, const Serializable auto &amp;obj)</div><div class="ttdef"><b>Definition:</b> Serializable.h:56</div></div>
-<div class="ttc" id="aStackTraceException_8h_html"><div class="ttname"><a href="StackTraceException_8h.html">StackTraceException.h</a></div><div class="ttdoc">Exceptions with built in stacktrace dumping. Macro STACKTRACE_ENABLE controls if the stacktrace repor...</div></div>
+<div class="ttc" id="aStackTraceException_8h_html"><div class="ttname"><a href="StackTraceException_8h.html">Exception.h</a></div><div class="ttdoc">Exceptions with built in stacktrace dumping. Macro STACKTRACE_ENABLE controls if the stacktrace repor...</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

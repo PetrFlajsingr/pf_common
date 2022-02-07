@@ -12,7 +12,7 @@
 #include <concepts>
 #include <functional>
 #include <future>
-#include <pf_common/exceptions/StackTraceException.h>
+#include <pf_common/exceptions/Exceptions.h>
 #include <pf_common/parallel/SafeQueue.h>
 #include <ranges>
 #include <thread>
