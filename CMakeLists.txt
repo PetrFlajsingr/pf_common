@@ -7,7 +7,7 @@ HunterGate(
 )
 
 project(pf_common
-        VERSION 1.1.0
+        VERSION 1.2.0
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
