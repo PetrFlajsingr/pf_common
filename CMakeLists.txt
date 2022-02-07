@@ -37,11 +37,7 @@ hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
 hunter_add_package(glm)
 find_package(glm CONFIG REQUIRED)
-CPMAddPackage(
-        NAME cppcoro
-        GITHUB_REPOSITORY andreasbuhr/cppcoro
-        GIT_TAG master
-)
+
 
 set(RANGE_V3_TESTS OFF)
 CPMAddPackage(
@@ -49,12 +45,12 @@ CPMAddPackage(
         GITHUB_REPOSITORY ericniebler/range-v3
         GIT_TAG 0.11.0
 )
+
 CPMAddPackage(
         NAME magic_enum
         GITHUB_REPOSITORY Neargye/magic_enum
         GIT_TAG v0.6.6
 )
-
 
 CPMAddPackage(
         NAME StaticTypeInfo
@@ -73,7 +69,7 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-target_link_libraries(${PROJECT_NAME} INTERFACE cppcoro magic_enum range-v3 fmt::fmt)
+target_link_libraries(${PROJECT_NAME} INTERFACE magic_enum range-v3 fmt::fmt)
 
 install(TARGETS ${PROJECT_NAME} magic_enum
         EXPORT ${PROJECT_NAME}_Targets
@@ -123,10 +119,10 @@ if (PF_COMMON_TESTS)
     enable_testing()
     include_directories(include)
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-            tests/ByteLiterals.cpp tests/algorithm.cpp tests/coroutines.cpp
+            tests/ByteLiterals.cpp tests/algorithm.cpp
             tests/concepts.cpp tests/enums.cpp tests/array.cpp)
 
-    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 cppcoro range-v3 fmt::fmt StaticTypeInfo)
+    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 range-v3 fmt::fmt StaticTypeInfo)
     target_compile_options(pf_common_tests PRIVATE ${flags})
 
     include(CTest)
