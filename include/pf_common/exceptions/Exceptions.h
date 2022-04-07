@@ -25,7 +25,9 @@ class Exception : public std::exception {
     using namespace std::string_view_literals;
 
     auto ss = std::stringstream{};
-    if (!fmt.empty()) { ss << fmt::format("An exception occurred: {}\n", fmt::format(fmt, args...)); }
+    if (!fmt.empty()) {
+      ss << fmt::format("An exception occurred: {}\n", fmt::vformat(fmt, fmt::make_format_args(args...)));
+    }
     whatStr = ss.str();
   }
 
