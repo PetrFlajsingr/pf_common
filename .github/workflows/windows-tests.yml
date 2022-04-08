@@ -20,7 +20,6 @@ jobs:
         cd ..
         git clone https://github.com/Microsoft/vcpkg.git
         cd vcpkg
-        dir
         .\bootstrap-vcpkg.bat
     
     
