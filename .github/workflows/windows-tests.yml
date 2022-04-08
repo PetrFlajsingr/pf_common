@@ -27,5 +27,4 @@ jobs:
       run: |
         cd ${{ github.workspace }}
         cmake . -DCMAKE_CXX_COMPILER=g++-11 -DPF_COMMON_TESTS=ON -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/../vcpkg/scripts/buildsystems/vcpkg.cmake
-        cmake --build . --target pf_common_tests
-        make test
+        cmake --build . --target test
