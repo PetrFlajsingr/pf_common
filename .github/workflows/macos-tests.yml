@@ -14,8 +14,16 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     
+    - name: Installing vcpkg
+      run: |
+        cd ..
+        git clone https://github.com/Microsoft/vcpkg.git
+        cd vcpkg
+        ./bootstrap-vcpkg.sh
+        
     - name: run tests
       run: |
-        cmake . -DCMAKE_CXX_COMPILER=g++-11 -DPF_COMMON_TESTS=ON
+        cd ${{ github.workspace }}
+        cmake . -DCMAKE_CXX_COMPILER=g++-11 -DPF_COMMON_TESTS=ON -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/../vcpkg/scripts/buildsystems/vcpkg.cmake
         make
         make test
