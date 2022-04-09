@@ -1,0 +1,26 @@
+{
+  "name": "pf-common",
+  "version": "1.2.1",
+  "dependencies": [
+    {
+      "name": "fmt",
+      "version>=": "8.1.1#1"
+    },
+    {
+      "name": "range-v3",
+      "version>=": "2021-11-02"
+    },
+    {
+      "name": "glm",
+      "version>=": "0.9.9.8#1"
+    },
+    {
+      "name": "magic-enum",
+      "version>=": "0.7.3#1"
+    },
+    {
+      "name": "catch2"
+    }
+  ],
+  "builtin-baseline": "59d355b5ec30d83aea2b18de5746f9c40224da9e"
+}

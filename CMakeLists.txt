@@ -1,13 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
-include("cmake/HunterGate.cmake")
-HunterGate(
-        URL "https://github.com/cpp-pm/hunter/archive/v0.23.321.tar.gz"
-        SHA1 "5e53cbb0429037ea8e2592bfd92704b8ff3ab492"
-)
-
 project(pf_common
-        VERSION 1.2.0
+        VERSION 1.2.1
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
@@ -21,42 +15,12 @@ else ()
     set(CMAKE_CXX_STANDARD 20) # /std:c++latest for msvc and -std=c++20 for everyone else.
 endif ()
 
-set(CPM_DOWNLOAD_LOCATION "${CMAKE_SOURCE_DIR}/cmake/CPM.cmake")
-set(CPM_DOWNLOAD_VERSION 0.32.2)
-
-if (NOT (EXISTS ${CPM_DOWNLOAD_LOCATION} AND CPM_VERSION STREQUAL CPM_DOWNLOAD_VERSION))
-    message(STATUS "Downloading CPM.cmake")
-    file(DOWNLOAD https://github.com/TheLartians/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake ${CPM_DOWNLOAD_LOCATION})
-endif ()
-
-include(${CPM_DOWNLOAD_LOCATION})
-
 option(BUILD_DOCS "build doxygen docs" OFF)
 
-hunter_add_package(fmt)
 find_package(fmt CONFIG REQUIRED)
-hunter_add_package(glm)
 find_package(glm CONFIG REQUIRED)
-
-
-set(RANGE_V3_TESTS OFF)
-CPMAddPackage(
-        NAME range-v3
-        GITHUB_REPOSITORY ericniebler/range-v3
-        GIT_TAG 0.11.0
-)
-
-CPMAddPackage(
-        NAME magic_enum
-        GITHUB_REPOSITORY Neargye/magic_enum
-        GIT_TAG v0.7.3
-)
-
-CPMAddPackage(
-        NAME StaticTypeInfo
-        GIT_TAG v1.3.1
-        GIT_REPOSITORY https://github.com/TheLartians/StaticTypeInfo
-)
+find_package(range-v3 CONFIG REQUIRED)
+find_package(magic_enum CONFIG REQUIRED)
 
 include(GNUInstallDirs)
 
@@ -69,9 +33,9 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-target_link_libraries(${PROJECT_NAME} INTERFACE magic_enum range-v3 fmt::fmt)
+target_link_libraries(${PROJECT_NAME} INTERFACE magic_enum::magic_enum glm::glm fmt::fmt range-v3 range-v3-meta range-v3::meta range-v3-concepts)
 
-install(TARGETS ${PROJECT_NAME} magic_enum
+install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -114,15 +78,15 @@ if (PF_COMMON_TESTS)
                 "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
                 "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
     endif()
-    hunter_add_package(Catch)
     find_package(Catch2 CONFIG REQUIRED)
+
     enable_testing()
     include_directories(include)
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
             tests/ByteLiterals.cpp tests/algorithm.cpp
-            tests/concepts.cpp tests/enums.cpp tests/array.cpp)
+            tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/FixedString.cpp)
 
-    target_link_libraries(pf_common_tests PRIVATE magic_enum Catch2::Catch2 range-v3 fmt::fmt StaticTypeInfo)
+    target_link_libraries(pf_common_tests PRIVATE Catch2::Catch2 fmt::fmt)
     target_compile_options(pf_common_tests PRIVATE ${flags})
 
     include(CTest)
