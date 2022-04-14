@@ -25,7 +25,8 @@ enum class Enabled { Yes, No };
  * @tparam T
  */
 template<typename T>
-concept ScopedEnum = std::is_enum_v<T> && !std::convertible_to<T, typename std::underlying_type_t<T>>;
+concept ScopedEnum = std::is_enum_v<T> && !
+std::convertible_to<T, typename std::underlying_type_t<T>>;
 
 /**
  * @brief enum or enum class
@@ -67,29 +68,30 @@ class Flags {
    * Create Flags from multiple enum values
    * @param args enum values
    */
-  explicit Flags(std::same_as<E> auto... args) { (operator|=(args), ...); }
+  constexpr explicit Flags(std::same_as<E> auto... args) { (operator|=(args), ...); }
   /**
    * Create Flags from range of enum values.
    * @param values enum values
    */
-  explicit Flags(std::ranges::range auto &&values) requires(
-      std::same_as<E, std::ranges::range_value_t<decltype(values)>>) {
+  constexpr explicit Flags(std::ranges::range auto &&values)
+    requires(std::same_as<E, std::ranges::range_value_t<decltype(values)>>)
+  {
     std::ranges::for_each(values, [this](auto val) { operator|=(val); });
   } /**
    * Copy assignment
    * @param other
    */
-  Flags(const Flags &other) { value = other.value; }
+  constexpr Flags(const Flags &other) { value = other.value; }
   /**
    * Assignment form enum type. Overwrites inner state.
    * @param other new value
    */
-  Flags(E other) { value = static_cast<UnderlyingType>(other); }
+  constexpr Flags(E other) { value = static_cast<UnderlyingType>(other); }
   /**
    * Copy assignment
    * @param other
    */
-  Flags &operator=(const Flags &other) {
+  constexpr Flags &operator=(const Flags &other) {
     value = other.value;
     return *this;
   }
@@ -97,73 +99,73 @@ class Flags {
    * Assignment form enum type. Overwrites inner state.
    * @param other new value
    */
-  Flags &operator=(E other) {
+  constexpr Flags &operator=(E other) {
     value = other;
     return *this;
   }
   /**
    * Flip flags.
    */
-  [[nodiscard]] Flags operator~() {
+  [[nodiscard]] constexpr Flags operator~() {
     auto result = *this;
     result.value = ~value;
     return result;
   }
-  [[nodiscard]] bool operator==(const Flags &rhs) const { return value == rhs.value; }
-  [[nodiscard]] bool operator!=(const Flags &rhs) const { return !(rhs == *this); }
-  [[nodiscard]] bool operator==(E rhs) const { return value == rhs; }
-  [[nodiscard]] bool operator!=(E rhs) const { return !(rhs == *this); }
+  [[nodiscard]] constexpr bool operator==(const Flags &rhs) const { return value == rhs.value; }
+  [[nodiscard]] constexpr bool operator!=(const Flags &rhs) const { return !(rhs == *this); }
+  [[nodiscard]] constexpr bool operator==(E rhs) const { return value == rhs; }
+  [[nodiscard]] constexpr bool operator!=(E rhs) const { return !(rhs == *this); }
 
-  Flags &operator|=(const Flags &other) {
+  constexpr Flags &operator|=(const Flags &other) {
     value = value | other.value;
     return *this;
   }
-  [[nodiscard]] Flags operator|(const Flags &other) const {
+  [[nodiscard]] constexpr Flags operator|(const Flags &other) const {
     auto result = *this;
     result |= other;
     return result;
   }
-  Flags &operator|=(E other) {
+  constexpr Flags &operator|=(E other) {
     value = value | static_cast<UnderlyingType>(other);
     return *this;
   }
-  [[nodiscard]] Flags operator|(E other) const {
+  [[nodiscard]] constexpr Flags operator|(E other) const {
     auto result = *this;
     result |= other;
     return result;
   }
-  Flags &operator&=(const Flags &other) {
+  constexpr Flags &operator&=(const Flags &other) {
     value = value & other.value;
     return *this;
   }
-  [[nodiscard]] Flags operator&(const Flags &other) const {
+  [[nodiscard]] constexpr Flags operator&(const Flags &other) const {
     auto result = *this;
     result &= other;
     return result;
   }
-  Flags &operator&=(E other) {
+  constexpr Flags &operator&=(E other) {
     value = value & static_cast<UnderlyingType>(other);
     return *this;
   }
-  [[nodiscard]] Flags operator&(E other) const {
+  [[nodiscard]] constexpr Flags operator&(E other) const {
     auto result = *this;
     result &= other;
     return result;
   }
-  Flags &operator^=(const Flags &other) {
+  constexpr Flags &operator^=(const Flags &other) {
     value = value ^ other.value;
     return *this;
   }
-  [[nodiscard]] Flags operator^(const Flags &other) const {
+  [[nodiscard]] constexpr Flags operator^(const Flags &other) const {
     auto result = *this;
     result ^= other;
     return result;
   }
-  Flags &operator^=(E other) {
+  constexpr Flags &operator^=(E other) {
     value = value ^ static_cast<UnderlyingType>(other);
     return *this;
   }
-  [[nodiscard]] Flags operator^(E other) const {
+  [[nodiscard]] constexpr Flags operator^(E other) const {
     auto result = *this;
     result ^= other;
     return result;
@@ -174,13 +176,13 @@ class Flags {
    * @param other flag to check
    * @return true if the value is contained in flags
    */
-  [[nodiscard]] bool operator&&(E other) { return ((*this) & other).is(other); }
+  [[nodiscard]] constexpr bool operator&&(E other) { return ((*this) & other).is(other); }
   /**
    * Check if the flag is contained within this object.
    * @param other flag to check
    * @return true if the value is contained in flags
    */
-  [[nodiscard]] bool is(E other) const {
+  [[nodiscard]] constexpr bool is(E other) const {
     const auto bitAnd = (value & static_cast<UnderlyingType>(other));
     return bitAnd == static_cast<UnderlyingType>(other);
   }
@@ -189,15 +191,13 @@ class Flags {
    * Get underlying value.
    * @return underlying value
    */
-  [[nodiscard]] UnderlyingType operator*() const {
-    return value;
-  }
+  [[nodiscard]] constexpr UnderlyingType operator*() const { return value; }
 
   /**
    * List all flags which are currently set.
    * @return flags which are currently set
    */
-  [[nodiscard]] auto getSetFlags() const {
+  [[nodiscard]] constexpr auto getSetFlags() const {
     return magic_enum::enum_values<E>() | std::views::filter([this](const auto val) { return is(val); });
   }
 
@@ -214,7 +214,7 @@ namespace enum_operators {
  * @return
  */
 template<Enum E>
-Flags<E> operator|(E lhs, E rhs) {
+constexpr Flags<E> operator|(E lhs, E rhs) {
   return Flags<E>{lhs, rhs};
 }
 /**
@@ -225,7 +225,7 @@ Flags<E> operator|(E lhs, E rhs) {
  * @return
  */
 template<Enum E>
-Flags<E> operator&(E lhs, E rhs) {
+constexpr Flags<E> operator&(E lhs, E rhs) {
   auto result = Flags<E>{lhs};
   result &= rhs;
   return result;
@@ -237,7 +237,7 @@ Flags<E> operator&(E lhs, E rhs) {
  * @return bitwise negated value
  */
 template<Enum E>
-E operator~(E value) {
+constexpr E operator~(E value) {
   using UnderlyingType = std::underlying_type_t<E>;
   return static_cast<E>(~static_cast<UnderlyingType>(value));
 }
