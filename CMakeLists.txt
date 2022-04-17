@@ -16,6 +16,7 @@ else ()
 endif ()
 
 option(BUILD_DOCS "build doxygen docs" OFF)
+add_compile_definitions(FMT_HEADER_ONLY)
 
 find_package(fmt CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
@@ -75,11 +76,11 @@ include(CPack)
 if (PF_COMMON_TESTS)
     if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         list(APPEND flags "/std:c++latest" "/Wall")
-    else()
+    else ()
         list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return-type" "-fcoroutines"
                 "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
                 "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
-    endif()
+    endif ()
     find_package(Catch2 CONFIG REQUIRED)
 
     enable_testing()
@@ -88,7 +89,7 @@ if (PF_COMMON_TESTS)
             tests/ByteLiterals.cpp tests/algorithm.cpp
             tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/FixedString.cpp)
 
-    target_link_libraries(pf_common_tests PRIVATE Catch2::Catch2 fmt::fmt)
+    target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2 fmt::fmt)
     target_compile_options(pf_common_tests PRIVATE ${flags})
 
     include(CTest)
