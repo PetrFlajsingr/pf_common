@@ -64,6 +64,7 @@ class Flags {
  public:
   using UnderlyingType = std::underlying_type_t<E>;
   using EnumType = E;
+  constexpr Flags() = default;
   /**
    * Create Flags from multiple enum values
    * @param args enum values
