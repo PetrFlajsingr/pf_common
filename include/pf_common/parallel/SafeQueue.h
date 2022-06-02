@@ -34,11 +34,11 @@ public:
   * Add an item to the end of the queue
   * @param item item to be added
   */
- void enqueue(T item) {
+ void enqueue(T &&item) {
    std::unique_lock<std::mutex> lock(queueMutex);
    bool wasEmpty = queue.empty();
 
-   queue.push(std::move(item));
+   queue.push(std::forward<T>(item));
    lock.unlock();
 
    if (wasEmpty) conditionVariable.notify_one();

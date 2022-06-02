@@ -12,10 +12,10 @@ namespace pf::math {
  * Relative position of two objects.
  */
 enum class RelativePosition {
-  Inside,/**< Object is fully contained */
-  Outside, /**< Objects do not share any area/volume */
+  Inside,      /**< Object is fully contained */
+  Outside,     /**< Objects do not share any area/volume */
   Intersection /**< Objects intersect without the checked one being contained inside the other one */
 };
-}
+}// namespace pf::math
 
 #endif// PF_COMMON_COMMON_H

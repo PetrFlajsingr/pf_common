@@ -19,8 +19,8 @@ namespace pf::math {
  */
 template<typename T>
 concept RangeValueType = std::equality_comparable<T> && requires(T t) {
-  { t - t } -> std::convertible_to<T>;
-};
+                                                          { t - t } -> std::convertible_to<T>;
+                                                        };
 
 /**
  * @brief 1D range.
@@ -29,7 +29,7 @@ concept RangeValueType = std::equality_comparable<T> && requires(T t) {
 template<RangeValueType T>
 struct Range {
   T start; /**< Starting position. */
-  T end; /**< Ending position. */
+  T end;   /**< Ending position. */
 
   constexpr bool operator==(const Range &rhs) const { return start == rhs.start && end == rhs.end; }
   constexpr bool operator!=(const Range &rhs) const { return !(rhs == *this); }
