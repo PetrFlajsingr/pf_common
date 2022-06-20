@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(pf_common
-        VERSION 1.2.4
+        VERSION 1.2.5
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
