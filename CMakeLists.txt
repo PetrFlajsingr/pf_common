@@ -89,7 +89,7 @@ if (PF_COMMON_TESTS)
             tests/ByteLiterals.cpp tests/algorithm.cpp
             tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/FixedString.cpp)
 
-    target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2 Catch2::Catch2WithMain fmt::fmt)
+    target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2 fmt::fmt)
     target_compile_options(pf_common_tests PRIVATE ${flags})
 
     include(CTest)

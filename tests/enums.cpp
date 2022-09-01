@@ -2,7 +2,7 @@
 // Created by petr on 4/17/21.
 //
 
-#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch.hpp>
 #include <concepts>
 #include <pf_common/concepts/StringConvertible.h>
 #include <pf_common/enums.h>

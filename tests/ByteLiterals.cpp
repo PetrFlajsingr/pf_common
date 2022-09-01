@@ -2,7 +2,7 @@
 // Created by Petr on 11.11.2020.
 //
 
-#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch.hpp>
 #include <pf_common/ByteLiterals.h>
 
 TEST_CASE("byte literals", "[byte_literals]") {
