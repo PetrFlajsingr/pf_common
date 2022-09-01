@@ -2,7 +2,7 @@
 // Created by Petr on 11.11.2020.
 //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <pf_common/math/Range.h>
 #include <pf_common/algorithms.h>
 #include <unordered_set>

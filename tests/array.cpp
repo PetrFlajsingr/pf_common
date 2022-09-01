@@ -2,7 +2,7 @@
 // Created by petr on 4/22/21.
 //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <pf_common/array.h>
 
 TEST_CASE("array", "[make_array]") {

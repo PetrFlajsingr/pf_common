@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(pf_common
-        VERSION 1.2.5
+        VERSION 1.2.6
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
@@ -89,7 +89,7 @@ if (PF_COMMON_TESTS)
             tests/ByteLiterals.cpp tests/algorithm.cpp
             tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/FixedString.cpp)
 
-    target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2 fmt::fmt)
+    target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2 Catch2::Catch2WithMain fmt::fmt)
     target_compile_options(pf_common_tests PRIVATE ${flags})
 
     include(CTest)

@@ -1,14 +1,14 @@
 {
   "name": "pf-common",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "dependencies": [
     {
       "name": "fmt",
-      "version>=": "8.1.1#1"
+      "version>=": "9.0.0"
     },
     {
       "name": "range-v3",
-      "version>=": "2021-11-02"
+      "version>=": "0.12.0"
     },
     {
       "name": "glm",
@@ -16,11 +16,12 @@
     },
     {
       "name": "magic-enum",
-      "version>=": "0.8.0"
+      "version>=": "0.8.1"
     },
     {
-      "name": "catch2"
+      "name": "catch2",
+      "version>=": "3.0.1#2"
     }
   ],
-  "builtin-baseline": "bae8f8c7d837c631ca72daec4b14e243824135a5"
+  "builtin-baseline": "4dacd997a589a9ed67a5d74ed580056ad0341775"
 }
