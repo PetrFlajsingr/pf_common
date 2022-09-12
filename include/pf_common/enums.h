@@ -29,11 +29,18 @@ concept ScopedEnum = std::is_enum_v<T> && !
 std::convertible_to<T, typename std::underlying_type_t<T>>;
 
 /**
+ * Detect old style enum.
+ * @tparam T
+ */
+template<typename T>
+concept UnscopedEnum = std::is_enum_v<T> && std::convertible_to<T, typename std::underlying_type_t<T>>;
+
+/**
  * @brief enum or enum class
  * @tparam T
  */
 template<typename T>
-concept Enum = std::is_enum_v<T> || ScopedEnum<T>;
+concept Enum = std::is_enum_v<T>;
 
 /**
  * Check enum values so that there is no bit overlap.

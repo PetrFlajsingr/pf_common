@@ -4,13 +4,12 @@
  * @author Petr Flajšingr
  * @date 2.1.21
  */
-#ifndef REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H
-#define REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H
+#ifndef PF_COMMON_SERIALIZABLE_H
+#define PF_COMMON_SERIALIZABLE_H
 
 #include <filesystem>
 #include <fstream>
 #include <span>
-#include <pf_common/exceptions/Exceptions.h>
 
 namespace pf {
 
@@ -20,16 +19,16 @@ namespace pf {
  */
 template<typename T>
 concept Serializable = requires(const T t) {
-  { t.serialize() } -> std::same_as<std::vector<std::byte>>;
-};
+                         { t.serialize() } -> std::same_as<std::vector<std::byte>>;
+                       };
 /**
  * @brief An object which provides deserialization from binary data.
  * @tparam T
  */
 template<typename T>
 concept Deserializable = requires(std::span<const std::byte> data) {
-  { T::Deserialize(data) } -> std::same_as<T>;
-};
+                           { T::Deserialize(data) } -> std::same_as<T>;
+                         };
 
 /**
  * Convenience function for object serialisation.
@@ -64,19 +63,18 @@ void saveToFile(const std::filesystem::path &path, const Serializable auto &obj)
  * Deserialize an object from file data.
  * @tparam T type to be deserialized
  * @param path path to source file
- * @return deserialized object
- * @throws Exception when file read fails
+ * @return deserialized object, nullopt if fail
  */
 template<Deserializable T>
-T loadFromFile(const std::filesystem::path &path) {
+std::optional<T> loadFromFile(const std::filesystem::path &path) {
   auto istream = std::ifstream(path, std::ios::binary | std::ios::ate);
   const auto size = istream.tellg();
   istream.seekg(0, std::ios::beg);
 
   auto data = std::vector<std::byte>(size);
   if (istream.read(reinterpret_cast<char *>(data.data()), size)) { return T::Deserialize(data); }
-  throw Exception("Could not deserialize from '{}'", path.string());
+  return std::nullopt;
 }
 
 }// namespace pf
-#endif//REALISTIC_VOXEL_RENDERING_SRC_UTILS_INTERFACE_SERIALIZABLE_H
+#endif//PF_COMMON_SERIALIZABLE_H
