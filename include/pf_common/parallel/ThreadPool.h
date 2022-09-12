@@ -5,14 +5,13 @@
 * @date 26.12.19
 */
 
-#ifndef UTILITIES_THREADPOOL_H
-#define UTILITIES_THREADPOOL_H
+#ifndef PF_COMMON_PARALLEL_THREADPOOL_H
+#define PF_COMMON_PARALLEL_THREADPOOL_H
 
 #include <algorithm>
 #include <concepts>
 #include <functional>
 #include <future>
-#include <pf_common/exceptions/Exceptions.h>
 #include <pf_common/parallel/SafeQueue.h>
 #include <ranges>
 #include <thread>
@@ -106,4 +105,4 @@ class ThreadPool {
   }
 };
 }// namespace pf
-#endif// UTILITIES_THREADPOOL_H
+#endif// PF_COMMON_PARALLEL_THREADPOOL_H
