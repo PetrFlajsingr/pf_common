@@ -1,6 +1,9 @@
-//
-// Created by xflajs00 on 02.09.2022.
-//
+/**
+ * @file PointerLike.h
+ * @brief Concept checking for pointer like object.
+ * @author Petr Flajšingr
+ * @date 2.9.22
+ */
 
 #ifndef PF_COMMON_POINTERLIKE_H
 #define PF_COMMON_POINTERLIKE_H
