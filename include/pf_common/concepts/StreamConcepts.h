@@ -4,11 +4,12 @@
  * @author Petr Flajšingr
  * @date 24.9.20
  */
-#ifndef PF_COMMON_STREAMCONCEPTS_H
-#define PF_COMMON_STREAMCONCEPTS_H
+#ifndef PF_COMMON_CONCEPTS_STREAMCONCEPTS_H
+#define PF_COMMON_CONCEPTS_STREAMCONCEPTS_H
 
 #include <istream>
 #include <ostream>
+
 namespace pf {
 /**
  * @brief A type which supports << to stream.
@@ -33,4 +34,4 @@ concept StreamOutputable = requires(T t, std::istream i) {
 template<typename T>
 concept Streamable = StreamOutputable<T> && StreamInputable<T>;
 }// namespace pf
-#endif//PF_COMMON_STREAMCONCEPTS_H
+#endif//PF_COMMON_CONCEPTS_STREAMCONCEPTS_H

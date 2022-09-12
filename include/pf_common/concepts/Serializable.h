@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 2.1.21
  */
-#ifndef PF_COMMON_SERIALIZABLE_H
-#define PF_COMMON_SERIALIZABLE_H
+#ifndef PF_COMMON_CONCEPTS_SERIALIZABLE_H
+#define PF_COMMON_CONCEPTS_SERIALIZABLE_H
 
 #include <filesystem>
 #include <fstream>
@@ -78,4 +78,4 @@ std::optional<T> loadFromFile(const std::filesystem::path &path) {
 }
 
 }// namespace pf
-#endif//PF_COMMON_SERIALIZABLE_H
+#endif//PF_COMMON_CONCEPTS_SERIALIZABLE_H

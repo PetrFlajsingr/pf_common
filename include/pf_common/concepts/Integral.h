@@ -5,8 +5,8 @@
  * @date 2.4.22
  */
 
-#ifndef PF_COMMON_INTEGRAL_H
-#define PF_COMMON_INTEGRAL_H
+#ifndef PF_COMMON_CONCEPTS_INTEGRAL_H
+#define PF_COMMON_CONCEPTS_INTEGRAL_H
 
 #include <type_traits>
 
@@ -15,4 +15,4 @@ template<typename T>
 concept Integral = std::is_integral_v<T>;
 }
 
-#endif//PF_COMMON_INTEGRAL_H
+#endif//PF_COMMON_CONCEPTS_INTEGRAL_H

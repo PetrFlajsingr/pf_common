@@ -5,8 +5,8 @@
  * @date 2.9.22
  */
 
-#ifndef PF_COMMON_POINTERLIKE_H
-#define PF_COMMON_POINTERLIKE_H
+#ifndef PF_COMMON_CONCEPTS_POINTERLIKE_H
+#define PF_COMMON_CONCEPTS_POINTERLIKE_H
 
 #include <concepts>
 #include <memory>
@@ -23,4 +23,4 @@ concept PointerLike = std::pointer_traits<T>::element_type
 
 }
 
-#endif//PF_COMMON_POINTERLIKE_H
+#endif//PF_COMMON_CONCEPTS_POINTERLIKE_H

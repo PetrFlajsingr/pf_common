@@ -5,8 +5,8 @@
  * @date 24.9.20
  */
 
-#ifndef PF_COMMON_INCREMENTABLE_H
-#define PF_COMMON_INCREMENTABLE_H
+#ifndef PF_COMMON_CONCEPTS_INCREMENTABLE_H
+#define PF_COMMON_CONCEPTS_INCREMENTABLE_H
 
 #include <concepts>
 
@@ -31,4 +31,4 @@ concept ModCapable = requires(T t) {
   { t % t } -> std::convertible_to<T>;
 };
 }// namespace pf
-#endif//PF_COMMON_INCREMENTABLE_H
+#endif//PF_COMMON_CONCEPTS_INCREMENTABLE_H

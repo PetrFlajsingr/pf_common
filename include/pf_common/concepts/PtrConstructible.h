@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 12.10.20
  */
-#ifndef PF_COMMON_PTRCONSTRUCTIBLE_H
-#define PF_COMMON_PTRCONSTRUCTIBLE_H
+#ifndef PF_COMMON_CONCEPTS_PTRCONSTRUCTIBLE_H
+#define PF_COMMON_CONCEPTS_PTRCONSTRUCTIBLE_H
 
 #ifndef _MSC_VER
 #include <experimental/memory>
@@ -33,4 +33,4 @@ struct PtrConstructible {
 #endif
 };
 }// namespace pf
-#endif//PF_COMMON_PTRCONSTRUCTIBLE_H
+#endif//PF_COMMON_CONCEPTS_PTRCONSTRUCTIBLE_H

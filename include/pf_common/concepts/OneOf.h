@@ -4,8 +4,8 @@
  * @author Petr Flajšingr
  * @date 19.10.20
  */
-#ifndef PF_COMMON_ONEOF_H
-#define PF_COMMON_ONEOF_H
+#ifndef PF_COMMON_CONCEPTS_ONEOF_H
+#define PF_COMMON_CONCEPTS_ONEOF_H
 
 #include <concepts>
 namespace pf {
@@ -28,4 +28,4 @@ concept OneOf = (std::same_as<T, Args> || ...);
 template <auto Value, decltype(Value) ...Values>
 constexpr bool OneOfValues_v = ((Value == Values) || ...);
 }// namespace pf
-#endif//PF_COMMON_ONEOF_H
+#endif//PF_COMMON_CONCEPTS_ONEOF_H
