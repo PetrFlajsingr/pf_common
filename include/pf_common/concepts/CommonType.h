@@ -1,6 +1,9 @@
-//
-// Created by petr on 4/22/21.
-//
+/**
+ * @file CommonType.h
+ * @brief Concept to check if all types have a common type.
+ * @author Petr Flajšingr
+ * @date 22.4.21
+ */
 
 #ifndef PF_COMMON_CONCEPTS_COMMONTYPE_H
 #define PF_COMMON_CONCEPTS_COMMONTYPE_H
