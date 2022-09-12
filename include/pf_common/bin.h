@@ -32,7 +32,6 @@ std::vector<std::byte> toBytes(const T &data) {
  */
 template<typename T>
 requires std::is_default_constructible_v<T> T fromBytes(std::span<const std::byte> data) {
-  assert(data.size() == sizeof(T));
   auto result = T{};
   std::ranges::copy(data, reinterpret_cast<std::byte *>(&result));
   return result;

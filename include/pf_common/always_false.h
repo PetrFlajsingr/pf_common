@@ -1,6 +1,9 @@
-//
-// Created by Petr on 6/6/2022.
-//
+/**
+ * @file always_false.h
+ * @brief Simple constexpr always false value.
+ * @author Petr Flajšingr
+ * @date 6.6.22
+ */
 
 #ifndef PF_COMMON_ALWAYS_FALSE_H
 #define PF_COMMON_ALWAYS_FALSE_H

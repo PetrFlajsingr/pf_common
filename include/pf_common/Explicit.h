@@ -1,6 +1,9 @@
-//
-// Created by Petr on 6/6/2022.
-//
+/**
+ * @file Explicit.h
+ * @brief Wrapper disabling default construction.
+ * @author Petr Flajšingr
+ * @date 6.6.22
+ */
 
 #ifndef PF_COMMON_EXPLICIT_H
 #define PF_COMMON_EXPLICIT_H

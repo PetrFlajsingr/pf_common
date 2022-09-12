@@ -123,6 +123,6 @@ TEST_CASE("Serialization", "[concepts][Serializable]") {
   SECTION("objects can be saved to file and loaded back up") {
     pf::saveToFile("./test.ser", SerStruct{10});
     auto deserialized = pf::loadFromFile<SerStruct>("./test.ser");
-    REQUIRE(deserialized.value == 10);
+    REQUIRE(deserialized->value == 10);
   }
 }

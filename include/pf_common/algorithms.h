@@ -8,6 +8,7 @@
 #define PF_COMMON_ALGORITHMS_H
 
 #include <algorithm>
+#include <concepts>
 #include <optional>
 #include <range/v3/range/concepts.hpp>
 #include <range/v3/range/traits.hpp>
@@ -49,10 +50,10 @@ template<std::ranges::range Range>
  * @param predicate predicate returning true on desired element
  * @return element for which predicate returns true or std::nullopt if no such element is found
  */
-template<ranges::range Range>
-std::optional<ranges::range_value_t<Range>> findIf(Range &&range,
-                                                   std::predicate<ranges::range_value_t<Range>> auto &&predicate) {
-  if (const auto iter = std::ranges::find_if(range, predicate); iter != ranges::end(range)) { return *iter; }
+template<std::ranges::range Range>
+std::optional<std::ranges::range_value_t<Range>>
+findIf(Range &&range, std::predicate<std::ranges::range_value_t<Range>> auto &&predicate) {
+  if (const auto iter = std::ranges::find_if(range, predicate); iter != std::ranges::end(range)) { return *iter; }
   return std::nullopt;
 }
 

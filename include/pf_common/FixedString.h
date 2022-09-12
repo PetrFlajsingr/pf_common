@@ -1,6 +1,9 @@
-//
-// Created by petr.flajsingr on 2/7/2022.
-//
+/**
+ * @file FixedString.h
+ * @brief Constexpr fixed string.
+ * @author Petr Flajšingr
+ * @date 7.2.22
+ */
 
 #ifndef PF_COMMON_FIXEDSTRING_H
 #define PF_COMMON_FIXEDSTRING_H
@@ -78,7 +81,7 @@ struct FixedString {
   [[nodiscard]] constexpr std::size_t length() const { return size(); }
   [[nodiscard]] constexpr const char *begin() const { return str; }
   [[nodiscard]] constexpr const char *end() const { return str + N; }
-  constexpr char operator[](std::size_t index) const { return str[index]; }
+  [[nodiscard]] constexpr char operator[](std::size_t index) const { return str[index]; }
   [[nodiscard]] constexpr char front() const { return str[0]; }
   [[nodiscard]] constexpr char back() const { return str[N + 1]; }
   [[nodiscard]] constexpr const char *data() const { return str; }

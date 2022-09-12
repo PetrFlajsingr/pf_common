@@ -8,6 +8,7 @@
 #define PF_COMMON_BITS_H
 
 #include <cassert>
+#include <cstddef>
 
 namespace pf {
 
