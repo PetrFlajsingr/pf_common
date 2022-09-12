@@ -1,6 +1,9 @@
-//
-// Created by xflajs00 on 02.04.2022.
-//
+/**
+ * @file Integral.h
+ * @brief Concept to check for integral type.
+ * @author Petr Flajšingr
+ * @date 2.4.22
+ */
 
 #ifndef PF_COMMON_INTEGRAL_H
 #define PF_COMMON_INTEGRAL_H
