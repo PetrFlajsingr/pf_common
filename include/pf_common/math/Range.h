@@ -7,8 +7,8 @@
  * @author Petr Flajšingr
  * @date 1.11.20
  */
-#ifndef PF_COMMON_MATH_H
-#define PF_COMMON_MATH_H
+#ifndef PF_COMMON_MATH_RANGE_H
+#define PF_COMMON_MATH_RANGE_H
 
 #include <compare>
 
@@ -48,4 +48,4 @@ struct Range {
 };
 }// namespace pf::math
 
-#endif//PF_COMMON_MATH_H
+#endif//PF_COMMON_MATH_RANGE_H

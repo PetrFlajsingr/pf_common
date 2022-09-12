@@ -2,8 +2,8 @@
 // Created by Petr on 19.11.2019.
 //
 
-#ifndef UTILITIES_VIEWFRUSTUM_H
-#define UTILITIES_VIEWFRUSTUM_H
+#ifndef PF_COMMON_VIEWFRUSTUM_H
+#define PF_COMMON_VIEWFRUSTUM_H
 
 #include "BoundingBox.h"
 #include "common.h"
@@ -124,4 +124,4 @@ class ViewFrustum {
 };
 }// namespace pf::math
 
-#endif // UTILITIES_VIEWFRUSTUM_H
+#endif // PF_COMMON_VIEWFRUSTUM_H
