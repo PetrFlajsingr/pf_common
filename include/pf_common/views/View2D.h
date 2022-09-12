@@ -5,12 +5,14 @@
  * @date 31.03.2021
  */
 
-#ifndef HUFF_CODEC__VECTOR2D_H
-#define HUFF_CODEC__VECTOR2D_H
+#ifndef PF_COMMON_VIEWS_VIEW2D_H
+#define PF_COMMON_VIEWS_VIEW2D_H
 
+#include <cmath>
 #include <memory>
 #include <ranges>
 #include <span>
+#include <type_traits>
 
 namespace pf {
 /**
@@ -20,8 +22,7 @@ namespace pf {
 template<std::ranges::contiguous_range R, bool IsConst>
 class View2D {
  public:
-  using range_storage =
-  std::conditional_t<IsConst, std::experimental::observer_ptr<const R>, std::experimental::observer_ptr<R>>;
+  using range_storage = std::conditional_t<IsConst, const R *, R *>;
   using range_reference = std::conditional_t<IsConst, const R &, R &>;
   using value_type = std::ranges::range_value_t<R>;
   using reference = std::ranges::range_reference_t<R>;
@@ -39,8 +40,12 @@ class View2D {
     width = other.width;
     return *this;
   }
-  View2D(const View2D<R, true> &other) requires(!IsConst) : range(other.range), width(other.width) {}
-  View2D &operator=(const View2D<R, true> &other) requires(!IsConst) {
+  View2D(const View2D<R, true> &other)
+    requires(!IsConst)
+  : range(other.range), width(other.width) {}
+  View2D &operator=(const View2D<R, true> &other)
+    requires(!IsConst)
+  {
     range = other.range;
     width = other.width;
     return *this;
@@ -54,7 +59,9 @@ class View2D {
   class RowAccessor {
    public:
     RowAccessor(range_storage range, size_t col, size_t width) : range(range), column(col), width(width) {}
-    [[nodiscard]] reference operator[](std::size_t index) requires(!IsConstAccessor) {
+    [[nodiscard]] reference operator[](std::size_t index)
+      requires(!IsConstAccessor)
+    {
       return (*range)[width * index + column];
     }
     [[nodiscard]] const_reference operator[](std::size_t index) const { return (*range)[width * index + column]; }
@@ -67,18 +74,32 @@ class View2D {
     std::size_t width;
   };
 
-  [[nodiscard]] RowAccessor<IsConst> operator[](std::size_t index) requires(!IsConst) {
+  [[nodiscard]] RowAccessor<IsConst> operator[](std::size_t index)
+    requires(!IsConst)
+  {
     return RowAccessor<IsConst>{range, index, width};
   }
   [[nodiscard]] RowAccessor<true> operator[](std::size_t index) const { return RowAccessor<true>{range, index, width}; }
 
-  [[nodiscard]] R &operator*() requires(!IsConst) { return getRange(); }
-  [[nodiscard]] R *operator->() requires(!IsConst) { return range.get(); }
+  [[nodiscard]] R &operator*()
+    requires(!IsConst)
+  {
+    return getRange();
+  }
+  [[nodiscard]] R *operator->()
+    requires(!IsConst)
+  {
+    return range.get();
+  }
 
   [[nodiscard]] const R &operator*() { return getRange(); }
 
   [[nodiscard]] std::size_t getWidth() const { return width; }
-  [[nodiscard]] R &getRange() requires(!IsConst) { return *range; }
+  [[nodiscard]] R &getRange()
+    requires(!IsConst)
+  {
+    return *range;
+  }
   [[nodiscard]] const R &getRange() const { return *range; }
 
   /**
@@ -102,4 +123,4 @@ auto makeView2D(std::ranges::range auto &r, std::size_t width) {
 
 }// namespace pf
 
-#endif//HUFF_CODEC__VECTOR2D_H
+#endif//PF_COMMON_VIEWS_VIEW2D_H

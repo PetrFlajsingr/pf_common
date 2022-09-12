@@ -5,8 +5,8 @@
 * @date 7.4.18
 */
 
-#ifndef UTILITIES_SAFEQUEUE_H
-#define UTILITIES_SAFEQUEUE_H
+#ifndef PF_COMMON_PARALLEL_SAFEQUEUE_H
+#define PF_COMMON_PARALLEL_SAFEQUEUE_H
 
 #include <atomic>
 #include <condition_variable>
@@ -78,4 +78,4 @@ private:
  std::atomic<bool> keep_running;
 };
 }// namespace pf
-#endif// UTILITIES_SAFEQUEUE_H
+#endif// PF_COMMON_PARALLEL_SAFEQUEUE_H
