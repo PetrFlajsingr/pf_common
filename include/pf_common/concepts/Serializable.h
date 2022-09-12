@@ -9,6 +9,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <optional>
 #include <span>
 
 namespace pf {
