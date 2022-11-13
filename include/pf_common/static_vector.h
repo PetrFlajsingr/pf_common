@@ -122,6 +122,7 @@ class static_vector {
     auto other_iter = other.begin();
     for (; this_iter != end() && other_iter != other.end(); ++this_iter, ++other_iter) { *this_iter = *other_iter; }
     for (; other_iter != other.end(); ++this_iter, ++other_iter) { new (this_iter) T{*other_iter}; }
+    if (this_iter < end_) { destroy_elements(this_iter, end_); }
     end_ = this_iter;
     return *this;
   }
@@ -133,7 +134,7 @@ class static_vector {
       *this_iter = std::move(*other_iter);
     }
     for (; other_iter != other.end(); ++this_iter, ++other_iter) { new (this_iter) T{std::move(*other_iter)}; }
-    if (this_iter != end_) { destroy_elements(this_iter, end_); }
+    if (this_iter < end_) { destroy_elements(this_iter, end_); }
     end_ = this_iter;
     return *this;
   }

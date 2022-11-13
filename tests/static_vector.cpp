@@ -377,17 +377,51 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("copy assignment does no unnecessary construction when copying to empty") {
     {
-      const static_vector<CtorDtorCounter<6>, CAPACITY> vec1{1, 2, 3, 4, 5};
+      const static_vector<CtorDtorCounter<6>, CAPACITY> vec1(5);
       static_vector<CtorDtorCounter<6>, CAPACITY> vec3{};
       vec3 = vec1;
     }
 
-    REQUIRE(CtorDtorCounter<6>::defaultCtorCnt == 0);
+    REQUIRE(CtorDtorCounter<6>::defaultCtorCnt == 5);
     REQUIRE(CtorDtorCounter<6>::moveCtorCnt == 0);
     REQUIRE(CtorDtorCounter<6>::moveAssignCnt == 0);
-    REQUIRE(CtorDtorCounter<6>::copyCtorCnt == 5 * 2);// *2 because init list sucks
+    REQUIRE(CtorDtorCounter<6>::copyCtorCnt == 5);
     REQUIRE(CtorDtorCounter<6>::copyAssignCnt == 0);
-    REQUIRE(CtorDtorCounter<6>::ctorCnt == 5 * 3);// *2 because source construction, *3 because init list
-    REQUIRE(CtorDtorCounter<6>::dtorCnt == 5 * 3);// *2 because source destruction, *3 because init list
+    REQUIRE(CtorDtorCounter<6>::ctorCnt == 5 * 2);// *2 because source construction
+    REQUIRE(CtorDtorCounter<6>::dtorCnt == 5 * 2);// *2 because source destruction
+  }
+
+  SECTION("copy assignment does no unnecessary construction when copying to smaller") {
+    {
+      const static_vector<CtorDtorCounter<7>, CAPACITY> vec1(5);
+      static_vector<CtorDtorCounter<7>, CAPACITY> vec3(2);
+      vec3 = vec1;
+    }
+
+    REQUIRE(CtorDtorCounter<7>::defaultCtorCnt == 2 + 5);// default init in vec3 and vec1
+    REQUIRE(CtorDtorCounter<7>::moveCtorCnt == 0);
+    REQUIRE(CtorDtorCounter<7>::moveAssignCnt == 0);
+    REQUIRE(CtorDtorCounter<7>::copyCtorCnt == 3);    // 3 for >size()
+    REQUIRE(CtorDtorCounter<7>::copyAssignCnt == 2);  // 2 elements already exist
+    REQUIRE(CtorDtorCounter<7>::ctorCnt == 5 + 2 + 3);// 5 because source construction, 2 for vec3, 3 for vec1 copies
+    REQUIRE(CtorDtorCounter<7>::dtorCnt == 5 * 2);    // *2 because source destruction
+  }
+
+  SECTION("copy assignment does no unnecessary construction when copying to bigger") {
+    {
+      const static_vector<CtorDtorCounter<8>, CAPACITY> vec1(2);
+      static_vector<CtorDtorCounter<8>, CAPACITY> vec3(5);
+      vec3 = vec1;
+      REQUIRE(CtorDtorCounter<8>::dtorCnt == 3);// we expect 3 elements to be destroyed since the source is smaller
+    }
+
+    REQUIRE(CtorDtorCounter<8>::defaultCtorCnt == 5 + 2);// 5 vec3, 2 vec1
+    REQUIRE(CtorDtorCounter<8>::moveCtorCnt == 0);
+    REQUIRE(CtorDtorCounter<8>::moveAssignCnt == 0);
+    REQUIRE(CtorDtorCounter<8>::copyCtorCnt == 0);
+    REQUIRE(CtorDtorCounter<8>::copyAssignCnt == 2);
+    REQUIRE(CtorDtorCounter<8>::ctorCnt == 2 + 5);// 2 because source construction, 5 for vec3
+    REQUIRE(CtorDtorCounter<8>::dtorCnt
+            == 2 + 3 + 2);// 2 source, 3 for initially destroyed during assignment and 2 remaining
   }
 }
