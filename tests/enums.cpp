@@ -118,21 +118,21 @@ TEST_CASE("constexpr enum flags", "[enums][Flags]") {
   SECTION("flags are correctly set after construction") {
     constexpr auto flags = pf::Flags<ScopedEnum>{ScopedEnum::A, ScopedEnum::B};
     constexpr auto isA = flags.is(ScopedEnum::A);
+    if constexpr (!isA) { FAIL(); }
     constexpr auto isB = flags.is(ScopedEnum::B);
-    static_assert(isA);
-    static_assert(isB);
+    if constexpr (!isB) { FAIL(); }
     SUCCEED();
   }
 
   SECTION("enum operators create correct flags") {
     constexpr bool b1 = (ScopedEnum::A | ScopedEnum::B).is(ScopedEnum::A);
+    if constexpr (!b1) { FAIL(); }
     constexpr bool b2 = (ScopedEnum::A | ScopedEnum::B).is(ScopedEnum::B);
+    if constexpr (!b2) { FAIL(); }
     constexpr bool b3 = (ScopedEnum::A & ScopedEnum::C).is(ScopedEnum::A);
+    if constexpr (!b3) { FAIL(); }
     constexpr bool b4 = !(ScopedEnum::A & ScopedEnum::C).is(ScopedEnum::B);
-    static_assert(b1);
-    static_assert(b2);
-    static_assert(b3);
-    static_assert(b4);
+    if constexpr (!b4) { FAIL(); }
     SUCCEED();
   }
 }
