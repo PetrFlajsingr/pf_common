@@ -162,7 +162,7 @@ class static_vector {
   }
   constexpr void assign(std::initializer_list<value_type> il) { assign(std::ranges::begin(il), std::ranges::end(il)); }
 
-  ~static_vector() { clear(); }
+  constexpr ~static_vector() { clear(); }
 
   [[nodiscard]] constexpr iterator begin() noexcept { return data(); }
   [[nodiscard]] constexpr const_iterator begin() const noexcept { return data(); }
