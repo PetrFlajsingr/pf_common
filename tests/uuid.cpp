@@ -77,11 +77,11 @@ TEST_CASE("UUID ctor", "[uuid][ctor]") {
   }
   SECTION("UDL") {
     using namespace pf::uuid_literals;
-    constexpr auto uchar = "00000000-0000-0000-0000-000000000000"_uuid;
-    constexpr auto uwchar = L"00000000-0000-0000-0000-000000000000"_uuid;
-    constexpr auto uchar8 = u8"00000000-0000-0000-0000-000000000000"_uuid;
-    constexpr auto uchar16 = u"00000000-0000-0000-0000-000000000000"_uuid;
-    constexpr auto uchar32 = U"00000000-0000-0000-0000-000000000000"_uuid;
+    [[maybe_unused]] constexpr auto uchar = "00000000-0000-0000-0000-000000000000"_uuid;
+    [[maybe_unused]] constexpr auto uwchar = L"00000000-0000-0000-0000-000000000000"_uuid;
+    [[maybe_unused]] constexpr auto uchar8 = u8"00000000-0000-0000-0000-000000000000"_uuid;
+    [[maybe_unused]] constexpr auto uchar16 = u"00000000-0000-0000-0000-000000000000"_uuid;
+    [[maybe_unused]] constexpr auto uchar32 = U"00000000-0000-0000-0000-000000000000"_uuid;
     SUCCEED();
   }
 }
