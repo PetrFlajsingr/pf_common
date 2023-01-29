@@ -18,10 +18,18 @@
 #endif
 
 #ifndef PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS
-#define PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS 0
+#define PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS false
+#else
+static_assert(std::same_as<bool, decltype(PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS)>, "Bool required");
 #endif
 
-#if PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS == 1
+#ifndef PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE
+#define PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE false
+#else
+static_assert(std::same_as<bool, decltype(PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE)>, "Bool required");
+#endif
+
+#if PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS
 #define PF_STATIC_VECTOR_ASSERT_BOUNDS(index)                                                                          \
   PF_STATIC_VECTOR_ASSERT(index < size(), "Attempting to access uninitialized memory")
 #define PF_STATIC_VECTOR_ASSERT_ITERATOR_VALID(iter)                                                                   \
@@ -53,7 +61,6 @@ class static_vector {
     requires(std::is_default_constructible_v<value_type>)
       : end_{data() + n} {
     PF_STATIC_VECTOR_ASSERT(n < max_size(), "Attempting to allocate more memory than available");
-
     std::ranges::uninitialized_default_construct(*this);
     init_ptrs();
   }
@@ -61,7 +68,6 @@ class static_vector {
     requires(std::is_copy_constructible_v<value_type>)
       : end_{data() + n} {
     PF_STATIC_VECTOR_ASSERT(n < max_size(), "Attempting to allocate more memory than available");
-
     std::ranges::uninitialized_fill(*this, value);
     init_ptrs();
   }
@@ -69,7 +75,6 @@ class static_vector {
   constexpr static_vector(InputIterator first, Sentinel last) {
     const auto src_size = std::ranges::distance(first, last);
     PF_STATIC_VECTOR_ASSERT(src_size < max_size(), "Attempting to allocate more memory than available");
-
     end_ = data() + src_size;
     std::ranges::uninitialized_copy(first, last, begin(), end());
     init_ptrs();
@@ -88,7 +93,6 @@ class static_vector {
   }
   constexpr static_vector(std::initializer_list<value_type> il) : end_{data() + il.size()} {
     PF_STATIC_VECTOR_ASSERT(il.size() < max_size(), "Attempting to allocate more memory than available");
-
     std::ranges::uninitialized_copy(il.begin(), il.end(), begin(), end());
     init_ptrs();
   }
@@ -142,7 +146,6 @@ class static_vector {
   constexpr void assign(InputIterator first, Sentinel last) {
     [[maybe_unused]] const auto src_size = std::ranges::distance(first, last);
     PF_STATIC_VECTOR_ASSERT(src_size < max_size(), "Attempting to allocate more memory than available");
-
     auto this_iter = begin();
     auto other_iter = first;
     for (; this_iter != end() && other_iter != last; ++this_iter, ++other_iter) { *this_iter = *other_iter; }
@@ -152,7 +155,6 @@ class static_vector {
   }
   constexpr void assign(size_type n, const value_type &u) {
     PF_STATIC_VECTOR_ASSERT(n < max_size(), "Attempting to allocate more memory than available");
-
     auto this_iter = begin();
     auto index = 0;
     for (; this_iter != end() && index < n; ++this_iter, ++index) { *this_iter = u; }
@@ -185,7 +187,6 @@ class static_vector {
     requires(std::is_default_constructible_v<T>)
   {
     PF_STATIC_VECTOR_ASSERT(sz < max_size(), "Attempting to allocate more memory than available");
-
     if (sz < size()) {
       destroy_elements(begin() + sz, end());
     } else {
@@ -195,7 +196,6 @@ class static_vector {
   }
   constexpr void resize(size_type sz, const value_type &c) {
     PF_STATIC_VECTOR_ASSERT(sz < max_size(), "Attempting to allocate more memory than available");
-
     if (sz < size()) {
       destroy_elements(begin() + sz, end());
     } else {
@@ -206,32 +206,26 @@ class static_vector {
 
   [[nodiscard]] constexpr reference operator[](size_type n) {
     PF_STATIC_VECTOR_ASSERT_BOUNDS(n);
-
     return data()[n];
   }
   [[nodiscard]] constexpr const_reference operator[](size_type n) const {
     PF_STATIC_VECTOR_ASSERT_BOUNDS(n);
-
     return data()[n];
   }
   [[nodiscard]] constexpr reference front() {
     PF_STATIC_VECTOR_ASSERT_BOUNDS(0);
-
     return data()[0];
   }
   [[nodiscard]] constexpr const_reference front() const {
     PF_STATIC_VECTOR_ASSERT_BOUNDS(0);
-
     return data()[0];
   }
   [[nodiscard]] constexpr reference back() {
     PF_STATIC_VECTOR_ASSERT_BOUNDS(size() - 1);
-
     return data()[size() - 1];
   }
   [[nodiscard]] constexpr const_reference back() const {
     PF_STATIC_VECTOR_ASSERT_BOUNDS(size() - 1);
-
     return data()[size() - 1];
   }
   [[nodiscard]] constexpr pointer data() noexcept { return std::launder(reinterpret_cast<value_type *>(storage)); }
@@ -361,10 +355,10 @@ class static_vector {
     return result_iter;
   }
 
-  alignas(T) std::byte storage[sizeof(T) * N];
+  alignas(T) std::byte storage[sizeof(T) * N]{};
   pointer end_;
 
-  // FIXME: remove
+#if PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE
   std::array<T*, N> ptrs;
 
   void init_ptrs() {
@@ -372,6 +366,9 @@ class static_vector {
       ptrs[i] = data() + i;
     }
   }
+#else
+  void init_ptrs() {}
+#endif
 };
 
 template<typename T, size_t N>
