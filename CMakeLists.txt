@@ -77,16 +77,16 @@ if (PF_COMMON_TESTS)
     if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         list(APPEND flags "/std:c++latest" "/Wall")
     else ()
-        list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return-type" "-fcoroutines"
-                "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
-                "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
+      # list(APPEND flags "-fconcepts" "-fconcepts-diagnostics-depth=10" "-Werror=return-type" "-fcoroutines"
+      #         "-Wall" "-Wextra" "-Werror" "-Wpedantic" "-Wno-unknown-pragmas" "-Wno-unused-function"
+      #         "-Wpointer-arith" "-Wno-cast-qual" "-Wno-type-limits" "-fno-strict-aliasing")
     endif ()
     find_package(Catch2 CONFIG REQUIRED)
 
     enable_testing()
     include_directories(include)
     add_executable(pf_common_tests tests/test_main.cpp tests/LazyInit.cpp tests/RAII.cpp
-            tests/ByteLiterals.cpp tests/algorithm.cpp
+            tests/ByteLiterals.cpp tests/algorithm.cpp tests/static_vector.cpp
             tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/FixedString.cpp tests/uuid.cpp)
 
     target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2 fmt::fmt)
