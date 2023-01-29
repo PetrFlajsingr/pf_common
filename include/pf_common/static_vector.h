@@ -163,7 +163,7 @@ class static_vector {
   constexpr void assign(size_type n, const value_type &u) {
     PF_STATIC_VECTOR_ASSERT(n < max_size(), "Attempting to allocate more memory than available");
     auto this_iter = begin();
-    auto index = 0;
+    auto index = 0ull;
     for (; this_iter != end() && index < n; ++this_iter, ++index) { *this_iter = u; }
     for (; index < n; ++this_iter, ++index) { new (this_iter) T{u}; }
     if (this_iter != end_) { destroy_elements(this_iter, end_); }

@@ -171,7 +171,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
     constexpr static std::size_t SIZE = 5;
     {
       const static_vector<CtorDtorCounter<4>, CAPACITY> src(SIZE);
-      const static_vector<CtorDtorCounter<4>, CAPACITY> vector{src};
+      const static_vector<CtorDtorCounter<4>, CAPACITY> vector = static_vector<CtorDtorCounter<4>, CAPACITY>(src);
     }
     REQUIRE(CtorDtorCounter<4>::defaultCtorCnt == SIZE);// source construction
     REQUIRE(CtorDtorCounter<4>::moveCtorCnt == 0);
@@ -195,7 +195,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
     constexpr static std::size_t SIZE = 5;
     {
       static_vector<CtorDtorCounter<5>, CAPACITY> src(SIZE);
-      const static_vector<CtorDtorCounter<5>, CAPACITY> vector{std::move(src)};
+      const static_vector<CtorDtorCounter<5>, CAPACITY> vector = static_vector<CtorDtorCounter<5>, CAPACITY>(std::move(src));
     }
     REQUIRE(CtorDtorCounter<5>::defaultCtorCnt == SIZE);// source construction
     REQUIRE(CtorDtorCounter<5>::moveCtorCnt == SIZE);
