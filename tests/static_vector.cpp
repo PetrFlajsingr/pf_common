@@ -70,10 +70,8 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
     REQUIRE(vector.capacity() == CAPACITY);
   }
   SECTION("default does no unnecessary constructions") {
-    std::size_t size{};
     {
       const static_vector<CtorDtorCounter<0>, CAPACITY> vec1{};
-      size = vec1.size();
     }
     REQUIRE(CtorDtorCounter<0>::defaultCtorCnt == 0);
     REQUIRE(CtorDtorCounter<0>::moveCtorCnt == 0);

@@ -73,7 +73,7 @@ class static_vector {
   }
   template<std::forward_iterator InputIterator, std::sentinel_for<InputIterator> Sentinel>
   constexpr static_vector(InputIterator first, Sentinel last) {
-    const auto src_size = std::ranges::distance(first, last);
+    const auto src_size = static_cast<size_type>(std::ranges::distance(first, last));
     PF_STATIC_VECTOR_ASSERT(src_size < max_size(), "Attempting to allocate more memory than available");
     end_ = data() + src_size;
     std::ranges::uninitialized_copy(first, last, begin(), end());
@@ -86,7 +86,7 @@ class static_vector {
     init_ptrs();
   }
   constexpr static_vector(static_vector &&other) noexcept(std::is_nothrow_move_constructible_v<value_type>)
-    requires (std::is_move_constructible_v<T>)
+    requires(std::is_move_constructible_v<T>)
       : end_{data() + other.size()} {
     std::ranges::uninitialized_move(std::move(other), *this);
     init_ptrs();
@@ -97,7 +97,8 @@ class static_vector {
     init_ptrs();
   }
 
-  [[nodiscard]] friend constexpr std::weak_ordering operator<=>(const static_vector<T, N> &lhs, const static_vector<T, N> &rhs) {
+  [[nodiscard]] friend constexpr std::weak_ordering operator<=>(const static_vector<T, N> &lhs,
+                                                                const static_vector<T, N> &rhs) {
     if constexpr (std::three_way_comparable<T>) {
       return std::lexicographical_compare_three_way(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     } else {
@@ -111,11 +112,17 @@ class static_vector {
     }
   }
 
-  [[nodiscard]] friend bool operator==(const static_vector &lhs, const static_vector &rhs) { return lhs <=> rhs == std::weak_ordering::equivalent; }
+  [[nodiscard]] friend bool operator==(const static_vector &lhs, const static_vector &rhs) {
+    return lhs <=> rhs == std::weak_ordering::equivalent;
+  }
   [[nodiscard]] friend bool operator!=(const static_vector &lhs, const static_vector &rhs) { return !(rhs == lhs); }
 
-  [[nodiscard]] friend bool operator<(const static_vector &lhs, const static_vector &rhs) { return lhs <=> rhs == std::weak_ordering::less; }
-  [[nodiscard]] friend bool operator>(const static_vector &lhs, const static_vector &rhs) { return lhs <=> rhs == std::weak_ordering::greater; }
+  [[nodiscard]] friend bool operator<(const static_vector &lhs, const static_vector &rhs) {
+    return lhs <=> rhs == std::weak_ordering::less;
+  }
+  [[nodiscard]] friend bool operator>(const static_vector &lhs, const static_vector &rhs) {
+    return lhs <=> rhs == std::weak_ordering::greater;
+  }
   [[nodiscard]] friend bool operator<=(const static_vector &lhs, const static_vector &rhs) { return !(rhs < lhs); }
   [[nodiscard]] friend bool operator>=(const static_vector &lhs, const static_vector &rhs) { return !(lhs < rhs); }
 
@@ -144,7 +151,7 @@ class static_vector {
   }
   template<std::input_iterator InputIterator, std::sentinel_for<InputIterator> Sentinel>
   constexpr void assign(InputIterator first, Sentinel last) {
-    [[maybe_unused]] const auto src_size = std::ranges::distance(first, last);
+    [[maybe_unused]] const auto src_size = static_cast<size_type>(std::ranges::distance(first, last));
     PF_STATIC_VECTOR_ASSERT(src_size < max_size(), "Attempting to allocate more memory than available");
     auto this_iter = begin();
     auto other_iter = first;
@@ -180,7 +187,9 @@ class static_vector {
   [[nodiscard]] constexpr const_reverse_iterator crend() const noexcept { return data() - 1; }
 
   [[nodiscard]] constexpr bool empty() const noexcept { return data() == end_; }
-  [[nodiscard]] constexpr size_type size() const noexcept { return std::ranges::distance(data(), end_); }
+  [[nodiscard]] constexpr size_type size() const noexcept {
+    return static_cast<size_type>(std::ranges::distance(data(), end_));
+  }
   [[nodiscard]] static constexpr size_type max_size() noexcept { return N; }
   [[nodiscard]] static constexpr size_type capacity() noexcept { return N; }
   constexpr void resize(size_type sz)
@@ -259,7 +268,7 @@ class static_vector {
   }
   template<std::input_iterator InputIterator, std::sentinel_for<InputIterator> Sentinel>
   constexpr iterator insert(const_iterator position, InputIterator first, Sentinel last) {
-    const auto count = std::ranges::distance(first, last);
+    const auto count = static_cast<size_type>(std::ranges::distance(first, last));
     PF_STATIC_VECTOR_ASSERT(size() + count < max_size(), "Attempting to allocate more memory than available");
     PF_STATIC_VECTOR_ASSERT_ITERATOR_VALID(position);
 
@@ -306,7 +315,7 @@ class static_vector {
   constexpr iterator erase(const_iterator position) {
     PF_STATIC_VECTOR_ASSERT_ITERATOR_VALID(position);
 
-    const auto index = std::ranges::distance(begin(), position);
+    const auto index = static_cast<size_type>(std::ranges::distance(begin(), position));
     const auto last_src = end_ - 1;
     for (auto dst = begin() + index; dst != last_src; ++dst) { *dst = std::move(*(dst + 1)); }
     last_src->~T();
@@ -317,8 +326,8 @@ class static_vector {
     PF_STATIC_VECTOR_ASSERT_ITERATOR_VALID(first);
     PF_STATIC_VECTOR_ASSERT_ITERATOR_VALID(last);
 
-    const auto index = std::ranges::distance(begin(), first);
-    const auto remove_count = std::ranges::distance(first, last);
+    const auto index = static_cast<size_type>(std::ranges::distance(begin(), first));
+    const auto remove_count = static_cast<size_type>(std::ranges::distance(first, last));
     for (auto dst = begin() + index; dst + remove_count != end_; ++dst) { *dst = std::move(*(dst + remove_count)); }
     for (auto to_destroy = end_ - remove_count; to_destroy != end_; ++to_destroy) { to_destroy->~T(); }
     end_ -= remove_count;
@@ -340,7 +349,7 @@ class static_vector {
   }
   constexpr iterator insert_empty(const_iterator position, size_type count) {
     const auto new_end = end_ + count;
-    const auto index = std::ranges::distance(begin(), position);
+    const auto index = static_cast<size_type>(std::ranges::distance(begin(), position));
     const auto result_iter = begin() + index;
     const auto last_source = result_iter + count - 1;
     for (auto target = new_end - 1; target != last_source; --target) {
@@ -359,12 +368,10 @@ class static_vector {
   pointer end_;
 
 #if PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE
-  std::array<T*, N> ptrs;
+  std::array<T *, N> ptrs;
 
   void init_ptrs() {
-    for (std::size_t i = 0ull; i < N; ++i) {
-      ptrs[i] = data() + i;
-    }
+    for (std::size_t i = 0ull; i < N; ++i) { ptrs[i] = data() + i; }
   }
 #else
   void init_ptrs() {}
@@ -376,6 +383,6 @@ constexpr void swap(static_vector<T, N> &x, static_vector<T, N> &y) noexcept(noe
   x.swap(y);
 }
 
-}  // namespace pf
+}// namespace pf
 
-#endif  //PF_COMMON_STATIC_VECTOR_H
+#endif//PF_COMMON_STATIC_VECTOR_H
