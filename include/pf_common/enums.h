@@ -25,8 +25,7 @@ enum class Enabled { Yes, No };
  * @tparam T
  */
 template<typename T>
-concept ScopedEnum = std::is_enum_v<T> && !
-std::convertible_to<T, typename std::underlying_type_t<T>>;
+concept ScopedEnum = std::is_enum_v<T> && !std::convertible_to<T, typename std::underlying_type_t<T>>;
 
 /**
  * Detect old style enum.
@@ -84,7 +83,8 @@ class Flags {
     requires(std::same_as<E, std::ranges::range_value_t<decltype(values)>>)
   {
     std::ranges::for_each(values, [this](auto val) { operator|=(val); });
-  } /**
+  }
+  /**
    * Copy assignment
    * @param other
    */
