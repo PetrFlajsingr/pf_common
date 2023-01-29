@@ -27,8 +27,8 @@ template<CharType T>
 template<CharType T>
 [[nodiscard]] constexpr T valueToHexDigit(const std::uint8_t value) {
   //FIXME: check input validity - contracts?
-  constexpr static auto MAPPING = make_array(T{'0'}, T{'1'}, T{'2'}, T{'3'}, T{'4'}, T{'5'}, T{'6'}, T{'7'},
-                                             T{'8'}, T{'9'}, T{'a'}, T{'b'}, T{'c'}, T{'d'}, T{'e'}, T{'f'});
+  constexpr auto MAPPING = make_array(T{'0'}, T{'1'}, T{'2'}, T{'3'}, T{'4'}, T{'5'}, T{'6'}, T{'7'}, T{'8'}, T{'9'},
+                                      T{'a'}, T{'b'}, T{'c'}, T{'d'}, T{'e'}, T{'f'});
   return MAPPING[value];
 }
 template<CharType T>
