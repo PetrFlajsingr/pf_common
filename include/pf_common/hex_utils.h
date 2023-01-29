@@ -5,8 +5,9 @@
 #ifndef PF_COMMON_HEX_UTILS_H
 #define PF_COMMON_HEX_UTILS_H
 
-#include <pf_common/concepts/Integral.h>
 #include <array>
+#include <pf_common/array.h>
+#include <pf_common/concepts/Integral.h>
 
 namespace pf {
 
@@ -26,23 +27,18 @@ template<CharType T>
 template<CharType T>
 [[nodiscard]] constexpr T valueToHexDigit(const std::uint8_t value) {
   //FIXME: check input validity - contracts?
-  constexpr static auto MAPPING = std::array<T, 15>{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+  constexpr static auto MAPPING = make_array(T{'0'}, T{'1'}, T{'2'}, T{'3'}, T{'4'}, T{'5'}, T{'6'}, T{'7'},
+                                             T{'8'}, T{'9'}, T{'a'}, T{'b'}, T{'c'}, T{'d'}, T{'e'}, T{'f'});
   return MAPPING[value];
 }
 template<CharType T>
 [[nodiscard]] constexpr std::uint8_t isValidHex(const T ch) {
-  if (ch >= static_cast<T>('0') && ch <= static_cast<T>('9')) {
-    return true;
-  }
-  if (ch >= static_cast<T>('a') && ch <= static_cast<T>('f')) {
-    return true;
-  }
-  if (ch >= static_cast<T>('A') && ch <= static_cast<T>('F')) {
-    return true;
-  }
+  if (ch >= static_cast<T>('0') && ch <= static_cast<T>('9')) { return true; }
+  if (ch >= static_cast<T>('a') && ch <= static_cast<T>('f')) { return true; }
+  if (ch >= static_cast<T>('A') && ch <= static_cast<T>('F')) { return true; }
   return false;
 }
 
-}
+}// namespace pf
 
 #endif//PF_COMMON_HEX_UTILS_H
