@@ -40,7 +40,8 @@ class Node {
   using rvalue = T &&;
   using size_type = std::size_t;
 
-  Node() requires std::is_default_constructible_v<T>
+  Node()
+    requires std::is_default_constructible_v<T>
   = default;
   explicit Node(rvalue val) : value_(std::move(val)) {}
   explicit Node(const_reference val) : value_(val) {}
@@ -62,7 +63,9 @@ class Node {
     children_.template emplace_back(std::make_unique<Node>(val));
     return *children_.back();
   }
-  Node<T> &appendChild() requires std::is_default_constructible_v<T> {
+  Node<T> &appendChild()
+    requires std::is_default_constructible_v<T>
+  {
     children_.template emplace_back(std::make_unique<Node>());
     return *children_.back();
   }
@@ -79,7 +82,9 @@ class Node {
     assert(idx < childrenSize());
     return **children_.insert(children_.begin() + idx, std::make_unique<Node>(val));
   }
-  Node<T> &insertChild(size_type idx) requires std::is_default_constructible_v<T> {
+  Node<T> &insertChild(size_type idx)
+    requires std::is_default_constructible_v<T>
+  {
     assert(idx < childrenSize());
     return **children_.insert(children_.begin() + idx, std::make_unique<Node>());
   }
@@ -121,8 +126,7 @@ class Node {
   [[nodiscard]] tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::BreadthFirst> iterBreadthFirst() {
     return tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::BreadthFirst>(this);
   }
-  [[nodiscard]] tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::BreadthFirst>
-  iterBreadthFirst() const {
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::BreadthFirst> iterBreadthFirst() const {
     return tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::BreadthFirst>(this);
   }
   [[nodiscard]] tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::DepthFirst> iterDepthFirst() {
@@ -132,19 +136,16 @@ class Node {
     return tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::DepthFirst>(this);
   }
 
-  [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::BreadthFirst>
-  iterNodesBreadthFirst() {
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::BreadthFirst> iterNodesBreadthFirst() {
     return tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::BreadthFirst>(this);
   }
-  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::BreadthFirst>
-  iterNodesBreadthFirst() const {
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::BreadthFirst> iterNodesBreadthFirst() const {
     return tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::BreadthFirst>(this);
   }
   [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::DepthFirst> iterNodesDepthFirst() {
     return tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::DepthFirst>(this);
   }
-  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::DepthFirst>
-  iterNodesDepthFirst() const {
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::DepthFirst> iterNodesDepthFirst() const {
     return tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::DepthFirst>(this);
   }
 
@@ -186,8 +187,7 @@ class Tree {
   [[nodiscard]] tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::BreadthFirst> iterBreadthFirst() {
     return root->iterBreadthFirst();
   }
-  [[nodiscard]] tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::BreadthFirst>
-  iterBreadthFirst() const {
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, false, tree_traversal::Type::BreadthFirst> iterBreadthFirst() const {
     return root->iterBreadthFirst();
   }
   [[nodiscard]] tree_traversal::TreeIteration<T, false, false, tree_traversal::Type::DepthFirst> iterDepthFirst() {
@@ -197,19 +197,16 @@ class Tree {
     return root->iterDepthFirst();
   }
 
-  [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::BreadthFirst>
-  iterNodesBreadthFirst() {
+  [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::BreadthFirst> iterNodesBreadthFirst() {
     return root->iterNodesBreadthFirst();
   }
-  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::BreadthFirst>
-  iterNodesBreadthFirst() const {
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::BreadthFirst> iterNodesBreadthFirst() const {
     return root->iterNodesBreadthFirst();
   }
   [[nodiscard]] tree_traversal::TreeIteration<T, false, true, tree_traversal::Type::DepthFirst> iterNodesDepthFirst() {
     return root->iterNodesDepthFirst();
   }
-  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::DepthFirst>
-  iterNodesDepthFirst() const {
+  [[nodiscard]] tree_traversal::TreeIteration<T, true, true, tree_traversal::Type::DepthFirst> iterNodesDepthFirst() const {
     return root->iterNodesDepthFirst();
   }
 

@@ -31,7 +31,8 @@ std::vector<std::byte> toBytes(const T &data) {
  * @return reconstructed value
  */
 template<typename T>
-requires std::is_default_constructible_v<T> T fromBytes(std::span<const std::byte> data) {
+  requires std::is_default_constructible_v<T>
+T fromBytes(std::span<const std::byte> data) {
   auto result = T{};
   std::ranges::copy(data, reinterpret_cast<std::byte *>(&result));
   return result;

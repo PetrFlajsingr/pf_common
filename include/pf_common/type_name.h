@@ -31,8 +31,7 @@ constexpr TypeNameFormat type_name_format = [] {
   ret.junk_total = sample.size() - 3;
   return ret;
 }();
-static_assert(type_name_format.junk_leading != std::size_t(-1),
-              "Unable to determine the type name format on this compiler.");
+static_assert(type_name_format.junk_leading != std::size_t(-1), "Unable to determine the type name format on this compiler.");
 
 template<typename T>
 static constexpr auto type_name_storage = [] {

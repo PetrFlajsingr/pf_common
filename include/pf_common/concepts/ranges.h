@@ -8,8 +8,8 @@
 #ifndef PF_COMMON_CONCEPTS_RANGES_H
 #define PF_COMMON_CONCEPTS_RANGES_H
 
-#include <ranges>
 #include <concepts>
+#include <ranges>
 
 namespace pf {
 /**
@@ -19,6 +19,6 @@ namespace pf {
  */
 template<typename R, typename ElementType>
 concept RangeOf = std::ranges::range<R> && std::same_as<std::ranges::range_value_t<R>, ElementType>;
-}
+}// namespace pf
 
 #endif//PF_COMMON_CONCEPTS_RANGES_H

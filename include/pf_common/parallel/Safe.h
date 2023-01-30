@@ -147,7 +147,6 @@ class Safe final {
   value_type value;
 };
 
-
 template<typename T, typename Mutex = std::mutex>
 using ReadOnlyAccess = typename Safe<T, Mutex>::template Access<Safe<T, Mutex>::AccessType::ReadOnly>;
 

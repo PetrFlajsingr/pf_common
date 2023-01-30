@@ -77,13 +77,9 @@ class UUID {
   constexpr explicit UUID(std::basic_string_view<T> uuid) {
     if (uuid.empty()) { return; }
     if (std::is_constant_evaluated()) {
-      if (!isValidUUID(uuid)) {
-        throw "Invalid UUID provided";
-      }// FIXME: this needs better reporting, would work with if constval better
+      if (!isValidUUID(uuid)) { throw "Invalid UUID provided"; }// FIXME: this needs better reporting, would work with if constval better
     } else {
-      if constexpr (PF_UUID_RUNTIME_VALIDITY_CHECK_ENABLED) {
-        PF_UUID_RUNTIME_ASSERT(isValidUUID(uuid), "Invalid UUID");
-      }
+      if constexpr (PF_UUID_RUNTIME_VALIDITY_CHECK_ENABLED) { PF_UUID_RUNTIME_ASSERT(isValidUUID(uuid), "Invalid UUID"); }
     }
     if (uuid.size() != 36) { return; }
 
@@ -141,21 +137,11 @@ class UUID {
   std::array<std::byte, 16> data{{std::byte{0}}};
 };
 namespace uuid_literals {
-[[nodiscard]] consteval UUID operator""_uuid(const char *str, std::size_t size) {
-  return UUID{std::basic_string_view{str, size}};
-}
-[[nodiscard]] consteval UUID operator""_uuid(const wchar_t *str, std::size_t size) {
-  return UUID{std::basic_string_view{str, size}};
-}
-[[nodiscard]] consteval UUID operator""_uuid(const char8_t *str, std::size_t size) {
-  return UUID{std::basic_string_view{str, size}};
-}
-[[nodiscard]] consteval UUID operator""_uuid(const char16_t *str, std::size_t size) {
-  return UUID{std::basic_string_view{str, size}};
-}
-[[nodiscard]] consteval UUID operator""_uuid(const char32_t *str, std::size_t size) {
-  return UUID{std::basic_string_view{str, size}};
-}
+[[nodiscard]] consteval UUID operator""_uuid(const char *str, std::size_t size) { return UUID{std::basic_string_view{str, size}}; }
+[[nodiscard]] consteval UUID operator""_uuid(const wchar_t *str, std::size_t size) { return UUID{std::basic_string_view{str, size}}; }
+[[nodiscard]] consteval UUID operator""_uuid(const char8_t *str, std::size_t size) { return UUID{std::basic_string_view{str, size}}; }
+[[nodiscard]] consteval UUID operator""_uuid(const char16_t *str, std::size_t size) { return UUID{std::basic_string_view{str, size}}; }
+[[nodiscard]] consteval UUID operator""_uuid(const char32_t *str, std::size_t size) { return UUID{std::basic_string_view{str, size}}; }
 }// namespace uuid_literals
 
 }// namespace pf

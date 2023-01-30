@@ -259,12 +259,12 @@ inline std::ostream &operator<<(std::ostream &o, pf::Enum auto e) {
 }
 #endif
 
-#define ENABLE_PF_ENUM_OUT_FOR_NAMESPACE(ns_name)                                                                      \
-  namespace ns_name {                                                                                                  \
-  inline std::ostream &operator<<(std::ostream &o, pf::Enum auto e) {                                                  \
-    o << magic_enum::enum_name(e);                                                                                     \
-    return o;                                                                                                          \
-  }                                                                                                                    \
+#define ENABLE_PF_ENUM_OUT_FOR_NAMESPACE(ns_name)                                                                                          \
+  namespace ns_name {                                                                                                                      \
+  inline std::ostream &operator<<(std::ostream &o, pf::Enum auto e) {                                                                      \
+    o << magic_enum::enum_name(e);                                                                                                         \
+    return o;                                                                                                                              \
+  }                                                                                                                                        \
   }
 
 #endif//PF_COMMON_ENUMS_H

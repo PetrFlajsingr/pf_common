@@ -34,11 +34,9 @@ template<std::ranges::range Range>
  * @return first common element if one is found, std::nullopt otherwise
  */
 [[nodiscard]] auto findFirstCommon(const std::ranges::range auto &range1, const std::ranges::range auto &range2) {
-  static_assert(std::equality_comparable_with<std::ranges::range_value_t<decltype(range1)>,
-                                              std::ranges::range_value_t<decltype(range2)>>);
+  static_assert(std::equality_comparable_with<std::ranges::range_value_t<decltype(range1)>, std::ranges::range_value_t<decltype(range2)>>);
   using ResultType = std::ranges::range_value_t<decltype(range1)>;
-  if (auto iter = std::ranges::find_if(range1, [&range2](const auto &val) { return isIn(val, range2); });
-      iter != range1.end()) {
+  if (auto iter = std::ranges::find_if(range1, [&range2](const auto &val) { return isIn(val, range2); }); iter != range1.end()) {
     return std::optional<ResultType>{*iter};
   }
   return std::optional<ResultType>{};
@@ -51,8 +49,7 @@ template<std::ranges::range Range>
  * @return element for which predicate returns true or std::nullopt if no such element is found
  */
 template<std::ranges::range Range>
-std::optional<std::ranges::range_value_t<Range>>
-findIf(Range &&range, std::predicate<std::ranges::range_value_t<Range>> auto &&predicate) {
+std::optional<std::ranges::range_value_t<Range>> findIf(Range &&range, std::predicate<std::ranges::range_value_t<Range>> auto &&predicate) {
   if (const auto iter = std::ranges::find_if(range, predicate); iter != std::ranges::end(range)) { return *iter; }
   return std::nullopt;
 }

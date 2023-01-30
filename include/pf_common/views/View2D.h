@@ -42,7 +42,7 @@ class View2D {
   }
   View2D(const View2D<R, true> &other)
     requires(!IsConst)
-  : range(other.range), width(other.width) {}
+      : range(other.range), width(other.width) {}
   View2D &operator=(const View2D<R, true> &other)
     requires(!IsConst)
   {

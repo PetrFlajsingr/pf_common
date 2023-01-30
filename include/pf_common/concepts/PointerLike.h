@@ -15,11 +15,13 @@
 namespace pf {
 
 template<typename T>
-concept PointerLike = std::pointer_traits<T>::element_type
-    && requires(T t) {
-         { *t } -> std::convertible_to<typename std::pointer_traits<T>::element_type>;
-         { t.operator->() } -> std::same_as<std::add_pointer<typename std::pointer_traits<T>::element_type>>;
-       };
+concept PointerLike =
+    std::pointer_traits<T>::element_type && requires(T t) {
+                                              { *t } -> std::convertible_to<typename std::pointer_traits<T>::element_type>;
+                                              {
+                                                t.operator->()
+                                              } -> std::same_as<std::add_pointer<typename std::pointer_traits<T>::element_type>>;
+                                            };
 
 }
 

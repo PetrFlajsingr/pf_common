@@ -13,7 +13,7 @@
 
 #ifndef PF_STATIC_VECTOR_ASSERT
 // FIXME: better impl
-#define PF_STATIC_VECTOR_ASSERT(b, msg)                                                                                \
+#define PF_STATIC_VECTOR_ASSERT(b, msg)                                                                                                    \
   do { assert((b) && msg); } while (0)
 #endif
 
@@ -30,10 +30,8 @@ static_assert(std::same_as<bool, decltype(PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_EN
 #endif
 
 #if PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS
-#define PF_STATIC_VECTOR_ASSERT_BOUNDS(index)                                                                          \
-  PF_STATIC_VECTOR_ASSERT(index < size(), "Attempting to access uninitialized memory")
-#define PF_STATIC_VECTOR_ASSERT_ITERATOR_VALID(iter)                                                                   \
-  PF_STATIC_VECTOR_ASSERT(begin() <= iter && iter <= end(), "Iterator out of bounds")
+#define PF_STATIC_VECTOR_ASSERT_BOUNDS(index) PF_STATIC_VECTOR_ASSERT(index < size(), "Attempting to access uninitialized memory")
+#define PF_STATIC_VECTOR_ASSERT_ITERATOR_VALID(iter) PF_STATIC_VECTOR_ASSERT(begin() <= iter && iter <= end(), "Iterator out of bounds")
 #else
 #define PF_STATIC_VECTOR_ASSERT_BOUNDS(index)
 #define PF_STATIC_VECTOR_ASSERT_ITERATOR_VALID(iter)
@@ -97,8 +95,7 @@ class static_vector {
     init_ptrs();
   }
 
-  [[nodiscard]] friend constexpr std::weak_ordering operator<=>(const static_vector<T, N> &lhs,
-                                                                const static_vector<T, N> &rhs) {
+  [[nodiscard]] friend constexpr std::weak_ordering operator<=>(const static_vector<T, N> &lhs, const static_vector<T, N> &rhs) {
     if constexpr (std::three_way_comparable<T>) {
       return std::lexicographical_compare_three_way(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     } else {
@@ -126,8 +123,7 @@ class static_vector {
   [[nodiscard]] friend bool operator<=(const static_vector &lhs, const static_vector &rhs) { return !(rhs < lhs); }
   [[nodiscard]] friend bool operator>=(const static_vector &lhs, const static_vector &rhs) { return !(lhs < rhs); }
 
-  constexpr static_vector &
-  operator=(const static_vector &other) noexcept(std::is_nothrow_copy_assignable_v<value_type>) {
+  constexpr static_vector &operator=(const static_vector &other) noexcept(std::is_nothrow_copy_assignable_v<value_type>) {
     if (this == &other) { return *this; }
     auto this_iter = begin();
     auto other_iter = other.begin();
@@ -141,9 +137,7 @@ class static_vector {
     if (this == &other) { return *this; }
     auto this_iter = begin();
     auto other_iter = other.begin();
-    for (; this_iter != end() && other_iter != other.end(); ++this_iter, ++other_iter) {
-      *this_iter = std::move(*other_iter);
-    }
+    for (; this_iter != end() && other_iter != other.end(); ++this_iter, ++other_iter) { *this_iter = std::move(*other_iter); }
     for (; other_iter != other.end(); ++this_iter, ++other_iter) { new (this_iter) T{std::move(*other_iter)}; }
     if (this_iter < end_) { destroy_elements(this_iter, end_); }
     end_ = this_iter;
@@ -187,9 +181,7 @@ class static_vector {
   [[nodiscard]] constexpr const_reverse_iterator crend() const noexcept { return data() - 1; }
 
   [[nodiscard]] constexpr bool empty() const noexcept { return data() == end_; }
-  [[nodiscard]] constexpr size_type size() const noexcept {
-    return static_cast<size_type>(std::ranges::distance(data(), end_));
-  }
+  [[nodiscard]] constexpr size_type size() const noexcept { return static_cast<size_type>(std::ranges::distance(data(), end_)); }
   [[nodiscard]] static constexpr size_type max_size() noexcept { return N; }
   [[nodiscard]] static constexpr size_type capacity() noexcept { return N; }
   constexpr void resize(size_type sz)
@@ -238,9 +230,7 @@ class static_vector {
     return data()[size() - 1];
   }
   [[nodiscard]] constexpr pointer data() noexcept { return std::launder(reinterpret_cast<value_type *>(storage)); }
-  [[nodiscard]] constexpr const_pointer data() const noexcept {
-    return std::launder(reinterpret_cast<const value_type *>(storage));
-  }
+  [[nodiscard]] constexpr const_pointer data() const noexcept { return std::launder(reinterpret_cast<const value_type *>(storage)); }
 
   constexpr iterator insert(const_iterator position, const value_type &x) {
     PF_STATIC_VECTOR_ASSERT(size() + 1 < max_size(), "Attempting to allocate more memory than available");
