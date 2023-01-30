@@ -4,7 +4,7 @@
 #include <array>
 #define PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS true
 #define PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE false
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <pf_common/static_vector.h>
 
 using namespace pf;

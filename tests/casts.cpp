@@ -3,7 +3,7 @@
 //
 
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #define PF_NARROW_FAIL(msg) throw std::exception()
 #define PF_POLYMORHPHIC_DOWNCAST_FAIL(msg) throw std::exception()

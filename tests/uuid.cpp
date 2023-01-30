@@ -2,7 +2,7 @@
 // Created by xflajs00 on 29.01.2023.
 //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 #define PF_UUID_RUNTIME_VALIDITY_CHECK_ENABLED true
 #define PF_UUID_RUNTIME_ASSERT(...)                                                                                    \

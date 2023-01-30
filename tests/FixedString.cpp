@@ -1,7 +1,7 @@
 //
 // Created by petr.flajsingr on 2/7/2022.
 //
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 #include <pf_common/FixedString.h>
 /* TODO: fix this
 TEST_CASE("Fixed string", "[FixedString]") {
