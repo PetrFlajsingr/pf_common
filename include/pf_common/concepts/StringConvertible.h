@@ -46,9 +46,11 @@ std::string toString(const T &val) {
     auto ss = std::stringstream();
     ss << val;
     return ss.str();
-  } else if constexpr (HasStdToString<T>) {
+  }
+  if constexpr (HasStdToString<T>) {
     return std::to_string(val);
-  } else if constexpr (HasToString<T>) {
+  }
+  if constexpr (HasToString<T>) {
     return val.toString();
   }
 }
