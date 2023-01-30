@@ -13,8 +13,8 @@
 #include <type_traits>
 
 namespace pf {
-template<HaveCommonType... Args>
-constexpr std::array<std::common_type_t<Args...>, sizeof...(Args)> make_array(Args &&...args) {
+template<typename T, std::convertible_to<T>... Args>
+[[nodiscard]] constexpr std::array<T, sizeof...(Args)> make_array(Args &&...args) {
   return {std::forward<Args>(args)...};
 }
 }// namespace pf
