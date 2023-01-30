@@ -8,7 +8,7 @@
 #ifndef PF_COMMON_CASTS_H
 #define PF_COMMON_CASTS_H
 
-#include <concepts>
+#include <pf_common/concepts/downcast.h>
 
 // Narrowing cast error
 #if !defined(PF_NARROW_FAIL)
@@ -59,7 +59,7 @@ template<typename To, typename From>
   const auto result = narrow_cast<To>(src);
 
   if (static_cast<From>(result) != src || (!isSameSign && ((result < To{}) != (src < From{})))) {
-    NARROW_FAIL(fmt::format("Checked narrow cast failed, source: {}, result: {}", src, result));
+    PF_NARROW_FAIL(fmt::format("Checked narrow cast failed, source: {}, result: {}", src, result));
   }
   return result;
 }
@@ -67,17 +67,19 @@ template<typename To, typename From>
 namespace details {
 template<typename Derived, typename Base>
 struct DynamicCastChecker {
-  [[nodiscard]] static constexpr bool operator()(Base base) { return dynamic_cast<Derived>(base) != nullptr; }
+  [[nodiscard]] constexpr bool operator()(Base base) { return dynamic_cast<Derived>(base) != nullptr; }
 };
 
 }// namespace details
 
+
+
 template<typename Derived, typename Base, typename Checker = details::DynamicCastChecker<Derived, Base>>
-  requires std::derived_from<Derived, Base> && std::is_invocable_r_v<bool, Checker, Derived, Base>
+  requires DowncastableTo<Derived, Base> && std::is_invocable_r_v<bool, Checker, Base>
     && std::is_default_constructible_v<Checker>
 [[nodiscard]] constexpr Derived polymorphic_downcast(Base base) {
 #if PF_POLYMORHPHIC_DOWNCAST_CHECK_ENABLE
-  if (Checker{}(base)) { PF_POLYMORHPHIC_DOWNCAST_FAIL("Invalid cast"); }
+  if (!Checker{}(base)) { PF_POLYMORHPHIC_DOWNCAST_FAIL("Invalid cast"); }
 #endif
   return static_cast<Derived>(base);
 }
