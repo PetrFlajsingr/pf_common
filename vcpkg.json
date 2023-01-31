@@ -22,8 +22,5 @@
       "name": "catch2"
     }
   ],
-  "builtin-baseline": "4dacd997a589a9ed67a5d74ed580056ad0341775",
-  "overrides": [
-    { "name": "catch2", "version": "2.13.9#1" }
-  ]
+  "builtin-baseline": "4dacd997a589a9ed67a5d74ed580056ad0341775"
 }

@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <concepts>
 #include <magic_enum.hpp>
+#include <pf_common/concepts/ranges.h>
 #include <ranges>
 #include <type_traits>
 
@@ -204,7 +205,7 @@ class Flags {
    * List all flags which are currently set.
    * @return flags which are currently set
    */
-  [[nodiscard]] constexpr auto getSetFlags() const {
+  [[nodiscard]] constexpr RangeOf<E> auto getSetFlags() const {
     return magic_enum::enum_values<E>() | std::views::filter([this](const auto val) { return is(val); });
   }
 
