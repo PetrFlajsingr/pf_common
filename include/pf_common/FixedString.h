@@ -244,7 +244,7 @@ template<typename TChar, std::size_t N, typename CharTraits = std::char_traits<T
 BasicFixedString(const TChar (&)[N]) -> BasicFixedString<TChar, N - 1, CharTraits>;
 
 // Can't do deduction guides for templated aliases so it has to be done this way
-#define PF_STRING_SPECIALIZATION(name, char_type)                                                                                          \
+#define PF_FIXEDSTRING_SPECIALIZATION(name, char_type)                                                                                          \
   template<std::size_t N>                                                                                                                  \
   struct name : BasicFixedString<char_type, N> {                                                                                           \
     using BasicFixedString<char_type, N>::BasicFixedString;                                                                                \
@@ -252,13 +252,13 @@ BasicFixedString(const TChar (&)[N]) -> BasicFixedString<TChar, N - 1, CharTrait
   template<std::size_t N>                                                                                                                  \
   name(const char_type(&)[N]) -> name<N - 1>;
 
-PF_STRING_SPECIALIZATION(FixedString, char)
-PF_STRING_SPECIALIZATION(FixedU8String, char8_t)
-PF_STRING_SPECIALIZATION(FixedU16String, char16_t)
-PF_STRING_SPECIALIZATION(FixedU32String, char32_t)
-PF_STRING_SPECIALIZATION(FixedWString, wchar_t)
+PF_FIXEDSTRING_SPECIALIZATION(FixedString, char)
+PF_FIXEDSTRING_SPECIALIZATION(FixedU8String, char8_t)
+PF_FIXEDSTRING_SPECIALIZATION(FixedU16String, char16_t)
+PF_FIXEDSTRING_SPECIALIZATION(FixedU32String, char32_t)
+PF_FIXEDSTRING_SPECIALIZATION(FixedWString, wchar_t)
 
-#undef PF_STRING_SPECIALIZATION
+#undef PF_FIXEDSTRING_SPECIALIZATION
 
 }// namespace pf
 
