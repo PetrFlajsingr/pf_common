@@ -243,6 +243,7 @@ class BasicFixedString {
 template<typename TChar, std::size_t N, typename CharTraits = std::char_traits<TChar>>
 BasicFixedString(const TChar (&)[N]) -> BasicFixedString<TChar, N - 1, CharTraits>;
 
+// Can't do deduction guides for templated aliases so it has to be done this way
 #define PF_STRING_SPECIALIZATION(name, char_type)                                                                                          \
   template<std::size_t N>                                                                                                                  \
   struct name : BasicFixedString<char_type, N> {                                                                                           \
