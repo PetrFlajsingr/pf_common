@@ -17,8 +17,6 @@ namespace pf {
 /**
  * @brief Simple constexpr friendly fixed string.
  * @tparam N Size of the string including terminating \0
- * @todo string_view stuff
- * @todo assign
  */
 template<typename TChar, std::size_t N, typename CharTraits = std::char_traits<TChar>>
 class BasicFixedString {
