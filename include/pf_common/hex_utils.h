@@ -7,7 +7,7 @@
 
 #include <array>
 #include <pf_common/array.h>
-#include <pf_common/concepts/Integral.h>
+#include <pf_common/concepts/FundamentalTypes.h>
 
 namespace pf {
 
