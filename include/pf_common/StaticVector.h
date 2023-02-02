@@ -2,8 +2,8 @@
 // Created by xflajs00 on 11.11.2022.
 //
 
-#ifndef PF_COMMON_STATIC_VECTOR_H
-#define PF_COMMON_STATIC_VECTOR_H
+#ifndef PF_COMMON_STATICVECTOR_H
+#define PF_COMMON_STATICVECTOR_H
 
 #include <cassert>
 #include <iterator>
@@ -40,7 +40,7 @@ static_assert(std::same_as<bool, decltype(PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_EN
 namespace pf {
 
 template<typename T, size_t N>
-class static_vector {
+class StaticVector {
  public:
   using value_type = T;
   using pointer = T *;
@@ -54,15 +54,15 @@ class static_vector {
   using reverse_iterator = std::reverse_iterator<iterator>;
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-  constexpr static_vector() noexcept : end_{data()} {}
-  constexpr explicit static_vector(size_type n)
+  constexpr StaticVector() noexcept : end_{data()} {}
+  constexpr explicit StaticVector(size_type n)
     requires(std::is_default_constructible_v<value_type>)
       : end_{data() + n} {
     PF_STATIC_VECTOR_ASSERT(n < max_size(), "Attempting to allocate more memory than available");
     std::ranges::uninitialized_default_construct(*this);
     init_ptrs();
   }
-  constexpr static_vector(size_type n, const value_type &value)
+  constexpr StaticVector(size_type n, const value_type &value)
     requires(std::is_copy_constructible_v<value_type>)
       : end_{data() + n} {
     PF_STATIC_VECTOR_ASSERT(n < max_size(), "Attempting to allocate more memory than available");
@@ -70,32 +70,32 @@ class static_vector {
     init_ptrs();
   }
   template<std::forward_iterator InputIterator, std::sentinel_for<InputIterator> Sentinel>
-  constexpr static_vector(InputIterator first, Sentinel last) {
+  constexpr StaticVector(InputIterator first, Sentinel last) {
     const auto src_size = static_cast<size_type>(std::ranges::distance(first, last));
     PF_STATIC_VECTOR_ASSERT(src_size < max_size(), "Attempting to allocate more memory than available");
     end_ = data() + src_size;
     std::ranges::uninitialized_copy(first, last, begin(), end());
     init_ptrs();
   }
-  constexpr static_vector(const static_vector &other) noexcept(std::is_nothrow_copy_constructible_v<value_type>)
+  constexpr StaticVector(const StaticVector &other) noexcept(std::is_nothrow_copy_constructible_v<value_type>)
     requires(std::is_copy_constructible_v<value_type>)
       : end_{data() + other.size()} {
     std::ranges::uninitialized_copy(other, *this);
     init_ptrs();
   }
-  constexpr static_vector(static_vector &&other) noexcept(std::is_nothrow_move_constructible_v<value_type>)
+  constexpr StaticVector(StaticVector &&other) noexcept(std::is_nothrow_move_constructible_v<value_type>)
     requires(std::is_move_constructible_v<T>)
       : end_{data() + other.size()} {
     std::ranges::uninitialized_move(std::move(other), *this);
     init_ptrs();
   }
-  constexpr static_vector(std::initializer_list<value_type> il) : end_{data() + il.size()} {
+  constexpr StaticVector(std::initializer_list<value_type> il) : end_{data() + il.size()} {
     PF_STATIC_VECTOR_ASSERT(il.size() < max_size(), "Attempting to allocate more memory than available");
     std::ranges::uninitialized_copy(il.begin(), il.end(), begin(), end());
     init_ptrs();
   }
 
-  [[nodiscard]] friend constexpr std::weak_ordering operator<=>(const static_vector<T, N> &lhs, const static_vector<T, N> &rhs) {
+  [[nodiscard]] friend constexpr std::weak_ordering operator<=>(const StaticVector<T, N> &lhs, const StaticVector<T, N> &rhs) {
     if constexpr (std::three_way_comparable<T>) {
       return std::lexicographical_compare_three_way(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     } else {
@@ -109,21 +109,21 @@ class static_vector {
     }
   }
 
-  [[nodiscard]] friend bool operator==(const static_vector &lhs, const static_vector &rhs) {
+  [[nodiscard]] friend bool operator==(const StaticVector &lhs, const StaticVector &rhs) {
     return lhs <=> rhs == std::weak_ordering::equivalent;
   }
-  [[nodiscard]] friend bool operator!=(const static_vector &lhs, const static_vector &rhs) { return !(rhs == lhs); }
+  [[nodiscard]] friend bool operator!=(const StaticVector &lhs, const StaticVector &rhs) { return !(rhs == lhs); }
 
-  [[nodiscard]] friend bool operator<(const static_vector &lhs, const static_vector &rhs) {
+  [[nodiscard]] friend bool operator<(const StaticVector &lhs, const StaticVector &rhs) {
     return lhs <=> rhs == std::weak_ordering::less;
   }
-  [[nodiscard]] friend bool operator>(const static_vector &lhs, const static_vector &rhs) {
+  [[nodiscard]] friend bool operator>(const StaticVector &lhs, const StaticVector &rhs) {
     return lhs <=> rhs == std::weak_ordering::greater;
   }
-  [[nodiscard]] friend bool operator<=(const static_vector &lhs, const static_vector &rhs) { return !(rhs < lhs); }
-  [[nodiscard]] friend bool operator>=(const static_vector &lhs, const static_vector &rhs) { return !(lhs < rhs); }
+  [[nodiscard]] friend bool operator<=(const StaticVector &lhs, const StaticVector &rhs) { return !(rhs < lhs); }
+  [[nodiscard]] friend bool operator>=(const StaticVector &lhs, const StaticVector &rhs) { return !(lhs < rhs); }
 
-  constexpr static_vector &operator=(const static_vector &other) noexcept(std::is_nothrow_copy_assignable_v<value_type>) {
+  constexpr StaticVector &operator=(const StaticVector &other) noexcept(std::is_nothrow_copy_assignable_v<value_type>) {
     if (this == &other) { return *this; }
     auto this_iter = begin();
     auto other_iter = other.begin();
@@ -133,7 +133,7 @@ class static_vector {
     end_ = this_iter;
     return *this;
   }
-  constexpr static_vector &operator=(static_vector &&other) noexcept(std::is_nothrow_move_assignable_v<value_type>) {
+  constexpr StaticVector &operator=(StaticVector &&other) noexcept(std::is_nothrow_move_assignable_v<value_type>) {
     if (this == &other) { return *this; }
     auto this_iter = begin();
     auto other_iter = other.begin();
@@ -165,7 +165,7 @@ class static_vector {
   }
   constexpr void assign(std::initializer_list<value_type> il) { assign(std::ranges::begin(il), std::ranges::end(il)); }
 
-  constexpr ~static_vector() { clear(); }
+  constexpr ~StaticVector() { clear(); }
 
   [[nodiscard]] constexpr iterator begin() noexcept { return data(); }
   [[nodiscard]] constexpr const_iterator begin() const noexcept { return data(); }
@@ -329,7 +329,7 @@ class static_vector {
     end_ = data();
   }
 
-  constexpr void swap(static_vector &x) noexcept(std::is_nothrow_swappable_v<value_type>) {
+  constexpr void swap(StaticVector &x) noexcept(std::is_nothrow_swappable_v<value_type>) {
     for (auto b1 = begin(), b2 = x.begin(); b1 != end(); ++b1, ++b2) { std::swap(*b1, *b2); }
   }
 
@@ -369,10 +369,10 @@ class static_vector {
 };
 
 template<typename T, size_t N>
-constexpr void swap(static_vector<T, N> &x, static_vector<T, N> &y) noexcept(noexcept(x.swap(y))) {
+constexpr void swap(StaticVector<T, N> &x, StaticVector<T, N> &y) noexcept(noexcept(x.swap(y))) {
   x.swap(y);
 }
 
 }// namespace pf
 
-#endif//PF_COMMON_STATIC_VECTOR_H
+#endif//PF_COMMON_STATICVECTOR_H

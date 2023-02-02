@@ -5,7 +5,7 @@
 #define PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS true
 #define PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE false
 #include <catch2/catch_test_macros.hpp>
-#include <pf_common/static_vector.h>
+#include <pf_common/StaticVector.h>
 
 using namespace pf;
 
@@ -62,7 +62,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   const std::initializer_list<int> initList{1, 2, 3, 4, 5};
 
   SECTION("default") {
-    const static_vector<int, CAPACITY> vector{};
+    const StaticVector<int, CAPACITY> vector{};
 
     REQUIRE(vector.size() == 0ull);
     REQUIRE(vector.empty());
@@ -71,7 +71,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   }
   SECTION("default does no unnecessary constructions") {
     {
-      const static_vector<CtorDtorCounter<0>, CAPACITY> vec1{};
+      const StaticVector<CtorDtorCounter<0>, CAPACITY> vec1{};
     }
     REQUIRE(CtorDtorCounter<0>::defaultCtorCnt == 0);
     REQUIRE(CtorDtorCounter<0>::moveCtorCnt == 0);
@@ -81,7 +81,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   }
   SECTION("sized") {
     constexpr static std::size_t SIZE = 5;
-    const static_vector<int, CAPACITY> vector(SIZE);
+    const StaticVector<int, CAPACITY> vector(SIZE);
 
     REQUIRE(vector.size() == SIZE);
     REQUIRE(!vector.empty());
@@ -90,7 +90,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   }
   SECTION("sized does no unnecessary constructions") {
     constexpr static std::size_t SIZE = 5;
-    { const static_vector<CtorDtorCounter<1>, CAPACITY> vec1(SIZE); }
+    { const StaticVector<CtorDtorCounter<1>, CAPACITY> vec1(SIZE); }
     REQUIRE(CtorDtorCounter<1>::defaultCtorCnt == SIZE);
     REQUIRE(CtorDtorCounter<1>::moveCtorCnt == 0);
     REQUIRE(CtorDtorCounter<1>::copyCtorCnt == 0);
@@ -99,7 +99,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   }
   SECTION("sized init value") {
     constexpr static std::size_t SIZE = 5;
-    const static_vector<int, CAPACITY> vector(SIZE, INIT_VALUE);
+    const StaticVector<int, CAPACITY> vector(SIZE, INIT_VALUE);
 
     REQUIRE(vector.size() == SIZE);
     REQUIRE(!vector.empty());
@@ -109,7 +109,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   }
   SECTION("sized init value does no unnecessary constructions") {
     constexpr static std::size_t SIZE = 5;
-    { const static_vector<CtorDtorCounter<2>, CAPACITY> vector(SIZE, INIT_VALUE); }
+    { const StaticVector<CtorDtorCounter<2>, CAPACITY> vector(SIZE, INIT_VALUE); }
     REQUIRE(CtorDtorCounter<2>::defaultCtorCnt == 0);
     REQUIRE(CtorDtorCounter<2>::moveCtorCnt == 0);
     REQUIRE(CtorDtorCounter<2>::copyCtorCnt == SIZE);
@@ -117,7 +117,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
     REQUIRE(CtorDtorCounter<2>::dtorCnt == SIZE + 1);// additional dtor call for the init value
   }
   SECTION("iterator") {
-    const static_vector<int, CAPACITY> vector(initList.begin(), initList.end());
+    const StaticVector<int, CAPACITY> vector(initList.begin(), initList.end());
 
     REQUIRE(vector.size() == initList.size());
     REQUIRE(!vector.empty());
@@ -129,7 +129,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   }
   SECTION("iterator does no unnecessary constructions") {
     const std::initializer_list<CtorDtorCounter<3>> initList{1, 2, 3, 4, 5};
-    { const static_vector<CtorDtorCounter<3>, CAPACITY> vector(initList.begin(), initList.end()); }
+    { const StaticVector<CtorDtorCounter<3>, CAPACITY> vector(initList.begin(), initList.end()); }
     REQUIRE(CtorDtorCounter<3>::defaultCtorCnt == 0);
     REQUIRE(CtorDtorCounter<3>::moveCtorCnt == 0);
     REQUIRE(CtorDtorCounter<3>::copyCtorCnt == initList.size());
@@ -137,7 +137,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
     REQUIRE(CtorDtorCounter<3>::dtorCnt == initList.size());    // initializer_list is not yet destroyed, so no *2
   }
   SECTION("initializer_list") {
-    const static_vector<int, CAPACITY> vector{initList};
+    const StaticVector<int, CAPACITY> vector{initList};
 
     REQUIRE(vector.size() == initList.size());
     REQUIRE(!vector.empty());
@@ -149,7 +149,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   }
   SECTION("initializer_list does no unnecessary constructions") {
     constexpr static std::size_t SIZE = 5;
-    { const static_vector<CtorDtorCounter<3>, CAPACITY> vector{1, 2, 3, 4, 5}; }
+    { const StaticVector<CtorDtorCounter<3>, CAPACITY> vector{1, 2, 3, 4, 5}; }
     REQUIRE(CtorDtorCounter<3>::defaultCtorCnt == 0);
     REQUIRE(CtorDtorCounter<3>::moveCtorCnt == 0);       // init list sucks and can't be moved from
     REQUIRE(CtorDtorCounter<3>::copyCtorCnt == SIZE * 2);// *2 because initializer_list copy
@@ -157,8 +157,8 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
     REQUIRE(CtorDtorCounter<3>::dtorCnt == SIZE * 4);    // *4 because initializer_list construction
   }
   SECTION("copy") {
-    const static_vector<int, CAPACITY> src{initList};
-    const static_vector<int, CAPACITY> vector{src};
+    const StaticVector<int, CAPACITY> src{initList};
+    const StaticVector<int, CAPACITY> vector{src};
 
     REQUIRE(vector.size() == src.size());
     REQUIRE(!vector.empty());
@@ -170,8 +170,8 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   SECTION("copy does no unnecessary constructions") {
     constexpr static std::size_t SIZE = 5;
     {
-      const static_vector<CtorDtorCounter<4>, CAPACITY> src(SIZE);
-      const static_vector<CtorDtorCounter<4>, CAPACITY> vector = static_vector<CtorDtorCounter<4>, CAPACITY>(src);
+      const StaticVector<CtorDtorCounter<4>, CAPACITY> src(SIZE);
+      const StaticVector<CtorDtorCounter<4>, CAPACITY> vector = StaticVector<CtorDtorCounter<4>, CAPACITY>(src);
     }
     REQUIRE(CtorDtorCounter<4>::defaultCtorCnt == SIZE);// source construction
     REQUIRE(CtorDtorCounter<4>::moveCtorCnt == 0);
@@ -180,8 +180,8 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
     REQUIRE(CtorDtorCounter<4>::dtorCnt == SIZE * 2);// *2 because source destruction
   }
   SECTION("move") {
-    static_vector<int, CAPACITY> src{initList};
-    const static_vector<int, CAPACITY> vector{std::move(src)};
+    StaticVector<int, CAPACITY> src{initList};
+    const StaticVector<int, CAPACITY> vector{std::move(src)};
 
     REQUIRE(vector.size() == initList.size());
     REQUIRE(!vector.empty());
@@ -194,8 +194,8 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   SECTION("move does no unnecessary constructions") {
     constexpr static std::size_t SIZE = 5;
     {
-      static_vector<CtorDtorCounter<5>, CAPACITY> src(SIZE);
-      const static_vector<CtorDtorCounter<5>, CAPACITY> vector = static_vector<CtorDtorCounter<5>, CAPACITY>(std::move(src));
+      StaticVector<CtorDtorCounter<5>, CAPACITY> src(SIZE);
+      const StaticVector<CtorDtorCounter<5>, CAPACITY> vector = StaticVector<CtorDtorCounter<5>, CAPACITY>(std::move(src));
     }
     REQUIRE(CtorDtorCounter<5>::defaultCtorCnt == SIZE);// source construction
     REQUIRE(CtorDtorCounter<5>::moveCtorCnt == SIZE);
@@ -210,10 +210,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("equality is detected correctly <=>") {
 
-    const static_vector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{1}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{1}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4},
                                                            ThreeWayComparable{5}};
-    const static_vector<ThreeWayComparable, CAPACITY> vec2 = vec1;
+    const StaticVector<ThreeWayComparable, CAPACITY> vec2 = vec1;
 
     REQUIRE(vec1 == vec2);
     REQUIRE(!(vec1 != vec2));
@@ -221,10 +221,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("equality is detected correctly == !=") {
 
-    const static_vector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{1}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{1}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4},
                                                             OldSchoolComparable{5}};
-    const static_vector<OldSchoolComparable, CAPACITY> vec2 = vec1;
+    const StaticVector<OldSchoolComparable, CAPACITY> vec2 = vec1;
 
     REQUIRE(vec1 == vec2);
     REQUIRE(!(vec1 != vec2));
@@ -232,10 +232,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("inequality is detected correctly <=>") {
 
-    const static_vector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{1}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{1}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4},
                                                            ThreeWayComparable{5}};
-    const static_vector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{1}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{1}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4}};
 
     REQUIRE(vec1 != vec2);
@@ -244,10 +244,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("inequality is detected correctly == !=") {
 
-    const static_vector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{1}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{1}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4},
                                                             OldSchoolComparable{5}};
-    const static_vector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{1}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{1}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4}};
 
     REQUIRE(vec1 != vec2);
@@ -256,10 +256,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("greater is detected correctly <=>") {
 
-    const static_vector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{5}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{5}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4},
                                                            ThreeWayComparable{5}};
-    const static_vector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{1}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{1}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4}};
 
     REQUIRE(vec1 > vec2);
@@ -268,10 +268,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("greater is detected correctly >") {
 
-    const static_vector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{5}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{5}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4},
                                                             OldSchoolComparable{5}};
-    const static_vector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{1}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{1}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4}};
 
     REQUIRE(vec1 > vec2);
@@ -280,10 +280,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("greater or equal is detected correctly <=>") {
 
-    const static_vector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{5}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{5}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4},
                                                            ThreeWayComparable{5}};
-    const static_vector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{1}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{1}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4}};
     const auto vec3 = vec1;
 
@@ -295,10 +295,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("greater or equal is detected correctly >=") {
 
-    const static_vector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{5}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{5}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4},
                                                             OldSchoolComparable{5}};
-    const static_vector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{1}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{1}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4}};
     const auto vec3 = vec1;
 
@@ -309,10 +309,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("less is detected correctly <=>") {
 
-    const static_vector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{1}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{1}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4},
                                                            ThreeWayComparable{5}};
-    const static_vector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{5}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{5}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4}};
 
     REQUIRE(vec1 < vec2);
@@ -321,10 +321,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("less is detected correctly >") {
 
-    const static_vector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{1}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{1}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4},
                                                             OldSchoolComparable{5}};
-    const static_vector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{5}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{5}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4}};
 
     REQUIRE(vec1 < vec2);
@@ -333,10 +333,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("less or equal is detected correctly <=>") {
 
-    const static_vector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{1}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec1{ThreeWayComparable{1}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4},
                                                            ThreeWayComparable{5}};
-    const static_vector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{5}, ThreeWayComparable{2},
+    const StaticVector<ThreeWayComparable, CAPACITY> vec2{ThreeWayComparable{5}, ThreeWayComparable{2},
                                                            ThreeWayComparable{3}, ThreeWayComparable{4}};
     const auto vec3 = vec1;
 
@@ -348,10 +348,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("less or equal is detected correctly >=") {
 
-    const static_vector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{1}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec1{OldSchoolComparable{1}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4},
                                                             OldSchoolComparable{5}};
-    const static_vector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{5}, OldSchoolComparable{2},
+    const StaticVector<OldSchoolComparable, CAPACITY> vec2{OldSchoolComparable{5}, OldSchoolComparable{2},
                                                             OldSchoolComparable{3}, OldSchoolComparable{4}};
     const auto vec3 = vec1;
 
@@ -361,10 +361,10 @@ TEST_CASE("static_vector operators", "[static_vector]") {
   }
 
   SECTION("copy assignment") {
-    const static_vector<int, CAPACITY> vec1{1, 2, 3, 4, 5};
-    const static_vector<int, CAPACITY> vec2{5, 2, 3, 4};
+    const StaticVector<int, CAPACITY> vec1{1, 2, 3, 4, 5};
+    const StaticVector<int, CAPACITY> vec2{5, 2, 3, 4};
 
-    static_vector<int, CAPACITY> vec3{};
+    StaticVector<int, CAPACITY> vec3{};
     vec3 = vec1;
     REQUIRE(vec3.size() == vec1.size());
     for (std::size_t i = 0; i < vec1.size(); ++i) { REQUIRE(vec1[i] == vec3[i]); }
@@ -376,8 +376,8 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("copy assignment does no unnecessary construction when copying to empty") {
     {
-      const static_vector<CtorDtorCounter<6>, CAPACITY> vec1(5);
-      static_vector<CtorDtorCounter<6>, CAPACITY> vec3{};
+      const StaticVector<CtorDtorCounter<6>, CAPACITY> vec1(5);
+      StaticVector<CtorDtorCounter<6>, CAPACITY> vec3{};
       vec3 = vec1;
     }
 
@@ -392,8 +392,8 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("copy assignment does no unnecessary construction when copying to smaller") {
     {
-      const static_vector<CtorDtorCounter<7>, CAPACITY> vec1(5);
-      static_vector<CtorDtorCounter<7>, CAPACITY> vec3(2);
+      const StaticVector<CtorDtorCounter<7>, CAPACITY> vec1(5);
+      StaticVector<CtorDtorCounter<7>, CAPACITY> vec3(2);
       vec3 = vec1;
     }
 
@@ -408,8 +408,8 @@ TEST_CASE("static_vector operators", "[static_vector]") {
 
   SECTION("copy assignment does no unnecessary construction when copying to bigger") {
     {
-      const static_vector<CtorDtorCounter<8>, CAPACITY> vec1(2);
-      static_vector<CtorDtorCounter<8>, CAPACITY> vec3(5);
+      const StaticVector<CtorDtorCounter<8>, CAPACITY> vec1(2);
+      StaticVector<CtorDtorCounter<8>, CAPACITY> vec3(5);
       vec3 = vec1;
       REQUIRE(CtorDtorCounter<8>::dtorCnt == 3);// we expect 3 elements to be destroyed since the source is smaller
     }

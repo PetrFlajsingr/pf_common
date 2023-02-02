@@ -1,6 +1,9 @@
-//
-// Created by xflajs00 on 30.01.2023.
-//
+/**
+ * @file references.h
+ * @brief Concepts for references.
+ * @author Petr Flajšingr
+ * @date 30.1.23
+ */
 
 #ifndef PF_COMMON_REFERENCES_H
 #define PF_COMMON_REFERENCES_H
