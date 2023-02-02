@@ -25,7 +25,8 @@ constexpr bool OneOf_v = (std::same_as<T, Args> || ...);
 template<typename T, typename... Args>
 concept OneOf = (std::same_as<T, Args> || ...);
 
-template<auto Value, decltype(Value)... Values>
+template<auto Value, auto... Values>
+  requires(std::equality_comparable_with<decltype(Values), decltype(Value)> && ...)
 constexpr bool OneOfValues_v = ((Value == Values) || ...);
 }// namespace pf
 #endif//PF_COMMON_CONCEPTS_ONEOF_H
