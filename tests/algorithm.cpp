@@ -30,8 +30,8 @@ TEST_CASE("contains", "[algorithm][contains]") {
   }
 
   SECTION("can be instantiated with arbitrary iterable") {
-    REQUIRE(CheckContainsInstantiation<int, std::vector>::valid);
-    REQUIRE(CheckContainsInstantiation<int, std::unordered_set>::valid);
+    STATIC_REQUIRE(CheckContainsInstantiation<int, std::vector>::valid);
+    STATIC_REQUIRE(CheckContainsInstantiation<int, std::unordered_set>::valid);
   }
 }
 

@@ -6,7 +6,6 @@
 #include <ostream>
 #include <pf_common/concepts/Incrementable.h>
 #include <pf_common/concepts/OneOf.h>
-#include <pf_common/concepts/PtrConstructible.h>
 #include <pf_common/concepts/Serializable.h>
 #include <pf_common/concepts/StreamConcepts.h>
 #include <pf_common/concepts/StringConvertible.h>
@@ -78,17 +77,6 @@ TEST_CASE("String convertible", "[concepts][ToStringConvertible]") {
     REQUIRE(pf::toString(E2::A) == std::string("A"));
     REQUIRE(pf::toString(E2::B) == std::string("B"));
     REQUIRE(pf::toString(E2::C) == std::string("C"));
-  }
-}
-
-struct PtrTest : public pf::PtrConstructible<PtrTest> {
-  PtrTest(int value) : value(value) {}
-  int value;
-};
-TEST_CASE("Pointer constructible", "[concepts][PtrConstructible]") {
-  SECTION("objects are constructed correctly") {
-    REQUIRE(PtrTest::CreateShared(10)->value == 10);
-    REQUIRE(PtrTest::CreateUnique(10)->value == 10);
   }
 }
 
