@@ -15,8 +15,8 @@
 namespace pf {
 
 /**
- * @brief Simple constexpr friendly fixed string.
- * @tparam N Size of the string including terminating \0
+ * @brief Constexpr friendly fixed string.
+ * @tparam N Size of the string
  */
 template<typename TChar, std::size_t N, typename CharTraits = std::char_traits<TChar>>
 class BasicFixedString {
@@ -37,8 +37,8 @@ class BasicFixedString {
   using string_view_type = std::basic_string_view<value_type, traits_type>;
   constexpr static auto npos = string_view_type::npos;
 
-  constexpr BasicFixedString() = default;
-  explicit constexpr BasicFixedString(const char (&arr)[N + 1]) noexcept { traits_type::copy(str.data(), arr, N + 1); }
+  constexpr BasicFixedString() noexcept = default;
+  explicit constexpr BasicFixedString(const TChar (&arr)[N + 1]) noexcept { traits_type::copy(str.data(), arr, N + 1); }
 
   [[nodiscard]] explicit constexpr operator string_view_type() const noexcept { return string_view_type{data(), size()}; }
 
@@ -46,48 +46,47 @@ class BasicFixedString {
   [[nodiscard]] constexpr BasicFixedString<value_type, N + N2, traits_type>
   append(const BasicFixedString<value_type, N2, traits_type> &str2) const noexcept {
     auto result = BasicFixedString<value_type, N + N2, traits_type>{};
-    for (size_type i = 0; i < N; ++i) { traits_type::assing(result.str[i], str[i]); }
-    for (size_type i = 0; i < N2; ++i) { traits_type::assing(result.str[N + i], str2.str[i]); }
-    traits_type::assign(result.str[N + N2], TChar{'\0'});
+    for (size_type i = 0; i < N; ++i) { traits_type::assign(result.data()[i], str[i]); }
+    for (size_type i = 0; i < N2; ++i) { traits_type::assign(result.data()[N + i], str2.data()[i]); }
+    traits_type::assign(result.data()[N + N2], TChar{'\0'});
     return result;
   }
 
   template<size_type N2>
-  [[nodiscard]] constexpr BasicFixedString<value_type, N + N2, traits_type> append(TChar const (&arr)[N2]) const noexcept {
-    auto result = BasicFixedString<value_type, N + N2, traits_type>{};
-    for (size_type i = 0; i < N; ++i) { traits_type::assing(result.str[i], str[i]); }
-    for (size_type i = 0; i < N2; ++i) { traits_type::assing(result.str[N + i], arr[i]); }
-    traits_type::assign(result.str[N + N2], TChar{'\0'});
+  [[nodiscard]] constexpr BasicFixedString<value_type, N + N2 - 1, traits_type> append(TChar const (&arr)[N2]) const noexcept {
+    auto result = BasicFixedString<value_type, N + N2 - 1, traits_type>{};
+    for (size_type i = 0; i < N; ++i) { traits_type::assign(result.data()[i], data()[i]); }
+    for (size_type i = 0; i < N2; ++i) { traits_type::assign(result.data()[N + i], arr[i]); }
     return result;
   }
 
   [[nodiscard]] constexpr int compare(string_view_type other) const noexcept { return static_cast<string_view_type>(*this).compare(other); }
 
   template<size_type N2>
-  [[nodiscard]] constexpr BasicFixedString<TChar, N + N2, traits_type> insert(size_type index, TChar const (&arr)[N2]) const noexcept {
-    BasicFixedString<TChar, N + N2, traits_type> result{};
-    for (size_type i = 0; i < index; ++i) { traits_type::assign(result.str[i], str[i]); }
-    for (size_type i = index; i < index + N2; ++i) { traits_type::assign(result.str[i], arr[i]); }
-    for (size_type i = index; i < N; ++i) { traits_type::assign(result.str[i + N2], str[i]); }
-    traits_type::assign(result.str[N + N2], TChar{'\0'});
+  [[nodiscard]] constexpr BasicFixedString<TChar, N + N2 - 1, traits_type> insert(size_type index, TChar const (&arr)[N2]) const noexcept {
+    BasicFixedString<TChar, N + N2 - 1, traits_type> result{};
+    for (size_type i = 0; i < index; ++i) { traits_type::assign(result.data()[i], data()[i]); }
+    for (size_type i = index; i < index + N2 - 1; ++i) { traits_type::assign(result.data()[i], arr[i]); }
+    for (size_type i = index; i < N; ++i) { traits_type::assign(result.data()[i + N2 - 1], data()[i]); }
+    traits_type::assign(result.data()[N + N2 - 1], TChar{'\0'});
     return result;
   }
   template<size_type N2>
   [[nodiscard]] constexpr BasicFixedString<TChar, N + N2, traits_type>
   insert(size_type index, const BasicFixedString<TChar, N2, traits_type> &other) const noexcept {
     BasicFixedString<TChar, N + N2, traits_type> result{};
-    for (size_type i = 0; i < index; ++i) { traits_type::assign(result.str[i], str[i]); }
-    for (size_type i = index; i < index + N2; ++i) { traits_type::assign(result.str[i], other.str[i]); }
-    for (size_type i = index; i < N; ++i) { traits_type::assign(result.str[i + N2], str[i]); }
-    traits_type::assign(result.str[N + N2 ], TChar{'\0'});
+    for (size_type i = 0; i < index; ++i) { traits_type::assign(result.data()[i], data()[i]); }
+    for (size_type i = index; i < index + N2; ++i) { traits_type::assign(result.data()[i], other.data()[i]); }
+    for (size_type i = index; i < N; ++i) { traits_type::assign(result.data()[i + N2], data()[i]); }
+    traits_type::assign(result.data()[N + N2], TChar{'\0'});
     return result;
   }
 
   [[nodiscard]] constexpr BasicFixedString<TChar, N + 1, traits_type> push_back(TChar ch) const noexcept {
     BasicFixedString<TChar, N + 1, traits_type> result;
     traits_type::copy(result.data(), data(), N);
-    traits_type::assign(result.str[N], ch);
-    traits_type::assign(result.str[N + 1], TChar{'\0'});
+    traits_type::assign(result.data()[N], ch);
+    traits_type::assign(result.data()[N + 1], TChar{'\0'});
     return result;
   }
   [[nodiscard]] constexpr BasicFixedString<TChar, N - 1, traits_type> pop_back() const noexcept
@@ -95,7 +94,7 @@ class BasicFixedString {
   {
     BasicFixedString<TChar, N - 1, traits_type> result{};
     traits_type::copy(result.data(), data(), N - 1);
-    traits_type::assign(result.str[N], TChar{'\0'});
+    traits_type::assign(result.data()[N - 1], TChar{'\0'});
     return result;
   }
 
@@ -162,6 +161,14 @@ class BasicFixedString {
     traits_type::assign(result.data()[N + N2], TChar{'\0'});
     return result;
   }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend BasicFixedString<TChar, N + N2 - 1, CharTraits>
+  operator+(const BasicFixedString<TChar, N, CharTraits> &lhs, TChar const (&rhs)[N2]) noexcept {
+    BasicFixedString<TChar, N + N2 - 1, CharTraits> result{};
+    traits_type::copy(result.data(), lhs.data(), N);
+    traits_type::copy(result.data() + N, rhs, N2);
+    return result;
+  }
 
   template<size_type N2>
   [[nodiscard]] constexpr friend auto operator<=>(const BasicFixedString<TChar, N, CharTraits> &lhs,
@@ -176,28 +183,100 @@ class BasicFixedString {
                                                  const BasicFixedString<TChar, N2, CharTraits> &rhs) noexcept {
     return (lhs <=> rhs) == std::strong_ordering::equal;
   }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator!=(const BasicFixedString<TChar, N, CharTraits> &lhs,
+                                                 const BasicFixedString<TChar, N2, CharTraits> &rhs) noexcept {
+    return !(lhs == rhs);
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator<(const BasicFixedString<TChar, N, CharTraits> &lhs,
+                                                const BasicFixedString<TChar, N2, CharTraits> &rhs) noexcept {
+    return (lhs <=> rhs) == std::strong_ordering::less;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator<=(const BasicFixedString<TChar, N, CharTraits> &lhs,
+                                                 const BasicFixedString<TChar, N2, CharTraits> &rhs) noexcept {
+    const auto cmp_result = lhs <=> rhs;
+    return cmp_result == std::strong_ordering::less || cmp_result == std::strong_ordering::equal;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator>(const BasicFixedString<TChar, N, CharTraits> &lhs,
+                                                const BasicFixedString<TChar, N2, CharTraits> &rhs) noexcept {
+    return (lhs <=> rhs) == std::strong_ordering::greater;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator>=(const BasicFixedString<TChar, N, CharTraits> &lhs,
+                                                 const BasicFixedString<TChar, N2, CharTraits> &rhs) noexcept {
+    const auto cmp_result = lhs <=> rhs;
+    return cmp_result == std::strong_ordering::greater || cmp_result == std::strong_ordering::equal;
+  }
 
   template<size_type N2>
-  [[nodiscard]] constexpr friend auto operator<=>(const BasicFixedString<TChar, N, CharTraits> &lhs, const char (&rhs)[N2]) noexcept {
+  [[nodiscard]] constexpr friend auto operator<=>(const BasicFixedString<TChar, N, CharTraits> &lhs, const TChar (&rhs)[N2]) noexcept {
     const auto cmp_result = lhs.compare(string_view_type{rhs});
     if (cmp_result < 0) { return std::strong_ordering::less; }
     if (cmp_result > 0) { return std::strong_ordering::greater; }
     return std::strong_ordering::equal;
   }
   template<size_type N2>
-  [[nodiscard]] constexpr friend bool operator==(const BasicFixedString<TChar, N, CharTraits> &lhs, const char (&rhs)[N2]) noexcept {
+  [[nodiscard]] constexpr friend bool operator==(const BasicFixedString<TChar, N, CharTraits> &lhs, const TChar (&rhs)[N2]) noexcept {
     return (lhs <=> rhs) == std::strong_ordering::equal;
   }
   template<size_type N2>
-  [[nodiscard]] constexpr friend auto operator<=>(const char (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
+  [[nodiscard]] constexpr friend bool operator!=(const BasicFixedString<TChar, N, CharTraits> &lhs, const TChar (&rhs)[N2]) noexcept {
+    return !(lhs == rhs);
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator<(const BasicFixedString<TChar, N, CharTraits> &lhs, const TChar (&rhs)[N2]) noexcept {
+    return (lhs <=> rhs) == std::strong_ordering::less;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator<=(const BasicFixedString<TChar, N, CharTraits> &lhs, const TChar (&rhs)[N2]) noexcept {
+    const auto cmp_result = lhs <=> rhs;
+    return cmp_result == std::strong_ordering::less || cmp_result == std::strong_ordering::equal;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator>(const BasicFixedString<TChar, N, CharTraits> &lhs, const TChar (&rhs)[N2]) noexcept {
+    return (lhs <=> rhs) == std::strong_ordering::greater;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator>=(const BasicFixedString<TChar, N, CharTraits> &lhs, const TChar (&rhs)[N2]) noexcept {
+    const auto cmp_result = lhs <=> rhs;
+    return cmp_result == std::strong_ordering::greater || cmp_result == std::strong_ordering::equal;
+  }
+
+  template<size_type N2>
+  [[nodiscard]] constexpr friend auto operator<=>(const TChar (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
     const auto cmp_result = rhs.compare(lhs) * -1;
     if (cmp_result < 0) { return std::strong_ordering::less; }
     if (cmp_result > 0) { return std::strong_ordering::greater; }
     return std::strong_ordering::equal;
   }
   template<size_type N2>
-  [[nodiscard]] constexpr friend bool operator==(const char (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
+  [[nodiscard]] constexpr friend bool operator==(const TChar (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
     return (lhs <=> rhs) == std::strong_ordering::equal;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator!=(const TChar (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
+    return !(lhs == rhs);
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator<(const TChar (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
+    return (lhs <=> rhs) == std::strong_ordering::less;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator<=(const TChar (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
+    const auto cmp_result = lhs <=> rhs;
+    return cmp_result == std::strong_ordering::less || cmp_result == std::strong_ordering::equal;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator>(const TChar (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
+    return (lhs <=> rhs) == std::strong_ordering::greater;
+  }
+  template<size_type N2>
+  [[nodiscard]] constexpr friend bool operator>=(const TChar (&lhs)[N2], const BasicFixedString<TChar, N, CharTraits> &rhs) noexcept {
+    const auto cmp_result = lhs <=> rhs;
+    return cmp_result == std::strong_ordering::greater || cmp_result == std::strong_ordering::equal;
   }
 
   friend std::ostream &operator<<(std::ostream &o, const BasicFixedString<TChar, N, CharTraits> &s) {
@@ -243,8 +322,8 @@ class BasicFixedString {
 template<typename TChar, std::size_t N, typename CharTraits = std::char_traits<TChar>>
 BasicFixedString(const TChar (&)[N]) -> BasicFixedString<TChar, N - 1, CharTraits>;
 
-// Can't do deduction guides for templated aliases so it has to be done this way
-#define PF_FIXEDSTRING_SPECIALIZATION(name, char_type)                                                                                          \
+// Can't do deduction guides for templated aliases, so it has to be done this way
+#define PF_FIXEDSTRING_SPECIALIZATION(name, char_type)                                                                                     \
   template<std::size_t N>                                                                                                                  \
   struct name : BasicFixedString<char_type, N> {                                                                                           \
     using BasicFixedString<char_type, N>::BasicFixedString;                                                                                \
