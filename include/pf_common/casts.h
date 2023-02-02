@@ -8,7 +8,7 @@
 #ifndef PF_COMMON_CASTS_H
 #define PF_COMMON_CASTS_H
 
-#include <pf_common/concepts/downcast.h>
+#include <pf_common/concepts/DowncastableTo.h>
 
 // Narrowing cast error
 #if !defined(PF_NARROW_FAIL)
