@@ -21,10 +21,9 @@ namespace pf {
  * @param haystack range to search through
  * @return true if the value is found, false otherwise
  */
-template<std::ranges::range Range>
-[[nodiscard]] constexpr bool isIn(const auto &needle, Range &&haystack) {
-  static_assert(std::equality_comparable_with<decltype(needle), std::ranges::range_value_t<Range>>);
-  return std::ranges::any_of(haystack, [&needle](const auto &value) { return needle == value; });
+template<std::ranges::range Range, typename Proj = std::identity>
+[[nodiscard]] constexpr bool contains(Range &&haystack, const auto &needle, Proj proj = {}) requires (std::equality_comparable_with<decltype(needle), std::ranges::range_value_t<Range>>) {
+  return std::ranges::any_of(haystack, [&](auto &&value) { return needle == proj(value); });
 }
 
 /**
@@ -33,10 +32,10 @@ template<std::ranges::range Range>
  * @param range2
  * @return first common element if one is found, std::nullopt otherwise
  */
-[[nodiscard]] auto findFirstCommon(const std::ranges::range auto &range1, const std::ranges::range auto &range2) {
+[[nodiscard]] constexpr auto findFirstCommon(const std::ranges::range auto &range1, const std::ranges::range auto &range2) {
   static_assert(std::equality_comparable_with<std::ranges::range_value_t<decltype(range1)>, std::ranges::range_value_t<decltype(range2)>>);
   using ResultType = std::ranges::range_value_t<decltype(range1)>;
-  if (auto iter = std::ranges::find_if(range1, [&range2](const auto &val) { return isIn(val, range2); }); iter != range1.end()) {
+  if (auto iter = std::ranges::find_if(range1, [&range2](const auto &val) { return contains(range2, val); }); iter != range1.end()) {
     return std::optional<ResultType>{*iter};
   }
   return std::optional<ResultType>{};

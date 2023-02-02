@@ -8,30 +8,30 @@
 #include <unordered_set>
 
 template<typename T, template<class> typename C>
-struct CheckIsInInstantiation {
-  static constexpr bool valid = std::same_as<decltype(pf::isIn(std::declval<T>(), std::declval<C<T>>())), bool>;
+struct CheckContainsInstantiation {
+  static constexpr bool valid = std::same_as<decltype(pf::contains(std::declval<C<T>>(), std::declval<T>())), bool>;
 };
 
-TEST_CASE("is in", "[algorithm][isIn]") {
+TEST_CASE("contains", "[algorithm][contains]") {
   const auto vec = std::vector<int>{0, 1, 2, 3, 4, 5, 6};
 
   SECTION("correctly detects present elements") {
-    for (int i = 0; i < static_cast<int>(vec.size()); ++i) { REQUIRE(pf::isIn(i, vec)); }
+    for (int i = 0; i < static_cast<int>(vec.size()); ++i) { REQUIRE(pf::contains(vec, i)); }
   }
 
   SECTION("correctly detects absent elements") {
-    for (int i = static_cast<int>(vec.size()); i < 100; ++i) { REQUIRE(!pf::isIn(i, vec)); }
+    for (int i = static_cast<int>(vec.size()); i < 100; ++i) { REQUIRE(!pf::contains(vec, i)); }
   }
 
   SECTION("doesn't modify container") {
     auto vecCopy = vec;
-    for (int i = 0; i < 100; ++i) { [[maybe_unused]] auto tmp = pf::isIn(i, vecCopy); }
+    for (int i = 0; i < 100; ++i) { [[maybe_unused]] auto tmp = pf::contains(vecCopy, i); }
     REQUIRE(vecCopy == vec);
   }
 
   SECTION("can be instantiated with arbitrary iterable") {
-    REQUIRE(CheckIsInInstantiation<int, std::vector>::valid);
-    REQUIRE(CheckIsInInstantiation<int, std::unordered_set>::valid);
+    REQUIRE(CheckContainsInstantiation<int, std::vector>::valid);
+    REQUIRE(CheckContainsInstantiation<int, std::unordered_set>::valid);
   }
 }
 
