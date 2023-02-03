@@ -36,7 +36,7 @@ class SmallVectorAllocator {
 
   template<typename U>
   constexpr SmallVectorAllocator(const SmallVectorAllocator<U, N, SecondaryAllocatorRebind<U>, PreRebindT> &other) noexcept
-      : allocator{other.allocator} {}
+      : allocator{other.get_secondary_allocator()} {}
 
   constexpr SmallVectorAllocator(const SmallVectorAllocator &other) noexcept
       : allocator{other.allocator}, stackStorageInUse{other.stackStorageInUse} {}
@@ -74,6 +74,8 @@ class SmallVectorAllocator {
     if (static_cast<const void *>(ptr) == static_cast<const void *>(storage)) { return; }
     allocator.deallocate(ptr, n);
   }
+
+  [[nodiscard]] constexpr SecondaryAllocator get_secondary_allocator() const { return allocator; }
 
  private:
   alignas(T) std::byte storage[sizeof(T) * N]{};
