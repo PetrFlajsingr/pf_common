@@ -326,6 +326,17 @@ class BasicFixedString {
 template<typename TChar, std::size_t N, typename CharTraits = std::char_traits<TChar>>
 BasicFixedString(const TChar (&)[N]) -> BasicFixedString<TChar, N - 1, CharTraits>;
 
+namespace details {
+template<std::size_t N, typename TChar, typename CharTraits = std::char_traits<TChar>>
+struct BasicFixedStringUDLBuffer {
+
+  consteval BasicFixedStringUDLBuffer(const TChar (&str)[N]) noexcept { CharTraits::copy(data, str, N); }
+
+  TChar data[N];
+  constexpr static size_t count = N;
+};
+}// namespace details
+
 // Can't do deduction guides for templated aliases, so it has to be done this way
 #define PF_FIXEDSTRING_SPECIALIZATION(name, char_type)                                                                                     \
   template<std::size_t N>                                                                                                                  \
@@ -335,30 +346,19 @@ BasicFixedString(const TChar (&)[N]) -> BasicFixedString<TChar, N - 1, CharTrait
   template<std::size_t N>                                                                                                                  \
   name(const char_type(&)[N]) -> name<N - 1>;
 
+
 PF_FIXEDSTRING_SPECIALIZATION(FixedString, char)
 PF_FIXEDSTRING_SPECIALIZATION(FixedU8String, char8_t)
 PF_FIXEDSTRING_SPECIALIZATION(FixedU16String, char16_t)
 PF_FIXEDSTRING_SPECIALIZATION(FixedU32String, char32_t)
 PF_FIXEDSTRING_SPECIALIZATION(FixedWString, wchar_t)
 
-#undef PF_FIXEDSTRING_SPECIALIZATION
-
-template<std::size_t N, typename TChar, typename CharTraits>
-struct TempBuffer {
-
-  consteval TempBuffer(const TChar (&str)[N]) noexcept { CharTraits::copy(data, str, N); }
-
-  TChar data[N];
-  constexpr static size_t count = N;
-};
-
-template<std::size_t N>
-using CharTempBuffer = TempBuffer<N, char, std::char_traits<char>>;
-
-template<CharTempBuffer Buffer>
+template<details::BasicFixedStringUDLBuffer Buffer>
 consteval auto operator""_fixed_str() {
-  return FixedString{Buffer.data};
+  return BasicFixedString{Buffer.data};
 }
+
+#undef PF_FIXEDSTRING_SPECIALIZATION
 
 }// namespace pf
 
