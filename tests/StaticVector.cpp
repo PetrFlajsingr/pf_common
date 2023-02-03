@@ -57,7 +57,7 @@ struct CtorDtorCounter {
   inline static std::size_t moveAssignCnt = 0;
 };
 
-TEST_CASE("static_vector constructors", "[static_vector]") {
+TEST_CASE("StaticVector constructors", "[StaticVector]") {
   constexpr static std::size_t CAPACITY = 10;
   constexpr static int INIT_VALUE = 1;
   const std::initializer_list<int> initList{1, 2, 3, 4, 5};
@@ -206,7 +206,7 @@ TEST_CASE("static_vector constructors", "[static_vector]") {
   }
 }
 
-TEST_CASE("static_vector operators", "[static_vector]") {
+TEST_CASE("StaticVector operators", "[StaticVector]") {
   constexpr static std::size_t CAPACITY = 10;
 
   SECTION("equality is detected correctly <=>") {

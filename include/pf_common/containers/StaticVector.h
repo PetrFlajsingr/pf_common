@@ -361,7 +361,7 @@ class StaticVector {
     return result_iter;
   }
 
-  alignas(T) std::byte storage[sizeof(T) * N]{};
+  alignas(T) std::byte storage[sizeof(T) * N];
   pointer end_;
 
 #if PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE

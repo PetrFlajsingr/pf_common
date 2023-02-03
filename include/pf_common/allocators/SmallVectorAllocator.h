@@ -60,25 +60,29 @@ class SmallVectorAllocator {
   [[nodiscard]] friend constexpr bool operator!=(const SmallVectorAllocator &lhs, const SmallVectorAllocator &rhs) { return !(lhs == rhs); }
 
   [[nodiscard]] constexpr pointer allocate(size_type n) noexcept(noexcept(allocator.allocate(n))) {
-    if constexpr (!std::same_as<PreRebindT, T>) {
+    if constexpr (std::same_as<PreRebindT, T>) {
       if (n <= N) {
         stackStorageInUse = true;
-        return storage;
+        return std::launder(reinterpret_cast<value_type *>(storage));
       }
     }
+    stackStorageInUse = false;
     return allocator.allocate(n);
   }
 
   constexpr void deallocate(T *ptr, size_type n) noexcept(noexcept(allocator.deallocate(ptr, n))) {
     // no need to deallocate stack storage
-    if (static_cast<const void *>(ptr) == static_cast<const void *>(storage)) { return; }
+    if (ptr == std::launder(reinterpret_cast<value_type *>(storage))) {
+      stackStorageInUse = false;
+      return;
+    }
     allocator.deallocate(ptr, n);
   }
 
   [[nodiscard]] constexpr SecondaryAllocator get_secondary_allocator() const { return allocator; }
 
  private:
-  alignas(T) std::byte storage[sizeof(T) * N]{};
+  alignas(T) std::byte storage[sizeof(T) * N];
   bool stackStorageInUse = true;
 
   SecondaryAllocator allocator;
