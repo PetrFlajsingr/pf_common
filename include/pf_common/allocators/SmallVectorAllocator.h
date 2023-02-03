@@ -39,10 +39,10 @@ class SmallVectorAllocator {
       : allocator{other.get_secondary_allocator()} {}
 
   constexpr SmallVectorAllocator(const SmallVectorAllocator &other) noexcept
-      : allocator{other.allocator}, stackStorageInUse{other.stackStorageInUse} {}
+      : stackStorageInUse{other.stackStorageInUse}, allocator{other.allocator} {}
 
   constexpr SmallVectorAllocator(SmallVectorAllocator &&other) noexcept
-      : allocator{std::move(other.allocator)}, stackStorageInUse{other.stackStorageInUse} {}
+      : stackStorageInUse{other.stackStorageInUse}, allocator{std::move(other.allocator)} {}
 
   constexpr SmallVectorAllocator &operator=(const SmallVectorAllocator &other) noexcept {
     allocator = other.allocator;
