@@ -39,6 +39,10 @@ class BasicFixedString {
 
   constexpr BasicFixedString() noexcept = default;
   explicit constexpr BasicFixedString(const TChar (&arr)[N + 1]) noexcept { traits_type::copy(str.data(), arr, N + 1); }
+  explicit constexpr BasicFixedString(string_view_type src) noexcept {
+    traits_type::copy(str.data(), src.data(), N);
+    traits_type::assign(str.back(), TChar{'\0'});
+  }
 
   [[nodiscard]] explicit constexpr operator string_view_type() const noexcept { return string_view_type{data(), size()}; }
 
@@ -173,7 +177,7 @@ class BasicFixedString {
   template<size_type N2>
   [[nodiscard]] constexpr friend auto operator<=>(const BasicFixedString<TChar, N, CharTraits> &lhs,
                                                   const BasicFixedString<TChar, N2, CharTraits> &rhs) noexcept {
-    const auto cmp_result = lhs.compare(rhs);
+    const auto cmp_result = lhs.compare(static_cast<string_view_type>(rhs));
     if (cmp_result < 0) { return std::strong_ordering::less; }
     if (cmp_result > 0) { return std::strong_ordering::greater; }
     return std::strong_ordering::equal;
@@ -338,6 +342,23 @@ PF_FIXEDSTRING_SPECIALIZATION(FixedU32String, char32_t)
 PF_FIXEDSTRING_SPECIALIZATION(FixedWString, wchar_t)
 
 #undef PF_FIXEDSTRING_SPECIALIZATION
+
+template<std::size_t N, typename TChar, typename CharTraits>
+struct TempBuffer {
+
+  consteval TempBuffer(const TChar (&str)[N]) noexcept { CharTraits::copy(data, str, N); }
+
+  TChar data[N];
+  constexpr static size_t count = N;
+};
+
+template<std::size_t N>
+using CharTempBuffer = TempBuffer<N, char, std::char_traits<char>>;
+
+template<CharTempBuffer Buffer>
+consteval auto operator""_fixed_str() {
+  return FixedString{Buffer.data};
+}
 
 }// namespace pf
 
