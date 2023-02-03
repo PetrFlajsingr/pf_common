@@ -1,6 +1,9 @@
-//
-// Created by xflajs00 on 11.11.2022.
-//
+/**
+ * @file StaticVector.h
+ * @brief Vector with static max storage.
+ * @author Petr Flajšingr
+ * @date 11.11.22
+ */
 
 #ifndef PF_COMMON_STATICVECTOR_H
 #define PF_COMMON_STATICVECTOR_H
@@ -39,6 +42,11 @@ static_assert(std::same_as<bool, decltype(PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_EN
 
 namespace pf {
 // FIXME: deduplicate code
+/**
+ * @brief Vector which only has finite stack allocated storage.
+ * @tparam T value type
+ * @tparam N max storage size
+ */
 template<typename T, size_t N>
 class StaticVector {
  public:

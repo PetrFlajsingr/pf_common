@@ -1,6 +1,9 @@
-//
-// Created by Petr.Flajsingr on 2023-02-03.
-//
+/**
+ * @file SmallVector.h
+ * @brief Vector with static storage and secondary allocated dynamic storage.
+ * @author Petr Flajšingr
+ * @date 3.2.23
+ */
 
 #ifndef PF_COMMON_SMALLVECTOR_H
 #define PF_COMMON_SMALLVECTOR_H
@@ -10,6 +13,12 @@
 
 namespace pf {
 
+/**
+ * @brief Vector with static storage, when full it uses dynamic one.
+ * @tparam T value type
+ * @tparam N size of static storage
+ * @tparam SecondaryAllocator allocator used for dynamic allocation
+ */
 template<typename T, std::size_t N, typename SecondaryAllocator = std::allocator<T>>
 class SmallVector : public std::vector<T, SmallVectorAllocator<T, N, SecondaryAllocator>> {
   using Base = std::vector<T, SmallVectorAllocator<T, N, SecondaryAllocator>>;
