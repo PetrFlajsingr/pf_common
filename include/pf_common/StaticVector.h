@@ -38,7 +38,7 @@ static_assert(std::same_as<bool, decltype(PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_EN
 #endif
 
 namespace pf {
-
+// FIXME: deduplicate code
 template<typename T, size_t N>
 class StaticVector {
  public:
@@ -125,12 +125,7 @@ class StaticVector {
 
   constexpr StaticVector &operator=(const StaticVector &other) noexcept(std::is_nothrow_copy_assignable_v<value_type>) {
     if (this == &other) { return *this; }
-    auto this_iter = begin();
-    auto other_iter = other.begin();
-    for (; this_iter != end() && other_iter != other.end(); ++this_iter, ++other_iter) { *this_iter = *other_iter; }
-    for (; other_iter != other.end(); ++this_iter, ++other_iter) { new (this_iter) T{*other_iter}; }
-    if (this_iter < end_) { destroy_elements(this_iter, end_); }
-    end_ = this_iter;
+    assign(other.begin(), other.end());
     return *this;
   }
   constexpr StaticVector &operator=(StaticVector &&other) noexcept(std::is_nothrow_move_assignable_v<value_type>) {
@@ -143,6 +138,10 @@ class StaticVector {
     end_ = this_iter;
     return *this;
   }
+  constexpr StaticVector &operator=(std::initializer_list<value_type> ilist) noexcept(std::is_nothrow_copy_assignable_v<value_type>) {
+    assign(ilist);
+    return *this;
+  }
   template<std::input_iterator InputIterator, std::sentinel_for<InputIterator> Sentinel>
   constexpr void assign(InputIterator first, Sentinel last) {
     [[maybe_unused]] const auto src_size = static_cast<size_type>(std::ranges::distance(first, last));
@@ -151,7 +150,7 @@ class StaticVector {
     auto other_iter = first;
     for (; this_iter != end() && other_iter != last; ++this_iter, ++other_iter) { *this_iter = *other_iter; }
     for (; other_iter != last; ++this_iter, ++other_iter) { new (this_iter) T{std::move(*other_iter)}; }
-    if (this_iter != end_) { destroy_elements(this_iter, end_); }
+    if (this_iter < end_) { destroy_elements(this_iter, end_); }
     end_ = this_iter;
   }
   constexpr void assign(size_type n, const value_type &u) {
@@ -160,10 +159,18 @@ class StaticVector {
     auto index = 0ull;
     for (; this_iter != end() && index < n; ++this_iter, ++index) { *this_iter = u; }
     for (; index < n; ++this_iter, ++index) { new (this_iter) T{u}; }
-    if (this_iter != end_) { destroy_elements(this_iter, end_); }
+    if (this_iter < end_) { destroy_elements(this_iter, end_); }
     end_ = this_iter;
   }
-  constexpr void assign(std::initializer_list<value_type> il) { assign(std::ranges::begin(il), std::ranges::end(il)); }
+  constexpr void assign(std::initializer_list<value_type> ilist) {
+    PF_STATIC_VECTOR_ASSERT(ilist.size() < max_size(), "Attempting to allocate more memory than available");
+    auto this_iter = begin();
+    auto other_iter = ilist.begin();
+    for (; this_iter != end() && other_iter != ilist.end(); ++this_iter, ++other_iter) { *this_iter = *other_iter; }
+    for (; other_iter != ilist.end(); ++this_iter, ++other_iter) { new (this_iter) T{*other_iter}; }
+    if (this_iter < end_) { destroy_elements(this_iter, end_); }
+    end_ = this_iter;
+  }
 
   constexpr ~StaticVector() { clear(); }
 
