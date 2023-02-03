@@ -13,7 +13,6 @@
 #include <string_view>
 
 namespace pf {
-
 /**
  * @brief Constexpr friendly fixed string.
  * @tparam N Size of the string
@@ -319,7 +318,6 @@ class BasicFixedString {
   [[nodiscard]] constexpr const_pointer data() const noexcept { return str.data(); }
   [[nodiscard]] constexpr const_pointer c_str() const noexcept { return str.data(); }
 
- private:
   storage str{value_type{'\0'}};
 };
 
@@ -346,17 +344,18 @@ struct BasicFixedStringUDLBuffer {
   template<std::size_t N>                                                                                                                  \
   name(const char_type(&)[N]) -> name<N - 1>;
 
-
 PF_FIXEDSTRING_SPECIALIZATION(FixedString, char)
 PF_FIXEDSTRING_SPECIALIZATION(FixedU8String, char8_t)
 PF_FIXEDSTRING_SPECIALIZATION(FixedU16String, char16_t)
 PF_FIXEDSTRING_SPECIALIZATION(FixedU32String, char32_t)
 PF_FIXEDSTRING_SPECIALIZATION(FixedWString, wchar_t)
 
+namespace fixed_string_literal {
 template<details::BasicFixedStringUDLBuffer Buffer>
-consteval auto operator""_fixed_str() {
+consteval auto operator""_fstr() {
   return BasicFixedString{Buffer.data};
 }
+}// namespace fixed_string_literal
 
 #undef PF_FIXEDSTRING_SPECIALIZATION
 

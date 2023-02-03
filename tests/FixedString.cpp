@@ -6,6 +6,7 @@
 #include <pf_common/containers/FixedString.h>
 
 using namespace pf;
+using namespace pf::fixed_string_literal;
 
 TEST_CASE("Fixed string", "[FixedString][char]") {
 
@@ -18,8 +19,8 @@ TEST_CASE("Fixed string", "[FixedString][char]") {
     REQUIRE(std::char_traits<char>::compare(c.data(), "", c.size()) == 0);
   }
   SECTION("UDL") {
-    constexpr auto a = "literal"_fixed_str;
-    constexpr auto b = ""_fixed_str;
+    constexpr auto a = "literal"_fstr;
+    constexpr auto b = ""_fstr;
     constexpr auto c = FixedString<0>{};
     REQUIRE(std::char_traits<char>::compare(a.data(), "literal", a.size()) == 0);
     REQUIRE(std::char_traits<char>::compare(b.data(), "", b.size()) == 0);
@@ -129,8 +130,8 @@ TEST_CASE("Fixed string char8", "[FixedString][char8_t]") {
     REQUIRE(std::char_traits<char8_t>::compare(c.data(), u8"", c.size()) == 0);
   }
   SECTION("UDL") {
-    constexpr auto a = u8"literal"_fixed_str;
-    constexpr auto b = u8""_fixed_str;
+    constexpr auto a = u8"literal"_fstr;
+    constexpr auto b = u8""_fstr;
     constexpr auto c = FixedU8String<0>{};
     REQUIRE(std::char_traits<char8_t>::compare(a.data(), u8"literal", a.size()) == 0);
     REQUIRE(std::char_traits<char8_t>::compare(b.data(), u8"", b.size()) == 0);
