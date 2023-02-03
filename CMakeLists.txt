@@ -87,7 +87,7 @@ if (PF_COMMON_TESTS)
     include_directories(include)
     add_executable(pf_common_tests tests/LazyInit.cpp tests/RAII.cpp
             tests/ByteLiterals.cpp tests/algorithm.cpp tests/StaticVector.cpp tests/SmallVector.cpp
-            tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/FixedString.cpp tests/uuid.cpp tests/casts.cpp)
+            tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/StringLiteral.cpp tests/uuid.cpp tests/casts.cpp)
 
     target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2WithMain fmt::fmt)
     target_compile_options(pf_common_tests PRIVATE ${flags})
