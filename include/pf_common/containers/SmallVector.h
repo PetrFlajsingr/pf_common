@@ -10,6 +10,7 @@
 
 #include <pf_common/allocators/SmallVectorAllocator.h>
 #include <vector>
+#include <pf_common/concepts/Allocator.h>
 
 namespace pf {
 
@@ -19,7 +20,7 @@ namespace pf {
  * @tparam N size of static storage
  * @tparam SecondaryAllocator allocator used for dynamic allocation
  */
-template<typename T, std::size_t N, typename SecondaryAllocator = std::allocator<T>>
+template<typename T, std::size_t N, Allocator SecondaryAllocator = std::allocator<T>>
 class SmallVector : public std::vector<T, SmallVectorAllocator<T, N, SecondaryAllocator>> {
   using Base = std::vector<T, SmallVectorAllocator<T, N, SecondaryAllocator>>;
 

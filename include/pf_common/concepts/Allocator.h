@@ -16,8 +16,8 @@ concept Allocator = requires(T t, T t2, std::size_t n, typename T::value_type *p
   { t != t2 } noexcept -> std::convertible_to<bool>;
   { T{t} } noexcept -> std::same_as<T>;
   { T{std::move(t)} } noexcept -> std::same_as<T>;
-  { t.allocate(n) } noexcept -> std::same_as<typename T::value_type *>;
-  { t.deallocate(ptr, n) } noexcept;
+  { t.allocate(n) } -> std::same_as<typename T::value_type *>;
+  { t.deallocate(ptr, n) };
 };
 
 }

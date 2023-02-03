@@ -7,10 +7,11 @@
 
 #include <cstddef>
 #include <memory>
+#include <pf_common/concepts/Allocator.h>
 
 namespace pf {
 
-template<typename T, std::size_t N, typename SecondaryAllocator = std::allocator<T>, typename PreRebindT = T>
+template<typename T, std::size_t N, Allocator SecondaryAllocator = std::allocator<T>, typename PreRebindT = T>
 class SmallVectorAllocator {
   template<typename U>
   using SecondaryAllocatorRebind = typename std::allocator_traits<SecondaryAllocator>::template rebind_alloc<U>;
