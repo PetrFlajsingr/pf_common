@@ -24,6 +24,7 @@ class SmallVectorAllocator {
   using const_reference = const T &;
   using size_type = std::size_t;
   using difference_type = std::ptrdiff_t;
+  using secondary_allocator = SecondaryAllocator;
 
   using propagate_on_container_move_assignment = std::false_type;
   using propagate_on_container_swap = std::false_type;
@@ -80,13 +81,13 @@ class SmallVectorAllocator {
     allocator.deallocate(ptr, n);
   }
 
-  [[nodiscard]] constexpr SecondaryAllocator get_secondary_allocator() const { return allocator; }
+  [[nodiscard]] constexpr secondary_allocator get_secondary_allocator() const { return allocator; }
 
  private:
   alignas(T) std::byte storage[sizeof(T) * N];
   bool stackStorageInUse = true;
 
-  SecondaryAllocator allocator;
+  secondary_allocator allocator;
 };
 }// namespace pf
 
