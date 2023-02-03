@@ -3,7 +3,7 @@
 //
 #include <catch2/catch_test_macros.hpp>
 #include <cstring>
-#include <pf_common/FixedString.h>
+#include <pf_common/containers/FixedString.h>
 
 TEST_CASE("Fixed string", "[FixedString]") {
 

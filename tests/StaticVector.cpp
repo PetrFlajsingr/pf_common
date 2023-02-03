@@ -2,10 +2,11 @@
 // Created by xflajs00 on 13.11.2022.
 //
 #include <array>
+
 #define PF_STATIC_VECTOR_ENABLE_BOUND_CHECKS true
 #define PF_STATIC_VECTOR_DEBUG_T_PTR_MEMBER_ENABLE false
 #include <catch2/catch_test_macros.hpp>
-#include <pf_common/StaticVector.h>
+#include <pf_common/containers/StaticVector.h>
 
 using namespace pf;
 
