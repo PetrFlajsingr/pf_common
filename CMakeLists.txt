@@ -66,8 +66,6 @@ install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/pf_common DESTINATION include)
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/static_type_info DESTINATION include)
-install(FILES ${PROJECT_SOURCE_DIR}/include/static_type_info.h DESTINATION include)
 
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 
