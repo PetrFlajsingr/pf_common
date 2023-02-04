@@ -13,6 +13,7 @@
 #include <pf_common/concepts/ranges.h>
 #include <ranges>
 #include <type_traits>
+#include <pf_common/concepts/Enum.h>
 
 namespace pf {
 
@@ -20,27 +21,6 @@ namespace pf {
  * Common enum Enabled.
  */
 enum class Enabled { Yes, No };
-
-/**
- * @brief Detect enum class.
- * @tparam T
- */
-template<typename T>
-concept ScopedEnum = std::is_enum_v<T> && !std::convertible_to<T, typename std::underlying_type_t<T>>;
-
-/**
- * Detect old style enum.
- * @tparam T
- */
-template<typename T>
-concept UnscopedEnum = std::is_enum_v<T> && std::convertible_to<T, typename std::underlying_type_t<T>>;
-
-/**
- * @brief enum or enum class
- * @tparam T
- */
-template<typename T>
-concept Enum = std::is_enum_v<T>;
 
 /**
  * Check enum values so that there is no bit overlap.
