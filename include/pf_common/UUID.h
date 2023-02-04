@@ -21,6 +21,11 @@
 #define PF_UUID_RUNTIME_ASSERT(condition, message) assert((condition) && message)
 #endif
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 5045)
+#endif
+
 namespace pf {
 // UDLs
 class UUID;
@@ -146,5 +151,9 @@ namespace uuid_literals {
 }// namespace uuid_literals
 
 }// namespace pf
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 #endif//PF_COMMON_UUID_H

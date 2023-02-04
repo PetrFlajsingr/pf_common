@@ -9,6 +9,11 @@
 #include <pf_common/array.h>
 #include <pf_common/concepts/FundamentalTypes.h>
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 5045)
+#endif
+
 namespace pf {
 
 template<CharType T>
@@ -34,5 +39,9 @@ template<CharType T>
 }
 
 }// namespace pf
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 #endif//PF_COMMON_HEX_UTILS_H
