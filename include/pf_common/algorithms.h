@@ -22,8 +22,11 @@ namespace pf {
  * @return true if the value is found, false otherwise
  */
 template<std::ranges::range Range, typename Proj = std::identity>
-[[nodiscard]] constexpr bool contains(Range &&haystack, const auto &needle, Proj proj = {}) requires (std::equality_comparable_with<decltype(needle), std::ranges::range_value_t<Range>>) {
-  return std::ranges::any_of(haystack, [&](auto &&value) { return needle == proj(value); });
+[[nodiscard]] constexpr bool contains(Range &&haystack, const auto &needle, Proj proj = {})
+  requires(std::equality_comparable_with<decltype(needle), std::ranges::range_value_t<Range>>)
+{
+  return std::ranges::any_of(
+      haystack, [&](auto &&value) { return needle == value; }, proj);
 }
 
 /**
@@ -39,18 +42,6 @@ template<std::ranges::range Range, typename Proj = std::identity>
     return std::optional<ResultType>{*iter};
   }
   return std::optional<ResultType>{};
-}
-
-/**
- * Convenience function similar to std::find_if
- * @param range range to search through
- * @param predicate predicate returning true on desired element
- * @return element for which predicate returns true or std::nullopt if no such element is found
- */
-template<std::ranges::range Range>
-std::optional<std::ranges::range_value_t<Range>> findIf(Range &&range, std::predicate<std::ranges::range_value_t<Range>> auto &&predicate) {
-  if (const auto iter = std::ranges::find_if(range, predicate); iter != std::ranges::end(range)) { return *iter; }
-  return std::nullopt;
 }
 
 }// namespace pf
