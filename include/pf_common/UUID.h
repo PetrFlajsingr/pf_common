@@ -78,9 +78,10 @@ class UUID {
     if (uuid.empty()) { return; }
     if (std::is_constant_evaluated()) {
       if (!isValidUUID(uuid)) { throw "Invalid UUID provided"; }// FIXME: this needs better reporting, would work with if constval better
-    } else {
-      if constexpr (PF_UUID_RUNTIME_VALIDITY_CHECK_ENABLED) { PF_UUID_RUNTIME_ASSERT(isValidUUID(uuid), "Invalid UUID"); }
+    } else if constexpr (PF_UUID_RUNTIME_VALIDITY_CHECK_ENABLED) {
+      PF_UUID_RUNTIME_ASSERT(isValidUUID(uuid), "Invalid UUID");
     }
+
     if (uuid.size() != 36) { return; }
 
     std::size_t cnt{0};

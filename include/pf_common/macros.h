@@ -23,4 +23,10 @@
 #define PF_DEBUG_BREAK() raise(SIGTRAP)
 #endif
 
+#if defined(_MSC_VER)
+#define PF_NOUNIQUEADDRESS [[msvc::no_unique_address]]
+#else
+#define PF_NOUNIQUEADDRESS [[no_unique_address]]
+#endif
+
 #endif//PF_COMMON_MACROS_H

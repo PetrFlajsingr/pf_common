@@ -3,23 +3,23 @@
 //
 
 #include <catch2/catch_test_macros.hpp>
-#include <pf_common/RAII.h>
+#include <pf_common/ScopeExit.h>
 #include <unordered_map>
 
 
-TEST_CASE("RAII", "[RAII]") {
+TEST_CASE("ScopeExit", "[ScopeExit]") {
   auto testBool = true;
   {
-    const auto raii = pf::RAII([&] { testBool = false; });
+    const auto raii = pf::ScopeExit([&] { testBool = false; });
     REQUIRE(testBool);
   }
   REQUIRE(!testBool);
 }
 
-TEST_CASE("RAII exception", "[RAII]") {
+TEST_CASE("ScopeExit exception", "[ScopeExit]") {
   auto testBool = true;
   try {
-    const auto raii = pf::RAII([&] { testBool = false; });
+    const auto raii = pf::ScopeExit([&] { testBool = false; });
     REQUIRE(testBool);
     throw 0;
   } catch (...) {}

@@ -83,7 +83,7 @@ if (PF_COMMON_TESTS)
 
     enable_testing()
     include_directories(include)
-    add_executable(pf_common_tests tests/LazyInit.cpp tests/RAII.cpp
+    add_executable(pf_common_tests tests/LazyInit.cpp tests/ScopeExit.cpp
             tests/ByteLiterals.cpp tests/algorithm.cpp tests/StaticVector.cpp tests/SmallVector.cpp
             tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/StringLiteral.cpp tests/uuid.cpp tests/casts.cpp)
 
