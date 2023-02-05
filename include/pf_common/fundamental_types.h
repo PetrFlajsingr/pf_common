@@ -43,44 +43,44 @@ namespace fundamental_literals {
 template<char... Chars>
 [[nodiscard]] consteval i8 operator""_i8() {
   constexpr auto value = details::UDLCharsToULLConverter<Chars...>::GetValue();
-  static_assert(value <= std::numeric_limits<i8>::max());
+  static_assert(value <= static_cast<unsigned long long>(std::numeric_limits<i8>::max()));
   return static_cast<i8>(value);
 }
 template<char... Chars>
 [[nodiscard]] consteval i16 operator""_i16() {
   constexpr auto value = details::UDLCharsToULLConverter<Chars...>::GetValue();
-  static_assert(value <= std::numeric_limits<i16>::max());
+  static_assert(value <= static_cast<unsigned long long>(std::numeric_limits<i16>::max()));
   return static_cast<i16>(value);
 }
 template<char... Chars>
 [[nodiscard]] consteval i32 operator""_i32() {
   constexpr auto value = details::UDLCharsToULLConverter<Chars...>::GetValue();
-  static_assert(value <= std::numeric_limits<i32>::max());
+  static_assert(value <= static_cast<unsigned long long>(std::numeric_limits<i32>::max()));
   return static_cast<i32>(value);
 }
 template<char... Chars>
 [[nodiscard]] consteval i64 operator""_i64() {
   constexpr auto value = details::UDLCharsToULLConverter<Chars...>::GetValue();
-  static_assert(value <= std::numeric_limits<i64>::max());
+  static_assert(value <= static_cast<unsigned long long>(std::numeric_limits<i64>::max()));
   return static_cast<i64>(value);
 }
 
 template<char... Chars>
 [[nodiscard]] consteval u8 operator""_u8() {
   constexpr auto value = details::UDLCharsToULLConverter<Chars...>::GetValue();
-  static_assert(value <= std::numeric_limits<u8>::max());
+  static_assert(value <= static_cast<unsigned long long>(std::numeric_limits<u8>::max()));
   return static_cast<u8>(value);
 }
 template<char... Chars>
 [[nodiscard]] consteval u16 operator""_u16() {
   constexpr auto value = details::UDLCharsToULLConverter<Chars...>::GetValue();
-  static_assert(value <= std::numeric_limits<u16>::max());
+  static_assert(value <= static_cast<unsigned long long>(std::numeric_limits<u16>::max()));
   return static_cast<u16>(value);
 }
 template<char... Chars>
 [[nodiscard]] consteval u32 operator""_u32() {
   constexpr auto value = details::UDLCharsToULLConverter<Chars...>::GetValue();
-  static_assert(value <= std::numeric_limits<u32>::max());
+  static_assert(value <= static_cast<unsigned long long>(std::numeric_limits<u32>::max()));
   return static_cast<u32>(value);
 }
 template<char... Chars>
@@ -109,7 +109,7 @@ template<char... Chars>
 template<char... Chars>
 [[nodiscard]] consteval byte operator""_byte() {
   constexpr auto value = details::UDLCharsToULLConverter<Chars...>::GetValue();
-  static_assert(value <= std::numeric_limits<std::underlying_type_t<byte>>::max());
+  static_assert(value <= static_cast<unsigned long long>(std::numeric_limits<std::underlying_type_t<byte>>::max()));
   return static_cast<byte>(value);
 }
 #else

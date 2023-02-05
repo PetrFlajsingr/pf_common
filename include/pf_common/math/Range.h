@@ -19,8 +19,8 @@ namespace pf::math {
  */
 template<typename T>
 concept RangeValueType = std::equality_comparable<T> && requires(T t) {
-                                                          { t - t } -> std::convertible_to<T>;
-                                                        };
+  { t - t } -> std::convertible_to<T>;
+};
 
 /**
  * @brief 1D range.

@@ -20,16 +20,16 @@ namespace pf {
  */
 template<typename T>
 concept Serializable = requires(const T t) {
-                         { t.serialize() } -> std::same_as<std::vector<std::byte>>;
-                       };
+  { t.serialize() } -> std::same_as<std::vector<std::byte>>;
+};
 /**
  * @brief An object which provides deserialization from binary data.
  * @tparam T
  */
 template<typename T>
 concept Deserializable = requires(std::span<const std::byte> data) {
-                           { T::Deserialize(data) } -> std::same_as<T>;
-                         };
+  { T::Deserialize(data) } -> std::same_as<T>;
+};
 
 /**
  * Convenience function for object serialisation.

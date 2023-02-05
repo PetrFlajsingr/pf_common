@@ -17,16 +17,16 @@ namespace pf {
  */
 template<typename T>
 concept HasStdToString = requires(const T t) {
-                           { std::to_string(t) } -> std::convertible_to<std::string>;
-                         };
+  { std::to_string(t) } -> std::convertible_to<std::string>;
+};
 /**
  * @brief A type which has T::toString() method.
  * @tparam T
  */
 template<typename T>
 concept HasToString = requires(const T t) {
-                        { t.toString() } -> std::convertible_to<std::string>;
-                      };
+  { t.toString() } -> std::convertible_to<std::string>;
+};
 /**
  * @brief A type which provides functionality to be converted into a string.
  * @tparam T
@@ -47,12 +47,8 @@ std::string toString(const T &val) {
     ss << val;
     return ss.str();
   }
-  if constexpr (HasStdToString<T>) {
-    return std::to_string(val);
-  }
-  if constexpr (HasToString<T>) {
-    return val.toString();
-  }
+  if constexpr (HasStdToString<T>) { return std::to_string(val); }
+  if constexpr (HasToString<T>) { return val.toString(); }
 }
 }// namespace pf
 

@@ -122,9 +122,7 @@ class StaticVector {
   }
   [[nodiscard]] friend bool operator!=(const StaticVector &lhs, const StaticVector &rhs) { return !(rhs == lhs); }
 
-  [[nodiscard]] friend bool operator<(const StaticVector &lhs, const StaticVector &rhs) {
-    return lhs <=> rhs == std::weak_ordering::less;
-  }
+  [[nodiscard]] friend bool operator<(const StaticVector &lhs, const StaticVector &rhs) { return lhs <=> rhs == std::weak_ordering::less; }
   [[nodiscard]] friend bool operator>(const StaticVector &lhs, const StaticVector &rhs) {
     return lhs <=> rhs == std::weak_ordering::greater;
   }

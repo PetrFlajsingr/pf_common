@@ -9,8 +9,8 @@
 
 #include <concepts>
 #include <functional>
-#include <utility>
 #include <pf_common/macros.h>
+#include <utility>
 
 namespace pf {
 /**

@@ -10,10 +10,10 @@
 #include <algorithm>
 #include <concepts>
 #include <magic_enum.hpp>
+#include <pf_common/concepts/Enum.h>
 #include <pf_common/concepts/ranges.h>
 #include <ranges>
 #include <type_traits>
-#include <pf_common/concepts/Enum.h>
 
 namespace pf {
 

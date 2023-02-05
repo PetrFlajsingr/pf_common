@@ -9,8 +9,8 @@
 #define PF_COMMON_SMALLVECTOR_H
 
 #include <pf_common/allocators/SmallVectorAllocator.h>
-#include <vector>
 #include <pf_common/concepts/Allocator.h>
+#include <vector>
 
 namespace pf {
 

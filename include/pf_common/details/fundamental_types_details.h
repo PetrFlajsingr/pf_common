@@ -9,18 +9,23 @@
 
 namespace pf::details {
 
+template<unsigned long long Radix, char... Digits>
+consteval unsigned long long digitsToULL() {
+  auto mul = 1ull;
+  auto result = 0ull;
+  auto dummy = 0ull;
+  ((result += static_cast<unsigned long long>(Digits) * mul, mul *= Radix, dummy) = ... = 0);
+  return result;
+}
+
 template<char... Digits>
 consteval unsigned long long decToULL() {
-  auto mul = 1ull;
-  ((Digits, mul *= 10), ...);
-  return (... + (mul /= 10, static_cast<unsigned long long>(Digits - '0') * mul));
+  return digitsToULL<10ull, Digits - '0' ...>();
 }
 
 template<char... Digits>
 consteval unsigned long long binToULL() {
-  auto mul = 1ull;
-  ((Digits, mul *= 2), ...);
-  return (... + (mul /= 2, static_cast<unsigned long long>(Digits - '0') * mul));
+  return digitsToULL<2ull, Digits - '0' ...>();
 }
 consteval char hexDigitToValue(char ch) {
   if (ch >= '0' && ch <= '9') {
@@ -33,9 +38,7 @@ consteval char hexDigitToValue(char ch) {
 }
 template<char... Digits>
 consteval unsigned long long hexToULL() {
-  auto mul = 1ull;
-  ((Digits, mul *= 16ull), ...);
-  return (... + (mul /= 16, static_cast<unsigned long long>(hexDigitToValue(Digits)) * mul));
+  return digitsToULL<16ull, hexDigitToValue(Digits)...>();
 }
 
 template<char... Chars>

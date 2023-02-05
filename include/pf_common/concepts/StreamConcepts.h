@@ -17,16 +17,16 @@ namespace pf {
  */
 template<typename T>
 concept StreamInputable = requires(T t, std::ostream o) {
-                            { o << t } -> std::convertible_to<std::ostream &>;
-                          };
+  { o << t } -> std::convertible_to<std::ostream &>;
+};
 /**
  * @brief A type which supports >> to stream.
  * @tparam T
  */
 template<typename T>
 concept StreamOutputable = requires(T t, std::istream i) {
-                             { i >> t } -> std::convertible_to<std::istream &>;
-                           };
+  { i >> t } -> std::convertible_to<std::istream &>;
+};
 /**
  * A type which supports both >> and << for streams.
  * @tparam T

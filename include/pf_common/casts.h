@@ -72,11 +72,8 @@ struct DynamicCastChecker {
 
 }// namespace details
 
-
-
 template<typename Derived, typename Base, typename Checker = details::DynamicCastChecker<Derived, Base>>
-  requires DowncastableTo<Derived, Base> && std::is_invocable_r_v<bool, Checker, Base>
-    && std::is_default_constructible_v<Checker>
+  requires DowncastableTo<Derived, Base> && std::is_invocable_r_v<bool, Checker, Base> && std::is_default_constructible_v<Checker>
 [[nodiscard]] constexpr Derived polymorphic_downcast(Base base) {
 #if PF_POLYMORHPHIC_DOWNCAST_CHECK_ENABLE
   if (!Checker{}(base)) { PF_POLYMORHPHIC_DOWNCAST_FAIL("Invalid cast"); }

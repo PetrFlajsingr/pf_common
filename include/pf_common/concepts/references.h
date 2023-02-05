@@ -17,6 +17,6 @@ constexpr bool IsConstReference = std::is_reference_v<T> && std::is_const_v<std:
 template<typename T>
 constexpr bool IsPointerToConst = std::is_pointer_v<T> && std::is_const_v<std::remove_pointer_t<T>>;
 
-}
+}// namespace pf
 
 #endif//PF_COMMON_REFERENCES_H
