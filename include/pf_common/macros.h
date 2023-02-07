@@ -64,4 +64,15 @@
 #define PF_ASSUME(...) __builtin_assume(__VA_ARGS__)
 #endif
 
+#define PF_DEPRECATE_MACRO_IMPL(reason, ...)                                                                                               \
+  [&] {                                                                                                                                    \
+    enum [[deprecated(reason)]] DeprecationUtil{};                                                                                         \
+    DeprecationUtil a;                                                                                                                     \
+    if constexpr (false) {                                                                                                                 \
+      return __VA_ARGS__;                                                                                                                  \
+    } else {                                                                                                                               \
+      __VA_ARGS__;                                                                                                                         \
+    }                                                                                                                                      \
+  }()
+
 #endif//PF_COMMON_MACROS_H
