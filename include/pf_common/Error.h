@@ -5,7 +5,6 @@
 #ifndef PF_COMMON_ERROR_H
 #define PF_COMMON_ERROR_H
 
-#include <fmt/core.h>
 #include <magic_enum.hpp>
 #include <pf_common/concepts/Enum.h>
 #include <string>
@@ -17,7 +16,9 @@ struct Error {
   ErrorType type;
   Payload payload;
 
-  [[nodiscard]] std::string toString() const { return fmt::format("{}: '{}'", magic_enum::enum_name(type), to_string(payload)); }
+  [[nodiscard]] std::string toString() const {
+    return std::string{magic_enum::enum_name(type)} + ": '" + to_string(payload) + "'";
+  }
 };
 
 template<Enum ErrorType, typename Payload>

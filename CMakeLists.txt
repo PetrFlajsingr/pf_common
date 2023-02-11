@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(pf_common
-        VERSION 1.3.1
+        VERSION 1.3.2
         DESCRIPTION "Header only library with concepts and other commonly used things"
         HOMEPAGE_URL "https://github.com/PetrFlajsingr/pf_common"
         )
@@ -16,10 +16,7 @@ else ()
 endif ()
 
 option(BUILD_DOCS "build doxygen docs" OFF)
-add_compile_definitions(FMT_HEADER_ONLY)
 
-find_package(fmt CONFIG REQUIRED)
-find_package(glm CONFIG REQUIRED)
 find_package(range-v3 CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
 
@@ -34,7 +31,7 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-target_link_libraries(${PROJECT_NAME} INTERFACE magic_enum::magic_enum glm::glm fmt::fmt range-v3 range-v3-meta range-v3::meta range-v3-concepts)
+target_link_libraries(${PROJECT_NAME} INTERFACE magic_enum::magic_enum range-v3 range-v3-meta range-v3::meta range-v3-concepts)
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
@@ -87,7 +84,7 @@ if (PF_COMMON_TESTS)
             tests/ByteLiterals.cpp tests/algorithm.cpp tests/StaticVector.cpp tests/SmallVector.cpp
             tests/concepts.cpp tests/enums.cpp tests/array.cpp tests/StringLiteral.cpp tests/uuid.cpp tests/casts.cpp)
 
-    target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2WithMain fmt::fmt)
+    target_link_libraries(pf_common_tests PRIVATE pf_common::pf_common Catch2::Catch2WithMain)
     target_compile_options(pf_common_tests PRIVATE ${flags})
 
     include(CTest)

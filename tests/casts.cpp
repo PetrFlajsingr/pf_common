@@ -5,8 +5,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#define PF_NARROW_FAIL(msg) throw std::exception()
-#define PF_POLYMORHPHIC_DOWNCAST_FAIL(msg) throw std::exception()
+#define PF_NARROW_FAIL(source, target) throw std::exception()
+#define PF_POLYMORPHIC_DOWNCAST_FAIL(msg) throw std::exception()
 
 #include <pf_common/casts.h>
 
