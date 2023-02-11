@@ -25,7 +25,9 @@ class ScopeExit {
    */
   explicit ScopeExit(F &&callable) : callable(std::forward<F>(callable)) {}
   ScopeExit(ScopeExit &&other) noexcept : callable(std::move(other.callable)) { other.active = false; }
-  ~ScopeExit() { std::invoke(callable); }
+  ~ScopeExit() {
+    if (active) { std::invoke(callable); }
+  }
 
   ScopeExit &operator=(const ScopeExit &) const = delete;
   ScopeExit &operator=(ScopeExit &&other) noexcept {
