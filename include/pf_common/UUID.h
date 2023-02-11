@@ -9,7 +9,7 @@
 #define PF_COMMON_UUID_H
 
 #include <pf_common/hex_utils.h>
-#include <range/v3/algorithm/contains.hpp>
+#include <pf_common/algorithms.h>
 #include <string>
 
 #if !defined(PF_UUID_RUNTIME_VALIDITY_CHECK_ENABLED)
@@ -120,7 +120,7 @@ class UUID {
     std::basic_string<CharT, Traits, Allocator> result{NilUUIDString<CharT>};
     constexpr static auto HYPHEN_INDICES = std::array<std::size_t, 4>{8, 13, 18, 23};
     for (std::size_t i = 0, index = 0; i < 36; ++i) {
-      if (ranges::contains(HYPHEN_INDICES, i)) { continue; }
+      if (contains(HYPHEN_INDICES, i)) { continue; }
       result[i] = valueToHexDigit<CharT>(static_cast<std::uint8_t>(uuid.data.data()[index]) >> 4 & 0x0F);
       result[i + 1] = valueToHexDigit<CharT>(static_cast<std::uint8_t>(uuid.data.data()[index]) & 0x0F);
       ++index;

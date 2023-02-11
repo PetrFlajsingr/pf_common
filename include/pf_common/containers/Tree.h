@@ -10,8 +10,6 @@
 #include <algorithm>
 #include <memory>
 #include <queue>
-#include <range/v3/action/sort.hpp>
-#include <range/v3/view/transform.hpp>
 #include <ranges>
 #include <stack>
 
@@ -111,10 +109,10 @@ class Node {
   }
 
   [[nodiscard]] auto children() {
-    return children_ | ranges::views::transform([](const auto &child) -> Node & { return *child; });
+    return children_ | std::views::transform([](const auto &child) -> Node & { return *child; });
   }
   [[nodiscard]] auto children() const {
-    return children_ | ranges::views::transform([](const auto &child) -> const Node & { return *child; });
+    return children_ | std::views::transform([](const auto &child) -> const Node & { return *child; });
   }
 
   void sortChildren(std::predicate<T, T> auto pred) {

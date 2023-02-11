@@ -3,10 +3,6 @@
   "version": "1.3.2",
   "dependencies": [
     {
-      "name": "range-v3",
-      "version>=": "0.12.0#1"
-    },
-    {
       "name": "magic-enum",
       "version>=": "0.8.2"
     },

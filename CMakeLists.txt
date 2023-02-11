@@ -17,7 +17,6 @@ endif ()
 
 option(BUILD_DOCS "build doxygen docs" OFF)
 
-find_package(range-v3 CONFIG REQUIRED)
 find_package(magic_enum CONFIG REQUIRED)
 
 include(GNUInstallDirs)
@@ -31,7 +30,7 @@ target_include_directories(
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
-target_link_libraries(${PROJECT_NAME} INTERFACE magic_enum::magic_enum range-v3 range-v3-meta range-v3::meta range-v3-concepts)
+target_link_libraries(${PROJECT_NAME} INTERFACE magic_enum::magic_enum)
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
